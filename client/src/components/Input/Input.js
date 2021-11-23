@@ -4,9 +4,9 @@ import {InputContainer, InputField} from './Input.styled';
 export const Input = (props) => {
     return(
         <>
-            <InputContainer>
+            {/* <InputContainer> */}
                     <InputField type="text"/>
-            </InputContainer>
+            {/* </InputContainer> */}
         </>
     )
 }

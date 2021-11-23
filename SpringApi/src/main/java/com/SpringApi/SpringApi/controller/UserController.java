@@ -15,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/pizza")
+@CrossOrigin(origins = "http://localhost:3001")
 public class UserController {
 
     @Autowired

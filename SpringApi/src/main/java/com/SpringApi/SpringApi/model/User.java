@@ -23,7 +23,7 @@ public class User {
     @Column(name ="user_id")
     private UUID userId;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")
@@ -37,7 +37,7 @@ public class User {
     @JoinColumn(name = "id_city", referencedColumnName = "id_city")
     private City city;
 
-    @Column(name = "typ")
+    @Column(name = "typ", columnDefinition = " default KLIENT")
     @Enumerated(EnumType.STRING)
     private PersonType type;
 

@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="indent")
+@Table(name="asd")
 public class Indent {
 
     @Id
