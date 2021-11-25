@@ -1,21 +1,28 @@
-import react, {useState} from 'react';
+import react, {useEffect, useState} from 'react';
 import {SigningContainer} from './Login.styled';
 import {Input} from '../../components/Input/Input';
 import {Button} from '../../components/Button/Button';
 import { Flex } from "../../components/generalStyledComponents/generalStyledComponents";
 import axios from 'axios';
+import { Link, NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
-export const Login = (props) => {
-    const {isLoggedIn} = props;
+export const Login = () => {
 
     const [credentials, setCredentials] = useState({email: "", password: ""})
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        if(isLoggedIn) navigate("/pizzeria")
+    }, [isLoggedIn])
 
     const logInUser = () => {
         axios.post("http://localhost:8079/pizza/login", credentials)
         .then(response => {
-            isLoggedIn(response.data)
+            setIsLoggedIn(response.data)
         })
-        // isLoggedIn(true);
     }
 
     const sendCredentials = () => {
@@ -34,6 +41,7 @@ export const Login = (props) => {
     return(
         <>
             <SigningContainer>
+                    <label>login form</label>
                     <Flex>
                         <label>email</label>
                         <input name="email" onChange={onChange}/>
@@ -42,8 +50,9 @@ export const Login = (props) => {
                         <label>password</label>
                         <input name="password" onChange={onChange}/>
                     </Flex>
-                    <button onClick={logInUser}>Log in</button> 
-                </SigningContainer>
+                    <button onClick={sendCredentials}>Log in</button> 
+                    <NavLink to="/register">register link</NavLink>
+            </SigningContainer>
         </>
     )
 }

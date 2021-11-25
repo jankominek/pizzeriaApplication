@@ -6,18 +6,29 @@ import {Button} from '../../components/Button/Button';
 import { Login } from "../../components/Login/Login";
 import { Register } from "../../components/Register/Register";
 import { UserPage } from "../userPage/UserPage";
+import {useNavigate} from 'react-router';
+
 export const StartPage = () => {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
+
+    const loginNavigate = () => {
+        navigate("/login");
+    }
 
     const checkIfLoggedIn = (value) => {
-        setIsLoggedIn(value)
+        // setIsLoggedIn(value)
     }
 
     return(
         <>
             <StartPageContainer>
-                {isLoggedIn ? <UserPage /> : <Login  isLoggedIn={checkIfLoggedIn}/>}
+                {/* {isLoggedIn ? <UserPage /> : <Login  isLoggedIn={checkIfLoggedIn}/>} */}
+                <SigningContainer>
+                    <label>Please login for order pizza</label>
+                    <button onClick={loginNavigate}>Login</button>
+                    <button>Register</button>
+                </SigningContainer>
             </StartPageContainer>
         </>
     )

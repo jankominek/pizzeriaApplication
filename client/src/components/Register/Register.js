@@ -31,6 +31,7 @@ export const Register = () => {
     return(
         <>
             <SigningContainer>
+                <label>register form</label>
                     <Flex>
                         <label>email</label>
                         <input name="email" onChange={onChange}/>

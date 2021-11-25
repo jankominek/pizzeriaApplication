@@ -9,16 +9,22 @@ import { ProductElement } from "../../components/ProductElement/ProductElement";
 
 export const UserPage = () => {
 
+    const [isUserAuth, setIsUserAuth] = useState();
+
+    useEffect(()=> {
+
+    })
+
     const productTypes = type_of_products.map((element, index)=>(
         <ProductField key={index} type={element.type} />
     ))
-    const [x, setX] = useState();   
+     
     useEffect(()=>{
-        axios.get('http://localhost:8080/root/hello')
-            .then(response => setX(response.data));
     }, [])
+
     return(
         <>
+        {}
             <UserPageContainer>
                 <Menu />
                 <MainField>
