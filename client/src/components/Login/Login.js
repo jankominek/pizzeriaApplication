@@ -1,7 +1,6 @@
 import react, {useEffect, useState} from 'react';
-import {SigningContainer} from './Login.styled';
-import {Input} from '../../components/Input/Input';
-import {Button} from '../../components/Button/Button';
+import {SigningContainer, LoginContainer, Label, Button, ButtonRegister} from './Login.styled';
+import {Input} from './Login.styled';
 import { Flex } from "../../components/generalStyledComponents/generalStyledComponents";
 import axios from 'axios';
 import { Link, NavLink } from 'react-router-dom';
@@ -17,7 +16,9 @@ export const Login = () => {
     useEffect(()=>{
         if(isLoggedIn) navigate("/pizzeria")
     }, [isLoggedIn])
-
+    const redirectToRegister = () => {
+        navigate('/register');
+    }
     const logInUser = () => {
         axios.post("http://localhost:8079/pizza/login", credentials)
         .then(response => {
@@ -27,6 +28,7 @@ export const Login = () => {
 
     const sendCredentials = () => {
         if(credentials.email !== "" && credentials.password !== ""){
+            console.log(credentials)
             logInUser();
         }
     }
@@ -39,20 +41,14 @@ export const Login = () => {
     }
 
     return(
-        <>
+        <LoginContainer>
             <SigningContainer>
-                    <label>login form</label>
-                    <Flex>
-                        <label>email</label>
-                        <input name="email" onChange={onChange}/>
-                    </Flex>
-                    <Flex>
-                        <label>password</label>
-                        <input name="password" onChange={onChange}/>
-                    </Flex>
-                    <button onClick={sendCredentials}>Log in</button> 
-                    <NavLink to="/register">register link</NavLink>
+                    <Label>Login</Label>
+                    <Input name="email" onChange={onChange} placeholder="email"/>
+                    <Input name="password" onChange={onChange} placeholder="password"/>
+                    <Button onClick={sendCredentials}>Log in</Button> 
+                    <ButtonRegister onClick={redirectToRegister}>Register</ButtonRegister>
             </SigningContainer>
-        </>
+        </LoginContainer>
     )
 }

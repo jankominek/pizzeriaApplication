@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/pizza")
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
@@ -38,8 +38,9 @@ public class UserController {
     public Boolean verifyAccount(@RequestBody UserVerification userVerification){
         return userService.verifyAccount(userVerification);
     }
-    @GetMapping("/auth/verification-check")
-    public UserInfoDto getpizzeriaApplicationSpringReactUserInfo(@RequestBody String email){
+    @GetMapping("/getUserInfo/{email}")
+    public UserInfoDto getUserInfo(@PathVariable String email){
+        System.out.println(email);
         return userService.getUserInfo(email);
     }
 

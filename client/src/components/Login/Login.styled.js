@@ -1,14 +1,57 @@
 import styled from 'styled-components'; 
-
-export const SigningContainer = styled.div`
-    width: 50%;
-    border: 1px solid black;
-    border-radius: 25px;
-    padding: 30px 0px 30px 0px;
-    background: white;
+import {colors} from '../../utils/theme'
+export const LoginContainer = styled.div`
+    width: 100vw;
+    height: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content:center;
     align-items: center;
-    box-shadow: 0px 0px 10px white;   
+    background-color: ${colors.latte};
+`
+export const SigningContainer = styled.div`
+    width: 40%;
+   border: 1px solid black;
+   border-radius: 10px;
+   box-sizing: border-box;
+   padding: 10px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
 `; 
+export const Input = styled.input`
+    width: 80%;
+    height: 1.5rem;
+    padding: 5px 10px;
+    margin-top: 5%;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: none;
+    &:focus{
+        outline: none;
+    }
+`
+export const Label = styled.label`
+    font-size: 2rem;
+`
+
+export const Button = styled.button`
+    width: 40%;
+    height: 1.5rem;
+    padding: 5px 10px;
+    margin-top: 10%;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: none;
+    background-color: ${colors.lightRed};
+`
+export const ButtonRegister = styled.button`
+    width: 20%;
+    height: 1.5rem;
+    padding: 5px 10px;
+    margin-top: 5%;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: none;
+    background-color: ${colors.lightRed};
+`

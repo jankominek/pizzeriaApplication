@@ -6,14 +6,29 @@ import {UserPageContainer, MainField, Flex} from './UserPage.styled';
 import axios from 'axios';
 import { MenuListField } from "../MenuListField/MenuListField";
 import { ProductElement } from "../../components/ProductElement/ProductElement";
+import { useDispatch, useSelector} from "react-redux";
+import { setUserInfoAction } from "../../utils/store/actions/userStateAction";
 
-export const UserPage = () => {
-
+export const UserPage = (props) => {
+    
     const [isUserAuth, setIsUserAuth] = useState();
 
-    useEffect(()=> {
+    const dispatch = useDispatch();
 
-    })
+    useEffect(()=> {
+        getUserInfo();
+    }, [])
+    const state = useSelector( state => state)
+    console.log("state : ", state)
+    
+    const getUserInfo = () => {
+        const email = 'pkominek@gmail.com'
+        axios.get(`http://localhost:8079/pizza/getUserInfo/${email}`)
+            .then( response => {
+                console.log(response.data)
+                dispatch(setUserInfoAction(response.data))
+            })
+    }
 
     const productTypes = type_of_products.map((element, index)=>(
         <ProductField key={index} type={element.type} />
