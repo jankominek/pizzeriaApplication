@@ -20,6 +20,7 @@ function App() {
         ))} */}
         <Route path="/" element={<UserPage />} exact/>
         <Route path="/login" element={<Login />}/>
+        <Route path="/pizzeria" element={<UserPage />} />
       </Routes>
     </div>
   );

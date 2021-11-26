@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Menu } from "../../components/Menu/Menu";
 import { ProductField } from "../../components/ProductField/ProductField";
 import { type_of_products } from "../../utils/type_of_products";
-import {UserPageContainer, MainField, Flex} from './UserPage.styled';
+import {UserPageContainer, CompanyName, UserName, ProductTypeContainer} from './UserPage.styled';
 import axios from 'axios';
-import { MenuListField } from "../MenuListField/MenuListField";
-import { ProductElement } from "../../components/ProductElement/ProductElement";
 import { useDispatch, useSelector} from "react-redux";
 import { setUserInfoAction } from "../../utils/store/actions/userStateAction";
+import { ProductElementList } from "../../components/productElementList/ProductElementList";
 
 export const UserPage = (props) => {
     
@@ -29,26 +27,27 @@ export const UserPage = (props) => {
                 dispatch(setUserInfoAction(response.data))
             })
     }
-
     const productTypes = type_of_products.map((element, index)=>(
         <ProductField key={index} type={element.type} />
     ))
-     
-    useEffect(()=>{
-    }, [])
+    
 
     return(
-        <>
-        {}
-            <UserPageContainer>
-                <Menu />
+            <UserPageContainer> 
+                <CompanyName>Pizzeria ShaurJano</CompanyName>
+                <UserName>Witaj, Janek</UserName>
+                <ProductTypeContainer>
+                    {productTypes}
+                </ProductTypeContainer>
+
+                <ProductElementList />
+                {/* <Menu />
                 <MainField>
                     <Flex>{productTypes ? productTypes : null}</Flex>
                     <MenuListField>
                         <ProductElement />
                     </MenuListField>
-                </MainField>
+                </MainField> */}
             </UserPageContainer>
-        </>
     )
 }

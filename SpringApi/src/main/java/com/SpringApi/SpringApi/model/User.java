@@ -36,8 +36,8 @@ public class User {
     @OneToOne()
     @JoinColumn(name = "id_city", referencedColumnName = "id_city")
     private City city;
-
-    @Column(name = "typ", columnDefinition = " default KLIENT")
+//, columnDefinition = " default KLIENT"
+    @Column(name = "typ")
     @Enumerated(EnumType.STRING)
     private PersonType type;
 

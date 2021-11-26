@@ -1,5 +1,5 @@
 
-import { Picture, ProductElementContainer, SpanProduct } from './ProductElement.styled'
+import { Picture, ProductElementContainer, SpanIngeredient, SpanProduct } from './ProductElement.styled'
 
 export const ProductElement = () => {
     return(
@@ -7,7 +7,7 @@ export const ProductElement = () => {
             <ProductElementContainer>
                 <Picture/>
                 <SpanProduct>asd</SpanProduct>
-                <SpanProduct>asd</SpanProduct>
+                <SpanIngeredient>asdaaaaaaaaaaaaaaaaaaaa asdasd</SpanIngeredient>
             </ProductElementContainer>
         </>
     )

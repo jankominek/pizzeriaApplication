@@ -5,6 +5,8 @@ import { Flex } from "../../components/generalStyledComponents/generalStyledComp
 import axios from 'axios';
 import { Link, NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router';
+import { SuccessComponent } from '../../utils/successfullComponent/SuccessComponent';
+import {ErrorComponent} from '../../utils/errorComponent/ErrorComponent';
 
 export const Login = () => {
 
@@ -23,6 +25,11 @@ export const Login = () => {
         axios.post("http://localhost:8079/pizza/login", credentials)
         .then(response => {
             setIsLoggedIn(response.data)
+        }).catch( error => {
+              if(error.response.status == 500){
+                  console.log("Error message");
+                    <ErrorComponent message={"Błądne dane w formularzu"}/>
+              }
         })
     }
 

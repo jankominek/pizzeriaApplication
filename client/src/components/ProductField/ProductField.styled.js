@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { colors } from "../../utils/theme";
 
 export const ProductFieldContainer = styled.div`
     width: 18rem;
@@ -9,7 +10,7 @@ export const ProductFieldContainer = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    background: rgba(163,3,0,0.6);
+    background: ${colors.lightRed};
 `
 export const SpanProduct = styled.span`
     font-size: 1.3rem;
