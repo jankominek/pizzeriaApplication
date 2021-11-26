@@ -35,3 +35,5 @@ insert into dish (id_dish, name) values (1, 'Pizza Kurczak'),
                                         (14, 'Pizza Farmerska'),
                                         (15, 'Pizza Mięsna'),
                                         (16, 'Pizza Capricciosa');
+
+insert into dish_ingredient(id_d_i, id_dish, id_ingredient) values (1, 1, 1);
