@@ -37,3 +37,16 @@ insert into dish (id_dish, name) values (1, 'Pizza Kurczak'),
                                         (16, 'Pizza Capricciosa');
 
 insert into dish_ingredient(id_d_i, id_dish, id_ingredient) values (1, 1, 1);
+
+insert into voivodeship(id_voivodeship, voivodeship_name) values (1, 'Wielkopolskie'),
+                                                                 (2, 'Mazowieckie');
+
+insert into city(id_city, city_name) values (1, 'Poznań'),
+                                            (2, 'Kalisz'),
+                                            (3, 'Konin'),
+                                            (4, 'Piła'),
+                                            (5, 'Leszno'),
+                                            (6, 'Luboń'),
+                                            (7, 'Warszawa'),
+                                            (8, 'Ciechanów'),
+                                            (9, 'Radom');

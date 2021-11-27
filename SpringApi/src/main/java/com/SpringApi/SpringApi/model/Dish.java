@@ -10,6 +10,7 @@ import java.util.UUID;
 @Table(name = "dish")
 @Data
 public class Dish {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_dish")
