@@ -10,6 +10,7 @@ import { ProductElementList } from "../../components/productElementList/ProductE
 export const UserPage = (props) => {
     
     const [isUserAuth, setIsUserAuth] = useState();
+    const [products, setProducts] = useState([]);
 
     const dispatch = useDispatch();
 
@@ -40,7 +41,7 @@ export const UserPage = (props) => {
                     {productTypes}
                 </ProductTypeContainer>
 
-                <ProductElementList />
+                <ProductElementList products={products}/>
                 {/* <Menu />
                 <MainField>
                     <Flex>{productTypes ? productTypes : null}</Flex>

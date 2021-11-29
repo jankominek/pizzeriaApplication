@@ -4,20 +4,17 @@ import { type_of_products } from "../../utils/type_of_products"
 import { ProductField } from "../ProductField/ProductField"
 
 
-export const ProductElementList = () => {
+export const ProductElementList = (props) => {
 
+    const {products} = props;
+
+    const product_list = products.map(()=> {
+        
+    })
 
     return(
         <ProductListContainer>
-            <ProductElement />
-            <ProductElement />
-            <ProductElement />
-            <ProductElement />
-            <ProductElement />
-            <ProductElement />
-            <ProductElement />
-            <ProductElement />
-            <ProductElement />
+            
         </ProductListContainer>
 
     )
