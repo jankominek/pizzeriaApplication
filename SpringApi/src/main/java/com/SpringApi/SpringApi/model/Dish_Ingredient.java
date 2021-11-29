@@ -11,6 +11,7 @@ public class Dish_Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_d_i")
     private Integer id_d_i;
 
     @ManyToOne

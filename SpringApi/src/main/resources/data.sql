@@ -1,4 +1,4 @@
-insert into ingredient(id_ingredient, name) values (1, 'Pepperoni'),
+insert into ingredient(id_ingredient, ingredient_name) values (1, 'Pepperoni'),
                                        (2, 'Szynka'),
                                        (3, 'Wołowina'),
                                        (4, 'Wieprzowina'),
@@ -19,7 +19,7 @@ insert into ingredient(id_ingredient, name) values (1, 'Pepperoni'),
                                        (19, 'Ser corregio'),
                                        (20, 'Ser śródziemnomorski');
 
-insert into dish (id_dish, name) values (1, 'Pizza Kurczak'),
+insert into dish (id_dish, dish_name) values (1, 'Pizza Kurczak'),
                                         (2, 'Pizza Wiejska'),
                                         (3, 'Pizza Kebab'),
                                         (4, 'Pizza Serowa'),

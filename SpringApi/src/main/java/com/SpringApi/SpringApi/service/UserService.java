@@ -1,13 +1,11 @@
 package com.SpringApi.SpringApi.service;
 
 import com.SpringApi.SpringApi.dto.UserCredentialsDto;
-import com.SpringApi.SpringApi.dto.UserDto;
 import com.SpringApi.SpringApi.dto.UserInfoDto;
-import com.SpringApi.SpringApi.interfaces.UserRepository;
+import com.SpringApi.SpringApi.repository.UserRepository;
 import com.SpringApi.SpringApi.model.User;
 import com.SpringApi.SpringApi.utils.PersonType;
 import com.SpringApi.SpringApi.utils.UserVerification;
-import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

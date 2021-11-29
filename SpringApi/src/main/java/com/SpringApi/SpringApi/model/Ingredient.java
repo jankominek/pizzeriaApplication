@@ -15,8 +15,8 @@ public class Ingredient {
     @Column(name = "id_ingredient")
     private Integer id_ingredient;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "ingredient_name")
+    private String ingredient_name;
 
     @OneToMany(mappedBy = "ingredient")
     List<Dish_Ingredient> dish_ingredientList;
