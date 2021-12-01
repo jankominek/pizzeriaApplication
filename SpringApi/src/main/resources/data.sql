@@ -50,3 +50,4 @@ insert into city(id_city, city_name) values (1, 'Poznań'),
                                             (7, 'Warszawa'),
                                             (8, 'Ciechanów'),
                                             (9, 'Radom');
+insert into payment(id_payment, type) values (1, 'GOTOWKA'), (2, 'KARTA');

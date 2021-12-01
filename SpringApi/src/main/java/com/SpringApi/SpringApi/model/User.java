@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigInteger;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,5 +47,5 @@ public class User {
     private Boolean isVerified;
 
     @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Indent> orders;
+    private List<UserOrder> orders;
 }

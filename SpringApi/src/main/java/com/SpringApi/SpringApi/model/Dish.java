@@ -1,9 +1,13 @@
 package com.SpringApi.SpringApi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -19,7 +23,11 @@ public class Dish {
     @Column(name = "dish_name")
     private String dish_name;
 
-    @OneToMany(mappedBy = "dish")
-    List<Dish_Ingredient> dish_ingredientList;
+    @JsonManagedReference
+    @ManyToMany(cascade = CascadeType.MERGE)
+            @JoinTable(name = "dish_ingredient",
+            joinColumns = @JoinColumn(name = "id_dish"),
+                    inverseJoinColumns = @JoinColumn(name = "id_ingredient"))
+    List<Ingredient> ingredients;
 
 }

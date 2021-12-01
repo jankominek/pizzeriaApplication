@@ -1,9 +1,13 @@
 package com.SpringApi.SpringApi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Ingredient")
@@ -18,7 +22,9 @@ public class Ingredient {
     @Column(name = "ingredient_name")
     private String ingredient_name;
 
-    @OneToMany(mappedBy = "ingredient")
-    List<Dish_Ingredient> dish_ingredientList;
-
+//    @OneToMany(mappedBy = "ingredient")
+//    List<Dish_Ingredient> dish_ingredientList;
+    @JsonBackReference
+    @ManyToMany(mappedBy = "ingredients")
+    List<Dish> dishes;
 }

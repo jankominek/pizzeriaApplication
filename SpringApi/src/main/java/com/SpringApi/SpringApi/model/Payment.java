@@ -20,5 +20,5 @@ public class Payment {
     private PaymentEnum type;
 
     @OneToOne(mappedBy = "payment")
-    private Indent indent;
+    private UserOrder indent;
 }
