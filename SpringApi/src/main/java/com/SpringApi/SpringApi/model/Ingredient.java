@@ -27,4 +27,7 @@ public class Ingredient {
     @JsonBackReference
     @ManyToMany(mappedBy = "ingredients")
     List<Dish> dishes;
+
+    @OneToMany(mappedBy = "ingredient")
+    private List<Dish_modify> dishModifyList;
 }

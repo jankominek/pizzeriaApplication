@@ -23,11 +23,15 @@ public class Dish {
     @Column(name = "dish_name")
     private String dish_name;
 
+    @OneToMany(mappedBy = "idDish")
+    private List<Dish_order> dishOrderList;
+
     @JsonManagedReference
     @ManyToMany(cascade = CascadeType.MERGE)
             @JoinTable(name = "dish_ingredient",
             joinColumns = @JoinColumn(name = "id_dish"),
                     inverseJoinColumns = @JoinColumn(name = "id_ingredient"))
     List<Ingredient> ingredients;
+
 
 }

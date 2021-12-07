@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.math.BigInteger;
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Stream;
 
 @Data
@@ -22,21 +23,24 @@ public class UserOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id_order")
-    private BigInteger id_indent;
+    private BigInteger id_order;
 
-//    @Column(name = "date")
-//    private Date date;
-//
-//    @Column(name = "time")
-//    private Time time;
+    @Column(name = "date")
+    private Date date;
+
+    @Column(name = "time")
+    private Time time;
 
     @OneToOne()
     @JoinColumn(name = "id_payment", referencedColumnName = "id_payment")
     private Payment payment;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "userOrder", nullable = false)
     private User userId;
+
+//    @OneToMany(mappedBy = "idOrder")
+//    List<UserOrder> dish_orderList;
 
 
 }

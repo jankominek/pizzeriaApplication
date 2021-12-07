@@ -22,6 +22,12 @@ public class User {
     @Column(name ="user_id")
     private UUID userId;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "lastName")
+    private String lastName;
+
     @Column(name = "email", unique = true)
     private String email;
 
@@ -35,7 +41,7 @@ public class User {
     @OneToOne()
     @JoinColumn(name = "id_city", referencedColumnName = "id_city")
     private City city;
-//, columnDefinition = " default KLIENT"
+
     @Column(name = "typ")
     @Enumerated(EnumType.STRING)
     private PersonType type;
