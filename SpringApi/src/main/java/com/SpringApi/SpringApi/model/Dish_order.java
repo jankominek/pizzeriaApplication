@@ -29,6 +29,6 @@ public class Dish_order {
     @JoinColumn(name = "id_dish", nullable = false)
     private Dish idDish;
 
-    @OneToMany(mappedBy = "dishOrder")
+    @OneToMany(mappedBy = "dishOrder    ")
     private List<Dish_modify> dishModifyList;
 }

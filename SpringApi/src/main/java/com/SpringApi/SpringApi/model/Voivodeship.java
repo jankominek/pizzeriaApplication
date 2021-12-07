@@ -17,6 +17,6 @@ public class Voivodeship {
     @Column(name = "voivodeship_name")
     private String voivodeship_name;
 
-    @OneToOne(mappedBy = "voivodeship")
+    @OneToMany(mappedBy = "voivodeship")
     private User user;
 }
