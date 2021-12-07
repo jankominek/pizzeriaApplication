@@ -3,6 +3,7 @@ package com.SpringApi.SpringApi.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -18,5 +19,5 @@ public class Voivodeship {
     private String voivodeship_name;
 
     @OneToMany(mappedBy = "voivodeship")
-    private User user;
+    private List<User> userList;
 }

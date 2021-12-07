@@ -7,6 +7,7 @@ import { Register } from './components/Register/Register';
 import './AppStyles.css'
 
 import {Routes, Route} from 'react-router-dom';
+import { RegisterPage } from './view/RegisterPage/RegisterPage';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         ))} */}
         <Route path="/" element={<UserPage />} exact/>
         <Route path="/login" element={<Login />}/>
+        <Route path="/register" element={<RegisterPage />}/>
         <Route path="/pizzeria" element={<UserPage />} />
       </Routes>
     </div>

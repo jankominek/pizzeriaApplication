@@ -22,8 +22,6 @@ public class Ingredient {
     @Column(name = "ingredient_name")
     private String ingredient_name;
 
-//    @OneToMany(mappedBy = "ingredient")
-//    List<Dish_Ingredient> dish_ingredientList;
     @JsonBackReference
     @ManyToMany(mappedBy = "ingredients")
     List<Dish> dishes;

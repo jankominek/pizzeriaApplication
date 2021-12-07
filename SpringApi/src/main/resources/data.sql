@@ -36,7 +36,7 @@ insert into dish (id_dish, dish_name) values (1, 'Pizza Kurczak'),
                                         (15, 'Pizza Mięsna'),
                                         (16, 'Pizza Capricciosa');
 
-insert into dish_ingredient(id_d_i, id_dish, id_ingredient) values (1, 1, 1);
+insert into dish_ingredient(id_dish, id_ingredient) values (1, 1);
 
 insert into voivodeship(id_voivodeship, voivodeship_name) values (1, 'Wielkopolskie'),
                                                                  (2, 'Mazowieckie');

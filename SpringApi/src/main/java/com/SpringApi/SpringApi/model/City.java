@@ -3,6 +3,7 @@ package com.SpringApi.SpringApi.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "city")
@@ -17,6 +18,6 @@ public class City {
     @Column(name = "city_name")
     private String city_name;
 
-    @OneToOne(mappedBy = "city")
-    private User user;
+    @OneToMany(mappedBy = "city")
+    private List<User> userList;
 }

@@ -34,12 +34,12 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToOne()
-    @JoinColumn(name = "id_voivodeship", referencedColumnName = "id_voivodeship")
+    @ManyToOne
+    @JoinColumn(name = "id_voivodeship")
     private Voivodeship voivodeship;
 
-    @OneToOne()
-    @JoinColumn(name = "id_city", referencedColumnName = "id_city")
+    @ManyToOne()
+    @JoinColumn(name = "id_city")
     private City city;
 
     @Column(name = "typ")
