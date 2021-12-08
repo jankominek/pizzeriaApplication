@@ -22,8 +22,8 @@ public class User {
     @Column(name ="user_id")
     private UUID userId;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "firstname")
+    private String firstname;
 
     @Column(name = "lastName")
     private String lastName;

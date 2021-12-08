@@ -3,7 +3,6 @@ import React, { useState} from 'react';
 import {UserPage} from './view/userPage/UserPage';
 import routes from './utils/routes';
 import { Login } from './components/Login/Login';
-import { Register } from './components/Register/Register';
 import './AppStyles.css'
 
 import {Routes, Route} from 'react-router-dom';

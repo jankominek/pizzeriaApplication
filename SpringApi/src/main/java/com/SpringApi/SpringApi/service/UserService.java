@@ -75,6 +75,8 @@ public class UserService {
     public User credentialsDtoToUser(UserCredentialsDto user){
         UUID uuid = UUID.randomUUID();
         return User.builder().userId(uuid)
+                .firstname(user.getFirstname())
+                .lastName(user.getLastname())
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .type(PersonType.KLIENT)

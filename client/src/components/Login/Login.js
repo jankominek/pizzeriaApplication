@@ -1,11 +1,8 @@
-import react, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {SigningContainer, LoginContainer, Label, Button, ButtonRegister} from './Login.styled';
 import {Input} from './Login.styled';
-import { Flex } from "../../components/generalStyledComponents/generalStyledComponents";
 import axios from 'axios';
-import { Link, NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router';
-import { SuccessComponent } from '../../utils/successfullComponent/SuccessComponent';
 import {ErrorComponent} from '../../utils/errorComponent/ErrorComponent';
 
 export const Login = () => {
