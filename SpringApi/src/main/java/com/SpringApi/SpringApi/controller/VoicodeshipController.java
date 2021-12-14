@@ -19,8 +19,8 @@ public class VoicodeshipController {
     @Autowired
     VoivodeshipService voivodeshipService;
 
-    @GetMapping("/all")
-    public List<Voivodeship> findAllVoivodeships(){
-        return voivodeshipService.findAllVoivodeships();
-    }
+//    @GetMapping("/all")
+//    public List<Voivodeship> findAllVoivodeships(){
+//        return voivodeshipService.findAllVoivodeships();
+//    }
 }

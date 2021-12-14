@@ -2,14 +2,19 @@ package com.SpringApi.SpringApi.service;
 
 import com.SpringApi.SpringApi.dto.UserCredentialsDto;
 import com.SpringApi.SpringApi.dto.UserInfoDto;
+import com.SpringApi.SpringApi.model.City;
+import com.SpringApi.SpringApi.model.Voivodeship;
+import com.SpringApi.SpringApi.repository.CityRepository;
 import com.SpringApi.SpringApi.repository.UserRepository;
 import com.SpringApi.SpringApi.model.User;
+import com.SpringApi.SpringApi.repository.VoivodeshipRepository;
 import com.SpringApi.SpringApi.utils.PersonType;
 import com.SpringApi.SpringApi.utils.UserVerification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -17,6 +22,11 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    VoivodeshipRepository voivodeshipRepository;
+    @Autowired
+    CityRepository cityRepository;
+
     @Autowired
     EmailSenderService emailSenderService;
 
@@ -74,11 +84,15 @@ public class UserService {
 
     public User credentialsDtoToUser(UserCredentialsDto user){
         UUID uuid = UUID.randomUUID();
+        Optional<Voivodeship> voivodeship = voivodeshipRepository.findById(user.getVoivodeship_id());
+        Optional<City> city = cityRepository.findById(user.getCity_id());
         return User.builder().userId(uuid)
                 .firstname(user.getFirstname())
                 .lastName(user.getLastname())
                 .email(user.getEmail())
                 .password(user.getPassword())
+                .city(city.get())
+                .voivodeship(voivodeship.get())
                 .type(PersonType.KLIENT)
                 .v_code(uuid.toString())
                 .isVerified(false).build();

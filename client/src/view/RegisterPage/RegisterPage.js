@@ -8,8 +8,8 @@ export const RegisterPage = () => {
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [voivodeship, setVoivodeship] = useState("");
-    const [city, setCity] = useState("");
+    const [voivodeshipValue, setVoivodeshipValue] = useState(0);
+    const [cityValue, setCityValue] = useState(0);
 
     const [voivodeshipList, setVoivodeshipList] = useState();
     const [cityList, setCityList] = useState();
@@ -22,27 +22,26 @@ export const RegisterPage = () => {
         lastname: "",
         email: "",
         password: "",
-        voivodeship: "",
-        city: ""
+        voivodeship_id: 1,
+        city_id: 1
     });
 
 
     useEffect( () => {
         axios.get("http://localhost:8079/city/all").then( (response) => {
-            console.log(response.data)
+            console.log("cities : ", response.data)
             const options = prepareSelectListCity(response.data);
+            console.log("options: ", options)
             setCityOptions(options);
-        }).catch( err => {
-            console.log(err)
-        })
+        });
 
-        axios.get("http://localhost:8079/voivodeship/all").then( (response) => {
-            console.log(response.data)
-            const options = prepareSelectListVoiv(response.data, "voivodeship_name");
-            setVoivOptions(options);
-        }).catch( err => {
-            console.log(err)
-        })
+        // axios.get("http://localhost:8079/voivodeship/all").then( (response) => {
+        //     console.log(response.data)
+        //     const options = prepareSelectListVoiv(response.data);
+        //     setVoivOptions(options);
+        // }).catch( err => {
+        //     console.log(err)
+        // })
 
 
     }, [])
@@ -56,6 +55,11 @@ export const RegisterPage = () => {
 
     const sendCredentials = () => {
         console.log("clicked")
+        setCredentials({
+            ...credentials,
+            voivodeship_id: voivodeshipValue,
+            city_id : cityValue
+        })
         console.log(credentials)
         axios.post("http://localhost:8079/pizza/register", credentials);
     }
@@ -67,10 +71,11 @@ export const RegisterPage = () => {
                 value: ""
             };
             obj.label = element.city_name;
-            obj.value = element.city_id;
+            obj.value = element.id_city;
 
             return obj;
         })
+        console.log(options)
         return options;
     }
 
@@ -89,10 +94,10 @@ export const RegisterPage = () => {
     }
 
     const onChangeSelectListVoiv = (value) => {
-        setVoivodeship(value.target.value);
+        setVoivodeshipValue(value.target.value);
     }
     const onChangeSelectListCity = (value) => {
-        setCity(value.target.value);
+        setCityValue(value.target.value);
     }
 
     return(
@@ -106,13 +111,13 @@ export const RegisterPage = () => {
                     <SelectLabel>Województwo</SelectLabel>
                     <SelectList onChange={onChangeSelectListVoiv}>
                         {voivOptions && voivOptions.map((e)=> (
-                            <option value={e.value} selected={voivodeship == e.value}>{e.label}</option>
+                            <option value={e.value}>{e.label}</option>
                         ))}
                     </SelectList>
                     <SelectLabel>Miasto</SelectLabel>
                     <SelectList onChange={onChangeSelectListCity}>
                     {cityOptions && cityOptions.map((e)=> (
-                            <option value={e.value} selected={city == e.value}>{e.label}</option>
+                            <option value={e.value}>{e.label}</option>
                         ))}
                     </SelectList>
 
