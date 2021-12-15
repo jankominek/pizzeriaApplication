@@ -12,9 +12,6 @@ import java.util.Optional;
 @Repository
 public interface VoivodeshipRepository extends CrudRepository<Voivodeship, Integer> {
 
-//    @Override
-//    Iterable<Voivodeship> findAll();
-
     @Override
     Optional<Voivodeship> findById(Integer id);
 }

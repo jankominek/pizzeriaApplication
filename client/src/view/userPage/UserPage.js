@@ -6,20 +6,28 @@ import axios from 'axios';
 import { useDispatch, useSelector} from "react-redux";
 import { setUserInfoAction } from "../../utils/store/actions/userStateAction";
 import { ProductElementList } from "../../components/productElementList/ProductElementList";
+import { ProductElement } from "../../components/ProductElement/ProductElement";
 
 export const UserPage = (props) => {
     
     const [isUserAuth, setIsUserAuth] = useState();
-    const [products, setProducts] = useState([]);
+    const [pizzas, setPizzas] = useState([]);
 
     const dispatch = useDispatch();
 
     useEffect(()=> {
         getUserInfo();
+        getAllDishesWithIngredient();
     }, [])
     const state = useSelector( state => state)
     console.log("state : ", state)
-    
+
+    const getAllDishesWithIngredient = () => {
+        axios.get(`http://localhost:8079/dish/withIngredients/all`)
+            .then( response => {
+                setPizzas(response.data);
+            })
+    }
     const getUserInfo = () => {
         const email = 'pkominek@gmail.com'
         axios.get(`http://localhost:8079/pizza/getUserInfo/${email}`)
@@ -40,15 +48,7 @@ export const UserPage = (props) => {
                 <ProductTypeContainer>
                     {productTypes}
                 </ProductTypeContainer>
-
-                <ProductElementList products={products}/>
-                {/* <Menu />
-                <MainField>
-                    <Flex>{productTypes ? productTypes : null}</Flex>
-                    <MenuListField>
-                        <ProductElement />
-                    </MenuListField>
-                </MainField> */}
+                <ProductElementList products={pizzas}/>
             </UserPageContainer>
     )
 }

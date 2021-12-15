@@ -1,8 +1,8 @@
 package com.SpringApi.SpringApi.controller;
 
-import com.SpringApi.SpringApi.model.Voivodeship;
-import com.SpringApi.SpringApi.repository.VoivodeshipRepository;
-import com.SpringApi.SpringApi.service.VoivodeshipService;
+import com.SpringApi.SpringApi.dto.IngredientDto;
+import com.SpringApi.SpringApi.model.Ingredient;
+import com.SpringApi.SpringApi.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequestMapping("/ingredient")
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/voivodeship")
-public class VoicodeshipController {
+public class IngredientController {
 
     @Autowired
-    VoivodeshipService voivodeshipService;
+    IngredientService ingredientService;
 
     @GetMapping("/all")
-    public List<Voivodeship> findAllVoivodeships(){
-        return voivodeshipService.findAllVoivodeships();
+    public List<IngredientDto> getAllIngredients(){
+        return ingredientService.getAllIngredients();
     }
 }

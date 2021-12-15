@@ -35,15 +35,14 @@ export const RegisterPage = () => {
             setCityOptions(options);
         });
 
-        // axios.get("http://localhost:8079/voivodeship/all").then( (response) => {
-        //     console.log(response.data)
-        //     const options = prepareSelectListVoiv(response.data);
-        //     setVoivOptions(options);
-        // }).catch( err => {
-        //     console.log(err)
-        // })
-
-
+        axios.get("http://localhost:8079/voivodeship/all").then( (response) => {
+            console.log(response.data)
+            const options = prepareSelectListVoiv(response.data);
+            setVoivOptions(options);
+        }).catch( err => {
+            console.log(err)
+        })
+        
     }, [])
 
     const onChange = (e) => {

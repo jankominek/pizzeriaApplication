@@ -1,5 +1,6 @@
 package com.SpringApi.SpringApi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Voivodeship {
     @Column(name = "voivodeship_name")
     private String voivodeship_name;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "voivodeship")
     private List<User> userList;
 }

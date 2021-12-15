@@ -1,13 +1,22 @@
 
-import { Picture, ProductElementContainer, SpanIngeredient, SpanProduct } from './ProductElement.styled'
+import { BuyButton, IngredientFieldList, Picture, ProductElementContainer, SpanIngeredient, SpanProduct } from './ProductElement.styled'
+export const ProductElement = (props) => {
 
-export const ProductElement = () => {
+    const {name, ingredients} = props;
+
+    const ingredientList = ingredients.map( ing => (
+        <SpanIngeredient>{ing}</SpanIngeredient>
+    ))
+
     return(
         <>
             <ProductElementContainer>
-                <Picture/>
-                <SpanProduct>asd</SpanProduct>
-                <SpanIngeredient>asdaaaaaaaaaaaaaaaaaaaa asdasd</SpanIngeredient>
+                <Picture src={require(`../../assets/${name}.jpg`).default}/>
+                <SpanProduct>{name}</SpanProduct>
+                <IngredientFieldList>
+                    {ingredientList}
+                </IngredientFieldList>
+                <BuyButton>Kup teraz..</BuyButton>
             </ProductElementContainer>
         </>
     )

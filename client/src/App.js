@@ -7,6 +7,7 @@ import './AppStyles.css'
 
 import {Routes, Route} from 'react-router-dom';
 import { RegisterPage } from './view/RegisterPage/RegisterPage';
+import { DishPage } from './view/DishPage/DishPage';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/login" element={<Login />}/>
         <Route path="/register" element={<RegisterPage />}/>
         <Route path="/pizzeria" element={<UserPage />} />
+        <Route path="/pizzeria/dish/:id" element={<DishPage />} />
       </Routes>
     </div>
   );

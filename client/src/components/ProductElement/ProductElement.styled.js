@@ -16,10 +16,8 @@ export const ProductElementContainer = styled.div`
     margin: 1.2rem;
 `
 
-export const Picture = styled.div`
+export const Picture = styled.img`
     width: 90%;
-    height: 2rem;
-    border: 1px solid red;
     margin-bottom: 1rem;
 `
 export const SpanProduct = styled.span`
@@ -28,4 +26,21 @@ export const SpanProduct = styled.span`
 
 export const SpanIngeredient = styled.span`
     font-size: 1rem;
+`
+export const IngredientFieldList = styled.div`
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+`
+
+export const BuyButton = styled.div`
+    width: 40%;
+    height: 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `

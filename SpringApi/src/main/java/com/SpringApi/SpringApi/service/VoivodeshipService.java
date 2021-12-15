@@ -13,7 +13,7 @@ public class VoivodeshipService {
     @Autowired
     VoivodeshipRepository voivodeshipRepository;
 
-//    public List<Voivodeship> findAllVoivodeships() {
-//        return (List<Voivodeship>) voivodeshipRepository.findAll();
-//    }
+    public List<Voivodeship> findAllVoivodeships() {
+        return (List<Voivodeship>) voivodeshipRepository.findAll();
+    }
 }
