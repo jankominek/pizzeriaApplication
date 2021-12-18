@@ -10,6 +10,7 @@ import java.util.List;
 @Builder
 public class Dish_ingredientDTO {
 
+    private Integer dish_id;
     private String dishName;
     private List<String> ingredients;
 

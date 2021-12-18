@@ -3,12 +3,14 @@ package com.SpringApi.SpringApi.model;
 
 import com.SpringApi.SpringApi.utils.PaymentEnum;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
@@ -17,6 +19,7 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name="user_order")
 public class UserOrder {
 
@@ -26,21 +29,23 @@ public class UserOrder {
     private BigInteger id_order;
 
     @Column(name = "date")
-    private Date date;
-
-    @Column(name = "time")
-    private Time time;
+    private Timestamp date;
+//
+//    @Column(name = "time")
+//    private Time time;
 
     @OneToOne()
     @JoinColumn(name = "id_payment", referencedColumnName = "id_payment")
     private Payment payment;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "userOrder", nullable = false)
+    @Column(name = "status")
+    private Boolean status;
+
+    @Column(name = "price")
+    private Float price;
+
+    @ManyToOne()
+    @JoinColumn(name = "userId", nullable = false)
     private User userId;
-
-//    @OneToMany(mappedBy = "idOrder")
-//    List<UserOrder> dish_orderList;
-
 
 }

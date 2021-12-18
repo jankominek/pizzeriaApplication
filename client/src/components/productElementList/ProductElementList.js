@@ -9,8 +9,8 @@ export const ProductElementList = (props) => {
     const {products} = props;
     console.log(products)
 
-    const product_list = products.map((product)=> (
-        <ProductElement name={product.dishName} ingredients={product.ingredients}/>
+    const product_list = products &&products.map((product)=> (
+        <ProductElement name={product.dishName} ingredients={product.ingredients} id={product.dish_id}/>
     ));
 
     return(

@@ -21,4 +21,6 @@ public interface UserRepository extends CrudRepository<User, UUID> {
     @Query(value = "UPDATE User u SET u.isVerified = 1 WHERE u.email = :email")
     void verifyAccount(@Param(value = "email") String email);
 
+    User findByFirstname(String user);
+
 }

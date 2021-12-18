@@ -30,13 +30,24 @@ export const PizzaNameField = styled.span`
     border-bottom: 1px solid black;
     justify-content: space-between;
 `
+export const IngredientButton = styled.div`
+    cursor: pointer;
+    width: 13rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    margin-top: 1rem;
+`
 
 export const Span = styled.span`
     font-size: 2rem;
 `
 
 export const IngredientsField = styled.div`
-
+    padding: 1rem 0rem;
+    border-bottom: 1px solid black;
 `
 
 export const Button = styled.div`

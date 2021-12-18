@@ -6,8 +6,10 @@ import { BrowserRouter } from 'react-router-dom';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {userInfo} from './utils/store/reducers/userStateReducer';
+import { shoppingCartReducer } from './utils/store/reducers/shoppingCartReducer';
+import { allReducers } from './utils/store/allReducers';
 
-const store = createStore(userInfo, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(allReducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
   <React.StrictMode>

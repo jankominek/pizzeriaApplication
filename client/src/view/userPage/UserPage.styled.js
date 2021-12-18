@@ -39,3 +39,18 @@ export const ProductTypeContainer = styled.div`
 // export const Flex = styled.div`
 //     display: flex;
 // `
+
+export const ShoppingCartIconContainer = styled.div`
+    width: 3rem;
+    height: 3rem;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    translate: transform(-50%, -50%);
+    background: gray;
+    display: flex;
+    justify-content: center;
+    border-radius: 25px;
+    align-items: center;
+    color: white;
+`

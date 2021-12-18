@@ -34,7 +34,11 @@ public class DishService {
     public List<Dish_ingredientDTO> buildDishesToDto(List<Dish> dishes) {
         List<Dish_ingredientDTO> dish_ingredientDTOS = dishes.stream().map(dish -> {
            List<String> ingredients = dish.getIngredients().stream().map( ingredient -> ingredient.getIngredient_name()).toList();
-            Dish_ingredientDTO dto = Dish_ingredientDTO.builder().dishName(dish.getDish_name()).ingredients(ingredients).build();
+            Dish_ingredientDTO dto = Dish_ingredientDTO.builder()
+                    .dishName(dish.getDish_name())
+                    .ingredients(ingredients)
+                    .dish_id(dish.getId_dish())
+                    .build();
             return dto;
         }).toList();
         return dish_ingredientDTOS;

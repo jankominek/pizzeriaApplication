@@ -8,6 +8,7 @@ import './AppStyles.css'
 import {Routes, Route} from 'react-router-dom';
 import { RegisterPage } from './view/RegisterPage/RegisterPage';
 import { DishPage } from './view/DishPage/DishPage';
+import { ShoppingCart } from './view/ShoppingCart/ShoppingCart';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />}/>
         <Route path="/pizzeria" element={<UserPage />} />
         <Route path="/pizzeria/dish/:id" element={<DishPage />} />
+        <Route path="/pizzeria/shopping_cart" element={<ShoppingCart />} />
       </Routes>
     </div>
   );

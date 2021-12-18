@@ -52,6 +52,6 @@ public class User {
     @Column(name = "isVerified")
     private Boolean isVerified;
 
-    @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userId")
     private List<UserOrder> orders;
 }

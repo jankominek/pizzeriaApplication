@@ -1,7 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { IngredientsField } from "../../view/DishPage/DishPage.styles";
-import { CheckBox, IngredientName, ModalWrapper } from "./Modal.styles"
+import { AddButton, CheckBox, IngredientField, IngredientName, ModalContainer, ModalWrapper } from "./Modal.styles"
 
 
 export const Modal = (props) => {
@@ -9,7 +8,7 @@ export const Modal = (props) => {
     const [allIngredients, setAllIngredients] = useState();
     const [selectedIngredients, setSelectedIngredients] = useState([]);
 
-    const {dishIngredients} = props;
+    const {dishIngredients, isModalShowing, checkedData} = props;
 
     useEffect(()=>{
         getAllIngredients();
@@ -24,21 +23,34 @@ export const Modal = (props) => {
     }
     
     const onCkeckboxSelect = (e) => {
-        console.log(e)
-        setSelectedIngredients([...selectedIngredients, e.target.name]);
-        console.log("selectedIngredients : ",selectedIngredients)
+        if(e.target.checked){
+            setSelectedIngredients([...selectedIngredients, e.target.name]);
+        }
+        if(!e.target.checked){
+            const newSelectedIngredients = selectedIngredients.filter( element => element != e.target.name)
+            setSelectedIngredients(newSelectedIngredients);
+        }
+    }
+    
+    const SubmitIngredients = () => {
+        checkedData(selectedIngredients);
+        isModalShowing(false);
+        
     }
 
     const ingredientsList = allIngredients && allIngredients.map( element => (
-        <IngredientsField>
-                <CheckBox name={element.ingredient_id} onChange={onCkeckboxSelect}/>
+        <IngredientField>
+                <CheckBox name={element.ingredient_name} onChange={onCkeckboxSelect}/>
                 <IngredientName>{element.ingredient_name}</IngredientName>
-        </IngredientsField>
+        </IngredientField>
     ));
 
     return(
-        <ModalWrapper>
-            {ingredientsList}
-        </ModalWrapper>
+        <ModalContainer>
+            <ModalWrapper>
+                {ingredientsList}
+                <AddButton onClick={SubmitIngredients}>Dodaj składniki..</AddButton>
+            </ModalWrapper>
+        </ModalContainer>
     )
 }
