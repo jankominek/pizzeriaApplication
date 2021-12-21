@@ -1,5 +1,6 @@
 package com.SpringApi.SpringApi.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import java.util.List;
 
 
 @Entity
+@Builder
 @Table(name = "dish_order")
 @Data
 public class Dish_order {

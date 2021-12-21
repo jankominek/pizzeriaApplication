@@ -26,7 +26,7 @@ public class UserOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id_order")
-    private BigInteger id_order;
+    private Integer id_order;
 
     @Column(name = "date")
     private Timestamp date;

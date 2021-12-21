@@ -21,7 +21,7 @@ public class Dish {
     private Integer id_dish;
 
     @Column(name = "dish_name")
-    private String dish_name;
+    private String dishName;
 
     @OneToMany(mappedBy = "idDish")
     private List<Dish_order> dishOrderList;

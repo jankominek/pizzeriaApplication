@@ -2,7 +2,6 @@ package com.SpringApi.SpringApi.service;
 
 import com.SpringApi.SpringApi.dto.Dish_ingredientDTO;
 import com.SpringApi.SpringApi.model.Dish;
-import com.SpringApi.SpringApi.model.Ingredient;
 import com.SpringApi.SpringApi.repository.DishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class DishService {
@@ -19,7 +17,7 @@ public class DishService {
     DishRepository dishRepository;
 
     public List<Dish_ingredientDTO> findAllDishesId() {
-        List<Dish> dishes = dishRepository.findAll();
+        List<Dish> dishes = (List<Dish>) dishRepository.findAll();
         List<Dish_ingredientDTO> dish_ingredientDTOS = buildDishesToDto(dishes);
         return dish_ingredientDTOS;
     }
@@ -31,11 +29,15 @@ public class DishService {
         return dishDto;
     }
 
+    public Dish getDishByName(String dish_name){
+        return dishRepository.findByDishName(dish_name);
+    }
+
     public List<Dish_ingredientDTO> buildDishesToDto(List<Dish> dishes) {
         List<Dish_ingredientDTO> dish_ingredientDTOS = dishes.stream().map(dish -> {
            List<String> ingredients = dish.getIngredients().stream().map( ingredient -> ingredient.getIngredient_name()).toList();
             Dish_ingredientDTO dto = Dish_ingredientDTO.builder()
-                    .dishName(dish.getDish_name())
+                    .dishName(dish.getDishName())
                     .ingredients(ingredients)
                     .dish_id(dish.getId_dish())
                     .build();

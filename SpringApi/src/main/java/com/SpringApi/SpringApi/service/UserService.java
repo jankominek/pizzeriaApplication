@@ -53,6 +53,7 @@ public class UserService {
 
     public void registerUser(UserCredentialsDto user){
         User userEntity = credentialsDtoToUser(user);
+        System.out.println(userEntity.getVoivodeship().getVoivodeship_name());
         emailSenderService.sendEmail("pizzeriapp21@gmail.com", userEntity.getV_code());
         userRepository.save(userEntity);
     }
