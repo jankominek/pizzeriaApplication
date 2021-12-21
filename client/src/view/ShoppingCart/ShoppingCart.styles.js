@@ -18,6 +18,7 @@ export const SCName = styled.span`
 export const OrderField = styled.div`
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     margin-bottom: 2rem;
 `
@@ -34,6 +35,7 @@ export const SubmitButton = styled.div`
 
 export const Cart = styled.div`
     width: 15rem;
+    margin: 0rem 1rem;
     height: 18rem;
     border: 1px solid gray;
     border-radius: 5px;
@@ -50,6 +52,7 @@ export const CartName = styled.span`
 `
 export const CartIngredientField = styled.div`
     display: flex;
+    align-items: center;
     flex-direction: column;
     padding: 1rem;
 

@@ -3,6 +3,7 @@ import { ProductField } from "../../components/ProductField/ProductField";
 import { type_of_products } from "../../utils/type_of_products";
 import {UserPageContainer, CompanyName, UserName, ProductTypeContainer, ShoppingCartIconContainer, ShoppingCartContainer} from './UserPage.styled';
 import axios from 'axios';
+import {useNavigate} from 'react-router';
 import { useDispatch, useSelector} from "react-redux";
 import { setUserInfoAction } from "../../utils/store/actions/userStateAction";
 import { ProductElementList } from "../../components/productElementList/ProductElementList";
@@ -13,6 +14,8 @@ export const UserPage = (props) => {
     const [pizzas, setPizzas] = useState([]);
 
 
+    const navigate = useNavigate();
+
     const dispatch = useDispatch();
 
     useEffect(()=> {
@@ -20,7 +23,9 @@ export const UserPage = (props) => {
         getAllDishesWithIngredient();
     }, [])
 
-
+    const redirectToShoppingCart = () => {
+        navigate("/pizzeria/shopping_cart")
+    }
 
     const getAllDishesWithIngredient = () => {
         axios.get(`http://localhost:8079/dish/withIngredients/all`)
@@ -53,7 +58,7 @@ export const UserPage = (props) => {
                 </ProductTypeContainer>
                 <ProductElementList products={pizzas} setDataToShoppingCart={setDataToShoppingCart}/>
             </UserPageContainer>
-            <ShoppingCartIconContainer>S</ShoppingCartIconContainer>
+            <ShoppingCartIconContainer onClick={redirectToShoppingCart}>S</ShoppingCartIconContainer>
             </>
     )
 }

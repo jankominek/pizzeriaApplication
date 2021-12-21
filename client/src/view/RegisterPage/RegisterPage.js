@@ -60,6 +60,8 @@ export const RegisterPage = () => {
             city_id : cityValue
         })
         console.log(credentials)
+        setCityValue(null);
+        setVoivodeshipValue(null);
         axios.post("http://localhost:8079/pizza/register", credentials);
     }
 
@@ -74,7 +76,7 @@ export const RegisterPage = () => {
 
             return obj;
         })
-        console.log(options)
+        console.log("options city : ", options)
         return options;
     }
 
@@ -85,10 +87,11 @@ export const RegisterPage = () => {
                 value: ""
             };
             obj.label = element.voivodeship_name;
-            obj.value = element.voivodeship_id;
+            obj.value = element.id_voivodeship;
 
             return obj;
         })
+        console.log("options voiv : ", options)
         return options;
     }
 

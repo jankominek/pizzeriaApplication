@@ -43,6 +43,7 @@ export const ProductTypeContainer = styled.div`
 export const ShoppingCartIconContainer = styled.div`
     width: 3rem;
     height: 3rem;
+    cursor: pointer;
     position: fixed;
     top: 1rem;
     right: 1rem;
