@@ -9,6 +9,5 @@ import java.util.List;
 public class Dish_orderPostModel {
         private String dish_name;
         private List<String> ingredients;
-
-
+        private Boolean isMod;
 }

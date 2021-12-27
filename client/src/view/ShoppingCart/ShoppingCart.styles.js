@@ -65,3 +65,25 @@ export const CartIngredientSpan = styled.span`
 export const Price = styled.span`
     font-size: 1.2rem;
 `
+
+export const DeleteIcon = styled.div`
+    padding: .3rem 1rem;
+    margin-top: 0.2rem;
+    margin-right: .2rem;
+    border-radius: 10px;
+    text-align: center;
+    background: red;
+    color: white;
+    align-self: flex-end;
+`
+export const checkBoxWrapper = styled.div`
+    background: green;
+    align-self: flex-end;
+`
+export const CheckBox = styled.input.attrs({
+    type: 'checkbox'
+})`
+    width: 1rem;
+    height: 1rem;
+    margin-left: .5rem;
+`

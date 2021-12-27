@@ -29,17 +29,14 @@ public class DishService {
         return dishDto;
     }
 
-    public Dish getDishByName(String dish_name){
-        return dishRepository.findByDishName(dish_name);
-    }
 
     public List<Dish_ingredientDTO> buildDishesToDto(List<Dish> dishes) {
         List<Dish_ingredientDTO> dish_ingredientDTOS = dishes.stream().map(dish -> {
-           List<String> ingredients = dish.getIngredients().stream().map( ingredient -> ingredient.getIngredient_name()).toList();
+           List<String> ingredients = dish.getIngredients().stream().map( ingredient -> ingredient.getIngredientName()).toList();
             Dish_ingredientDTO dto = Dish_ingredientDTO.builder()
                     .dishName(dish.getDishName())
                     .ingredients(ingredients)
-                    .dish_id(dish.getId_dish())
+                    .dish_id(dish.getDishId())
                     .build();
             return dto;
         }).toList();

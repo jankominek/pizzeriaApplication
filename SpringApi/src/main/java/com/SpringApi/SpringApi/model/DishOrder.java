@@ -2,20 +2,22 @@ package com.SpringApi.SpringApi.model;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 
-@Entity
+
 @Builder
-@Table(name = "dish_order")
+@Table(name = "dishOrder")
 @Data
-public class Dish_order {
+@Entity
+public class DishOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id_dish_order;
+    private Integer dishOrderId;
 
     @Column(name = "isMod")
     private Boolean isMod;
@@ -23,14 +25,18 @@ public class Dish_order {
     @Column(name = "count")
     private Integer count;
 
+    @Column(name = "dish_price")
+    private Float dishPrice;
+
     @ManyToOne
-    @JoinColumn(name = "idOrder", nullable = false)
+    @JoinColumn(name = "orderId", nullable = false)
     private UserOrder userOrder;
 
     @ManyToOne
-    @JoinColumn(name = "id_dish", nullable = false)
-    private Dish idDish;
+    @JoinColumn(name = "dishId", nullable = false)
+    private Dish dishId;
 
     @OneToMany(mappedBy = "dishOrder")
-    private List<Dish_modify> dishModifyList;
+    private List<DishModify> dishModifyList;
+
 }

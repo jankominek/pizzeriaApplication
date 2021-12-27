@@ -45,10 +45,14 @@ export const DishPage = () => {
     const onClickOrder = () => {
         
         const allIngredients = [...dish.ingredients, ...additionIngredients]
+
         const dishObject = {
             dish_name : dish.dishName,
-            ingredients : allIngredients
+            ingredients : allIngredients,
+            isMod : additionIngredients.length ? true : false
+
         };
+        console.log("dish object : ", dishObject)
         dispatch(setShoppingCart(dishObject));
         navigate('/')
     }

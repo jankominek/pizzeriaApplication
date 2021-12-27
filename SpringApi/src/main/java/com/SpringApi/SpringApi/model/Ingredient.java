@@ -16,16 +16,16 @@ public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_ingredient")
-    private Integer id_ingredient;
+    @Column(name = "ingredientId")
+    private Integer ingredientId;
 
-    @Column(name = "ingredient_name")
-    private String ingredient_name;
+    @Column(name = "ingredientName")
+    private String ingredientName;
 
     @JsonBackReference
     @ManyToMany(mappedBy = "ingredients")
     List<Dish> dishes;
 
     @OneToMany(mappedBy = "ingredient")
-    private List<Dish_modify> dishModifyList;
+    private List<DishModify> dishModifyList;
 }

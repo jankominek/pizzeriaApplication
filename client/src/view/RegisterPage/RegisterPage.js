@@ -17,14 +17,15 @@ export const RegisterPage = () => {
     const [voivOptions, setVoivOptions] = useState();
     const [cityOptions, setCityOptions ]= useState();
 
-    const [credentials, setCredentials] = useState({
-        firstname: "",
-        lastname: "",
-        email: "",
-        password: "",
-        voivodeship_id: 1,
-        city_id: 1
-    });
+    const [credentials, setCredentials] = useState();
+    // {
+    //     firstname: "",
+    //     lastname: "",
+    //     email: "",
+    //     password: "",
+    //     voivodeship_id: 1,
+    //     city_id: 1
+    // }
 
 
     useEffect( () => {
@@ -71,8 +72,8 @@ export const RegisterPage = () => {
                 label: "",
                 value: ""
             };
-            obj.label = element.city_name;
-            obj.value = element.id_city;
+            obj.label = element.cityName;
+            obj.value = element.cityId;
 
             return obj;
         })
@@ -86,8 +87,8 @@ export const RegisterPage = () => {
                 label: "",
                 value: ""
             };
-            obj.label = element.voivodeship_name;
-            obj.value = element.id_voivodeship;
+            obj.label = element.voivodeshipName;
+            obj.value = element.voivodeshipId;
 
             return obj;
         })

@@ -13,11 +13,11 @@ public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_city")
-    private Integer id_city;
+    @Column(name = "cityId")
+    private Integer cityId;
 
-    @Column(name = "city_name")
-    private String city_name;
+    @Column(name = "cityName")
+    private String cityName;
 
     @JsonBackReference
     @OneToMany(mappedBy = "city")

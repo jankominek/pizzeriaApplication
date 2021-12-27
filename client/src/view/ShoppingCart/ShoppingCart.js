@@ -1,8 +1,9 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-import { setShoppingCart } from "../../utils/store/actions/shoppingCartAction"
-import { Cart, CartIngredientField, CartIngredientSpan, CartName, OrderField, Price, SCName, ShoppingCartContainer, SubmitButton } from "./ShoppingCart.styles"
+import {useNavigate} from 'react-router';
+import { useDispatch, useSelector } from "react-redux"
+import { deleteFromShoppingCart, setShoppingCart } from "../../utils/store/actions/shoppingCartAction"
+import { Cart, CartIngredientField, CartIngredientSpan, CartName, CheckBox, checkBoxWrapper, DeleteIcon, OrderField, Price, SCName, ShoppingCartContainer, SubmitButton } from "./ShoppingCart.styles"
 
 
 export const ShoppingCart = () => {
@@ -11,25 +12,57 @@ export const ShoppingCart = () => {
 
     const [shoppingState, setShoppingState] = useState(shopCart);
 
+    const [selected, setSelected] = useState({keys: []});
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     useEffect(()=> {
-        shopCart && setShoppingCart(shopCart);
+        shopCart && setShoppingState(shopCart)
     }, [shopCart])
 
     const getUserOrders = () => {
         axios.get()
         .then((response)=>{
-            console.log(response.data)
         })
     }
     const postOrder = () => {
-        axios.post(`http://localhost:8079/dish/order/new/teeest`, shoppingState)
+        axios.post(`http://localhost:8079/dish/order/new/janekkominek2000@gmail.com`, shoppingState)
             .then( response => {
-                console.log(response)
             })
+        navigate('/pizzeria')
+        
     }
 
+    const deleteSelected = () => {
+        console.log("selected in delete selected : ", selected)
+        selected.keys.forEach( s => dispatch(deleteFromShoppingCart(s.key)))
+        
+    }
+
+    const selectItemToRemove = (element) => {
+        if(element.target.checked){
+            const key = {
+                key: element.target.id
+            }
+            setSelected({
+                keys: [...selected.keys, key]
+            })
+        }
+        if(!element.target.checked){
+            const key = element.target.id;
+            const newSelected = selected.keys.filter( old => old.key !== key)
+            setSelected({
+                keys: newSelected
+            })
+        }
+    }
     const productList = shoppingState.map( (element)=> (
         <Cart>
+            <checkBoxWrapper>
+                zaznacz by usunać
+                <CheckBox id={element} onClick={selectItemToRemove}/>
+            </checkBoxWrapper>
             <CartName>{element.dish_name}</CartName>
             <CartIngredientField>
                 {element.ingredients.map((ingredient)=>(
@@ -38,10 +71,10 @@ export const ShoppingCart = () => {
             </CartIngredientField>
         </Cart>
     ))
-    console.log(shoppingState)
     return(
         <ShoppingCartContainer>
             <SCName>Twoje zamówienie..</SCName>
+            {selected && <DeleteIcon onClick={deleteSelected}>Usuń zaznaczone</DeleteIcon>}
             <OrderField>
                 {productList}
             </OrderField>

@@ -10,7 +10,7 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id_employee;
+    private Integer employeeId;
 
     @Column(name = "name")
     private String name;
@@ -25,11 +25,11 @@ public class Employee {
     private String password;
 
     @OneToOne()
-    @JoinColumn(name = "id_voivodeship", referencedColumnName = "id_voivodeship")
+    @JoinColumn(name = "voivodeshipId", referencedColumnName = "voivodeshipId")
     private Voivodeship voivodeship;
 
     @OneToOne()
-    @JoinColumn(name = "id_city", referencedColumnName = "id_city")
+    @JoinColumn(name = "cityId", referencedColumnName = "cityId")
     private City city;
 
     @Column(name = "typ")

@@ -20,22 +20,19 @@ import java.util.stream.Stream;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name="user_order")
+@Table(name="userOrder")
 public class UserOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id_order")
-    private Integer id_order;
+    @Column(name="orderId")
+    private Integer orderId;
 
     @Column(name = "date")
     private Timestamp date;
-//
-//    @Column(name = "time")
-//    private Time time;
 
     @OneToOne()
-    @JoinColumn(name = "id_payment", referencedColumnName = "id_payment")
+    @JoinColumn(name = "paymentId", referencedColumnName = "paymentId")
     private Payment payment;
 
     @Column(name = "status")
@@ -43,6 +40,9 @@ public class UserOrder {
 
     @Column(name = "price")
     private Float price;
+
+    @Column(name = "priceDate")
+    private Timestamp price_date;
 
     @ManyToOne()
     @JoinColumn(name = "userId", nullable = false)

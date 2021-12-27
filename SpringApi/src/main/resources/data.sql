@@ -1,4 +1,4 @@
-insert into ingredient(id_ingredient, ingredient_name) values (1, 'Pepperoni'),
+insert into ingredient(ingredient_id, ingredient_name) values (1, 'Pepperoni'),
                                        (2, 'Szynka'),
                                        (3, 'Wołowina'),
                                        (4, 'Wieprzowina'),
@@ -20,7 +20,7 @@ insert into ingredient(id_ingredient, ingredient_name) values (1, 'Pepperoni'),
                                        (20, 'Ser śródziemnomorski'),
                                         (21, 'Czerwona cebula');
 
-insert into dish (id_dish, dish_name) values (1, 'Pizza Kurczak'),
+insert into dish (dish_id, dish_name) values (1, 'Pizza Kurczak'),
                                         (2, 'Pizza Wiejska'),
                                         (3, 'Pizza Kebab'),
                                         (4, 'Pizza Serowa'),
@@ -38,7 +38,7 @@ insert into dish (id_dish, dish_name) values (1, 'Pizza Kurczak'),
                                         (16, 'Pizza Mięsna'),
                                         (17, 'Pizza Capricciosa');
 
-insert into dish_ingredient(id_dish, id_ingredient) values (1, 5),
+insert into dish_ingredient(dish_id, ingredient_id) values (1, 5),
                                                            (1, 7),
                                                            (1, 8),
                                                            (2, 12),
@@ -97,10 +97,10 @@ insert into dish_ingredient(id_dish, id_ingredient) values (1, 5),
 
 
 
-insert into voivodeship(id_voivodeship, voivodeship_name) values (1, 'Wielkopolskie'),
+insert into voivodeship(voivodeship_id, voivodeship_name) values (1, 'Wielkopolskie'),
                                                                  (2, 'Mazowieckie');
 
-insert into city(id_city, city_name) values (1, 'Poznań'),
+insert into city(city_id, city_name) values (1, 'Poznań'),
                                             (2, 'Kalisz'),
                                             (3, 'Konin'),
                                             (4, 'Piła'),

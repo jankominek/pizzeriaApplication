@@ -13,11 +13,11 @@ import java.util.List;
 public class Voivodeship {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_voivodeship")
-    private Integer id_voivodeship;
+    @Column(name = "voivodeshipId")
+    private Integer voivodeshipId;
 
-    @Column(name = "voivodeship_name")
-    private String voivodeship_name;
+    @Column(name = "voivodeshipName")
+    private String voivodeshipName;
 
     @JsonBackReference
     @OneToMany(mappedBy = "voivodeship")

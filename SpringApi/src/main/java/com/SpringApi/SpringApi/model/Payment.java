@@ -7,14 +7,14 @@ import javax.persistence.*;
 import java.math.BigInteger;
 
 @Entity
-@Table(name = "Payment")
+@Table(name = "payment")
 @Data
 public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id_payment")
-    private BigInteger id_payment;
+    @Column(name="paymentId")
+    private Integer paymentId;
 
     @Column(name = "type")
     private PaymentEnum type;

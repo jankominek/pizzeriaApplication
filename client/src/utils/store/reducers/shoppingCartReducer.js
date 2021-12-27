@@ -9,6 +9,11 @@ export const shoppingCartReducer = (state = initialState,  {type, payload}) => {
                 ...state,
                 products : [...state.products, payload]
             }
+        case 'DELETE_FROM_SHOPPINGCART':
+            return {
+                ...state,
+                products : state.products.filter( object => object.dish_name !== payload)
+            }
         default :
             return state;    
     }

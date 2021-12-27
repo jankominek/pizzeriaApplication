@@ -19,8 +19,9 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @Column(name ="user_id")
-    private UUID userId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name ="userId")
+    private Integer userId;
 
     @Column(name = "firstname")
     private String firstname;
@@ -35,19 +36,19 @@ public class User {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "id_voivodeship")
+    @JoinColumn(name = "veivodeship")
     private Voivodeship voivodeship;
 
     @ManyToOne()
-    @JoinColumn(name = "id_city")
+    @JoinColumn(name = "cityId")
     private City city;
 
     @Column(name = "typ")
     @Enumerated(EnumType.STRING)
     private PersonType type;
 
-    @Column(name = "veryfication_code")
-    private String v_code;
+    @Column(name = "veryficationCode")
+    private String vCode;
 
     @Column(name = "isVerified")
     private Boolean isVerified;

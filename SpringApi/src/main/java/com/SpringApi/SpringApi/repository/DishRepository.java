@@ -11,5 +11,9 @@ import java.util.List;
 @Repository
 public interface DishRepository extends JpaRepository<Dish, Integer> {
 
-    Dish findByDishName(String name);
+
+    @Query("select d from Dish d where d.dishName = ?1")
+    Dish findDishByDishName(String name);
+
+//    Dish findByDishName(String name);
 }

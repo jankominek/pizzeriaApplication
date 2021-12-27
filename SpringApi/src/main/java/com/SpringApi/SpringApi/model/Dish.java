@@ -3,6 +3,7 @@ package com.SpringApi.SpringApi.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -17,20 +18,20 @@ public class Dish {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_dish")
-    private Integer id_dish;
+    @Column(name = "dishId")
+    private Integer dishId;
 
-    @Column(name = "dish_name")
+    @Column(name = "dishName")
     private String dishName;
 
-    @OneToMany(mappedBy = "idDish")
-    private List<Dish_order> dishOrderList;
+    @OneToMany(mappedBy = "dishId")
+    private List<DishOrder> dishOrderList;
 
     @JsonManagedReference
     @ManyToMany(cascade = CascadeType.MERGE)
             @JoinTable(name = "dish_ingredient",
-            joinColumns = @JoinColumn(name = "id_dish"),
-                    inverseJoinColumns = @JoinColumn(name = "id_ingredient"))
+            joinColumns = @JoinColumn(name = "dishId"),
+                    inverseJoinColumns = @JoinColumn(name = "ingredientId"))
     List<Ingredient> ingredients;
 
 

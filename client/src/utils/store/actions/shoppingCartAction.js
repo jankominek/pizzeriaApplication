@@ -4,3 +4,10 @@ export const setShoppingCart = (cart) => {
         payload : cart
     }
 }
+
+export const deleteFromShoppingCart = (element)=> {
+    return {
+        type: 'DELETE_FROM_SHOPPINGCART',
+        payload : element
+    }
+}

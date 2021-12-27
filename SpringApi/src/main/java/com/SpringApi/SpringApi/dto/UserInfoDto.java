@@ -9,7 +9,7 @@ import java.util.UUID;
 @Data
 @Builder
 public class UserInfoDto {
-        private UUID userId;
+        private Integer userId;
         private String email;
         private PersonType type;
         private Boolean isVerified;

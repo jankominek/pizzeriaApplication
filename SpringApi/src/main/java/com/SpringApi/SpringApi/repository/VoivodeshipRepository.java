@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface VoivodeshipRepository extends CrudRepository<Voivodeship, Integer> {
+public interface VoivodeshipRepository extends JpaRepository<Voivodeship, Integer> {
 
-    @Override
-    Optional<Voivodeship> findById(Integer id);
+    Voivodeship findVoivodeshipByVoivodeshipId(Integer id);
 }

@@ -31,7 +31,7 @@ public class UserService {
     EmailSenderService emailSenderService;
 
     public User getUser(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findUserByEmail(email);
     }
 
     public Boolean loginUser(UserCredentialsDto user){
@@ -53,14 +53,14 @@ public class UserService {
 
     public void registerUser(UserCredentialsDto user){
         User userEntity = credentialsDtoToUser(user);
-        System.out.println(userEntity.getVoivodeship().getVoivodeship_name());
-        emailSenderService.sendEmail("pizzeriapp21@gmail.com", userEntity.getV_code());
+//        System.out.println(userEntity.getVoivodeship().getVoivodeshipName());
+        emailSenderService.sendEmail("pizzeriapp21@gmail.com", userEntity.getVCode());
         userRepository.save(userEntity);
     }
 
     @Transactional
     public Boolean verifyAccount(UserVerification userVerification) {
-        String codeEntity = getUser(userVerification.getEmail()).getV_code();
+        String codeEntity = getUser(userVerification.getEmail()).getVCode();
         System.out.println(codeEntity);
         if(codeEntity.equals(userVerification.getV_code())) {
             System.out.println("before verification");
@@ -85,17 +85,17 @@ public class UserService {
 
     public User credentialsDtoToUser(UserCredentialsDto user){
         UUID uuid = UUID.randomUUID();
-        Optional<Voivodeship> voivodeship = voivodeshipRepository.findById(user.getVoivodeship_id());
-        Optional<City> city = cityRepository.findById(user.getCity_id());
-        return User.builder().userId(uuid)
+        Voivodeship voivodeship = voivodeshipRepository.findVoivodeshipByVoivodeshipId(user.getVoivodeship_id());
+        City city = cityRepository.findCityByCityId(user.getCity_id());
+        return User.builder()
                 .firstname(user.getFirstname())
                 .lastName(user.getLastname())
                 .email(user.getEmail())
                 .password(user.getPassword())
-                .city(city.get())
-                .voivodeship(voivodeship.get())
+                .city(city)
+                .voivodeship(voivodeship)
                 .type(PersonType.KLIENT)
-                .v_code(uuid.toString())
+                .vCode(uuid.toString())
                 .isVerified(false).build();
     }
 }
