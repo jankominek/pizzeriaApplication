@@ -55,3 +55,18 @@ export const ShoppingCartIconContainer = styled.div`
     align-items: center;
     color: white;
 `
+export const EditUserIconContainer = styled.div`
+    width: 8rem;
+    height: 3rem;
+    cursor: pointer;
+    position: fixed;
+    top: 1rem;
+    right: 6rem;
+    translate: transform(-50%, -50%);
+    background: #cdb891;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    align-items: center;
+    color: white;
+`

@@ -1,15 +1,17 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
+import { registerValidation } from "../../utils/validation";
 import { RegisterContainer, SigningContainer, Label, Input, Button, ButtonRegister, SelectList, SelectLabel} from "./RegisterPage.styled";
-
+import {PError} from '../../components/Login/Login.styled'
+import { useNavigate } from 'react-router';
 export const RegisterPage = () => {
 
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [voivodeshipValue, setVoivodeshipValue] = useState(0);
-    const [cityValue, setCityValue] = useState(0);
+    const [voivodeshipValue, setVoivodeshipValue] = useState(1);
+    const [cityValue, setCityValue] = useState(1);
 
     const [voivodeshipList, setVoivodeshipList] = useState();
     const [cityList, setCityList] = useState();
@@ -18,6 +20,10 @@ export const RegisterPage = () => {
     const [cityOptions, setCityOptions ]= useState();
 
     const [credentials, setCredentials] = useState();
+
+    const [registerErrorMessage, setRegisterErrorMessage] = useState();
+
+    const navigate = useNavigate();
     // {
     //     firstname: "",
     //     lastname: "",
@@ -55,15 +61,21 @@ export const RegisterPage = () => {
 
     const sendCredentials = () => {
         console.log("clicked")
-        setCredentials({
+        const objectToSend = {
             ...credentials,
             voivodeship_id: voivodeshipValue,
             city_id : cityValue
-        })
-        console.log(credentials)
-        setCityValue(null);
-        setVoivodeshipValue(null);
-        axios.post("http://localhost:8079/pizza/register", credentials);
+        }
+        const [validationResult, message] = registerValidation(objectToSend);
+        if(validationResult){
+            console.log("IN POST METHOD")
+            axios.post("http://localhost:8079/pizza/register", objectToSend);
+            setCityValue(1);
+            setVoivodeshipValue(1);
+            navigate("/login")
+        }else{
+            setRegisterErrorMessage(message)
+        }        
     }
 
     const prepareSelectListCity = (data) => {
@@ -123,6 +135,7 @@ export const RegisterPage = () => {
                             <option value={e.value}>{e.label}</option>
                         ))}
                     </SelectList>
+                    {registerErrorMessage && <PError>{registerErrorMessage}</PError>}
 
                     <Button onClick={sendCredentials}>zarejestruj sie!</Button> 
             </SigningContainer>

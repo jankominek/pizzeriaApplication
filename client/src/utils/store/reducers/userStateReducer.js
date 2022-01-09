@@ -1,8 +1,8 @@
 
-export const userInfo = (state = {}, action) => {
-    switch(action.type){
+export const userStateReducer = (state = {}, {type, payload}) => {
+    switch(type){
         case 'SET_USER_INFO':
-            return action.payload;
+            return payload;
         default :
             return state;    
     }

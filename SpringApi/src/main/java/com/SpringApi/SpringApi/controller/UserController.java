@@ -26,6 +26,11 @@ public class UserController {
         return userService.getUser(email);
     }
 
+    @GetMapping("/user/{email}/information")
+    public UserCredentialsDto getUserInformation(@PathVariable String email){
+        return userService.getUserCredentialsDto(email);
+    }
+
     @PostMapping("/register")
     public void registerUser(@RequestBody UserCredentialsDto user){ userService.registerUser(user);
     }
@@ -42,6 +47,10 @@ public class UserController {
     public UserInfoDto getUserInfo(@PathVariable String email){
         System.out.println(email);
         return userService.getUserInfo(email);
+    }
+    @GetMapping("/updateUser/{email}")
+    public User updateUserCredentials(@PathVariable String email){
+        return userService.updateUserCredentials(email);
     }
 
 }

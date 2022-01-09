@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { ProductField } from "../../components/ProductField/ProductField";
 import { type_of_products } from "../../utils/type_of_products";
-import {UserPageContainer, CompanyName, UserName, ProductTypeContainer, ShoppingCartIconContainer, ShoppingCartContainer} from './UserPage.styled';
+import {UserPageContainer, CompanyName, UserName, ProductTypeContainer, ShoppingCartIconContainer, ShoppingCartContainer, EditUserIconContainer} from './UserPage.styled';
 import axios from 'axios';
 import {useNavigate} from 'react-router';
 import { useDispatch, useSelector} from "react-redux";
-import { setUserInfoAction } from "../../utils/store/actions/userStateAction";
 import { ProductElementList } from "../../components/productElementList/ProductElementList";
 
 export const UserPage = (props) => {
@@ -15,11 +14,10 @@ export const UserPage = (props) => {
 
 
     const navigate = useNavigate();
+    const userData = useSelector( state => state.userInfo);
 
-    const dispatch = useDispatch();
 
     useEffect(()=> {
-        getUserInfo();
         getAllDishesWithIngredient();
     }, [])
 
@@ -27,17 +25,14 @@ export const UserPage = (props) => {
         navigate("/pizzeria/shopping_cart")
     }
 
+    const redirectToEditProfile = () => {
+        navigate("/edit/profile")
+    }
+
     const getAllDishesWithIngredient = () => {
         axios.get(`http://localhost:8079/dish/withIngredients/all`)
             .then( response => {
                 setPizzas(response.data);
-            })
-    }
-    const getUserInfo = () => {
-        const email = 'pkominek@gmail.com'
-        axios.get(`http://localhost:8079/pizza/getUserInfo/${email}`)
-            .then( response => {
-                dispatch(setUserInfoAction(response.data))
             })
     }
 
@@ -52,13 +47,14 @@ export const UserPage = (props) => {
         <>
             <UserPageContainer> 
                 <CompanyName>Pizzeria ShaurJano</CompanyName>
-                <UserName>Witaj, Janek</UserName>
+                {userData && <UserName>{`Witaj ${userData.email}`}</UserName>}
                 <ProductTypeContainer>
                     {productTypes}
                 </ProductTypeContainer>
                 <ProductElementList products={pizzas} setDataToShoppingCart={setDataToShoppingCart}/>
             </UserPageContainer>
             <ShoppingCartIconContainer onClick={redirectToShoppingCart}>S</ShoppingCartIconContainer>
+            <EditUserIconContainer onClick={redirectToEditProfile}>Edytuj profil</EditUserIconContainer>
             </>
     )
 }

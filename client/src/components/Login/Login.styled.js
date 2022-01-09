@@ -45,6 +45,11 @@ export const Button = styled.button`
     border: none;
     background-color: ${colors.lightRed};
 `
+export const PError = styled.p`
+    margin-top: 1rem;
+    color: red;
+    font-size: 1.2rem;
+`
 export const ButtonRegister = styled.button`
     width: 20%;
     height: 1.5rem;

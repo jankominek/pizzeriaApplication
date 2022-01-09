@@ -34,6 +34,17 @@ public class UserService {
         return userRepository.findUserByEmail(email);
     }
 
+    public UserCredentialsDto getUserCredentialsDto(String email){
+        User user = getUser(email);
+        return UserCredentialsDto.builder()
+                .firstname(user.getFirstname())
+                .lastname(user.getLastName())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .voivodeship_id(user.getVoivodeship().getVoivodeshipId())
+                .city_id(user.getCity().getCityId()).build();
+    }
+
     public Boolean loginUser(UserCredentialsDto user){
         User userEntity = getUser(user.getEmail());
         UserCredentialsDto userAuth = toCredentialsDto(userEntity);
@@ -97,5 +108,23 @@ public class UserService {
                 .type(PersonType.KLIENT)
                 .vCode(uuid.toString())
                 .isVerified(false).build();
+    }
+
+    public User updateUserCredentials( String userEmail) {
+        System.out.println(userEmail);
+        User userEntity = getUser(userEmail);
+//        User userEntity = userRepository.findUserByUserId(47);
+        System.out.println(userEntity);
+//        Voivodeship newVoivodeship = voivodeshipRepository.getById(user.getVoivodeship_id());
+//        City newCity = cityRepository.findCityByCityId(user.getCity_id());
+//        userEntity.builder().userId(userEntity.getUserId())
+//                .firstname(user.getFirstname())
+//                .lastName(user.getLastname())
+//                .email(user.getEmail())
+//                .password(user.getPassword())
+//                .voivodeship(newVoivodeship)
+//                .city(newCity).build();
+//        userRepository.save(userEntity);
+        return userEntity;
     }
 }
