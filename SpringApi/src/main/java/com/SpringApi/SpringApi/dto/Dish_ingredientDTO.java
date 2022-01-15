@@ -12,6 +12,7 @@ public class Dish_ingredientDTO {
 
     private Integer dish_id;
     private String dishName;
+    private Double dishPrice;
     private List<String> ingredients;
 
 }

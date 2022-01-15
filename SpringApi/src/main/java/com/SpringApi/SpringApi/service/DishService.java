@@ -35,6 +35,7 @@ public class DishService {
            List<String> ingredients = dish.getIngredients().stream().map( ingredient -> ingredient.getIngredientName()).toList();
             Dish_ingredientDTO dto = Dish_ingredientDTO.builder()
                     .dishName(dish.getDishName())
+                    .dishPrice(dish.getDishPrice())
                     .ingredients(ingredients)
                     .dish_id(dish.getDishId())
                     .build();

@@ -20,6 +20,11 @@ export const Picture = styled.img`
     width: 90%;
     margin-bottom: 1rem;
 `
+export const Price = styled.p`
+    font-size: 1.2rem;
+    padding: .5rem 0;
+    color: green;
+`
 export const SpanProduct = styled.span`
     font-size: 1.4rem;
 `

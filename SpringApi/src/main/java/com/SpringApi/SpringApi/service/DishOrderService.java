@@ -42,10 +42,16 @@ public class DishOrderService {
     public void addDishesToOrder(String email, List<Dish_orderPostModel> dishes){
 
         UserOrder userOrder = createOrder(email);
-
+        System.out.println(email);
+        System.out.println(dishes);
         dishes.stream().forEach( dishModel -> {
             Dish dish = dishRepository.findDishByDishName(dishModel.getDish_name());
-            DishOrder builtDish = DishOrder.builder().count(1).isMod(dishModel.getIsMod()).dishId(dish).userOrder(userOrder).build();
+            DishOrder builtDish = DishOrder.builder()
+                    .count(1)
+                    .isMod(dishModel.getIsMod())
+                    .dishId(dish)
+                    .userOrder(userOrder)
+                    .build();
             dishOrderRepository.save(builtDish);
 
             if(dishModel.getIsMod().equals(true)){

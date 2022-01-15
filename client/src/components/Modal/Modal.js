@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { AddButton, CheckBox, IngredientField, IngredientName, ModalContainer, ModalWrapper } from "./Modal.styles"
+import { AddButton, CheckBox, IngredientField, IngredientName, ModalContainer, ModalWrapper, Price, ProductWithCheckBoxContainer } from "./Modal.styles"
 
 
 export const Modal = (props) => {
@@ -40,8 +40,11 @@ export const Modal = (props) => {
 
     const ingredientsList = allIngredients && allIngredients.map( element => (
         <IngredientField>
+            <ProductWithCheckBoxContainer>
                 <CheckBox name={element.ingredient_name} onChange={onCkeckboxSelect}/>
                 <IngredientName>{element.ingredient_name}</IngredientName>
+            </ProductWithCheckBoxContainer>
+            <Price>{element.ingredientPrice} zł</Price>
         </IngredientField>
     ));
 

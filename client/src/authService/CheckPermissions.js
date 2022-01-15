@@ -7,6 +7,7 @@ export const CheckPermissions = (requiredRole, userRoleType) => {
         if(requiredRole === "General"){
             console.log("is general")
         }
+        console.log("ansewer: ", userRoleType === requiredRole)
         const permission = userRoleType === requiredRole;
         return permission;
     }else{

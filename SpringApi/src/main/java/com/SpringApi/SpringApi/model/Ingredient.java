@@ -22,6 +22,9 @@ public class Ingredient {
     @Column(name = "ingredientName")
     private String ingredientName;
 
+    @Column(name = "ingredientPrice")
+    private Double ingredientPrice;
+
     @JsonBackReference
     @ManyToMany(mappedBy = "ingredients")
     List<Dish> dishes;

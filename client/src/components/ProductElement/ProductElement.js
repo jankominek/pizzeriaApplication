@@ -1,9 +1,9 @@
 
-import { BuyButton, IngredientFieldList, Picture, ProductElementContainer, SpanIngeredient, SpanProduct } from './ProductElement.styled'
+import { BuyButton, IngredientFieldList, Picture, Price, ProductElementContainer, SpanIngeredient, SpanProduct } from './ProductElement.styled'
 import {useNavigate} from 'react-router';
 export const ProductElement = (props) => {
 
-    const {name, ingredients, id} = props;
+    const {name, ingredients, id, price} = props;
     const navigate = useNavigate();
 
     const ingredientList = ingredients.map( ing => (
@@ -22,6 +22,7 @@ export const ProductElement = (props) => {
                 <IngredientFieldList>
                     {ingredientList}
                 </IngredientFieldList>
+                <Price>{price}</Price>
                 <BuyButton onClick={navigateToProduct}>Kup teraz..</BuyButton>
             </ProductElementContainer>
         </>

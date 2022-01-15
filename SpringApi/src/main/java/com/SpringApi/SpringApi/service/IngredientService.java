@@ -23,6 +23,7 @@ public class IngredientService {
     public List<IngredientDto> ingredientToDto(List<Ingredient> ingredients){
         List<IngredientDto> ingredientDtoList = ingredients.stream().map( ingredient -> IngredientDto.builder()
                 .ingredient_name(ingredient.getIngredientName()).
+                ingredientPrice(ingredient.getIngredientPrice()).
                 ingredient_id(ingredient.getIngredientId()).build()).toList();
         return ingredientDtoList;
     }

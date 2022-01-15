@@ -24,6 +24,9 @@ public class Dish {
     @Column(name = "dishName")
     private String dishName;
 
+    @Column(name = "dish_price")
+    private Double dishPrice;
+
     @OneToMany(mappedBy = "dishId")
     private List<DishOrder> dishOrderList;
 

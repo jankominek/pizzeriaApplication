@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends CrudRepository<User, Integer> {
 
 //    @Query(value = "SELECT * FROM User WHERE email = ?1", nativeQuery = true)
 //    User findByEmail(String email);

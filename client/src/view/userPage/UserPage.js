@@ -26,12 +26,14 @@ export const UserPage = (props) => {
     }
 
     const redirectToEditProfile = () => {
-        navigate("/edit/profile")
+        // navigate("/edit/profile")
+        navigate("/admin")
     }
 
     const getAllDishesWithIngredient = () => {
         axios.get(`http://localhost:8079/dish/withIngredients/all`)
             .then( response => {
+                console.log(response.data)
                 setPizzas(response.data);
             })
     }

@@ -110,11 +110,13 @@ public class UserService {
                 .isVerified(false).build();
     }
 
-    public User updateUserCredentials( String userEmail) {
-        System.out.println(userEmail);
-        User userEntity = getUser(userEmail);
+    public User updateUserCredentials(String email) {
+        System.out.println(email);
+        System.out.println("asdasdasd");
+        User userEntity = getUser(email);
+
 //        User userEntity = userRepository.findUserByUserId(47);
-        System.out.println(userEntity);
+//        System.out.println(userEntity);
 //        Voivodeship newVoivodeship = voivodeshipRepository.getById(user.getVoivodeship_id());
 //        City newCity = cityRepository.findCityByCityId(user.getCity_id());
 //        userEntity.builder().userId(userEntity.getUserId())
@@ -125,6 +127,9 @@ public class UserService {
 //                .voivodeship(newVoivodeship)
 //                .city(newCity).build();
 //        userRepository.save(userEntity);
+//        return userEntity;
+        userEntity.setFirstname("XDDDDDDDDDDDDDDDD");
+        userRepository.save(userEntity);
         return userEntity;
     }
 }

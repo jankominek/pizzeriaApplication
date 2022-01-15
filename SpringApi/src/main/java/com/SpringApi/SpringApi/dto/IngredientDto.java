@@ -8,4 +8,5 @@ import lombok.Data;
 public class IngredientDto {
     private String ingredient_name;
     private Integer ingredient_id;
+    private Double ingredientPrice;
 }

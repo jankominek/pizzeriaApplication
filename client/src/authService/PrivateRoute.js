@@ -11,6 +11,7 @@ export const AuthRoute = ({component : RouteComponent, role}) => {
     const userRole = useSelector(state => state.userInfo)
  
     userRole && console.log('user role from private route : ', userRole?.role);
+    console.log("required : ", role)
     const isPermitted = userRole && userRole?.role && CheckPermissions(role, userRole.role);
     console.log("is permitted: ", isPermitted)
     if(userRole && isPermitted){

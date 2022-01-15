@@ -30,6 +30,11 @@ export const IngredientField = styled.div`
     border-radius: 10px;
     border: 1px solid black;
     margin: 0.25rem 0rem;
+    display: flex;
+    justify-content: space-between;
+`
+export const ProductWithCheckBoxContainer = styled.div`
+    
 `
 
 export const CheckBox = styled.input.attrs({ type: 'checkbox' })`
@@ -39,7 +44,12 @@ export const IngredientName = styled.span`
     font-size: 1.5rem;
     margin-left: 1rem;
 `
-
+export const Price = styled.p`
+    font-size: 1.5rem;
+    color: green;
+    text-align: right;
+    margin-right: 2rem;
+`
 export const AddButton = styled.div`
     padding: 1rem 2rem;
     background: #9AE66E;

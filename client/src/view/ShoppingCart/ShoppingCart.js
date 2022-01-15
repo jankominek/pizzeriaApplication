@@ -8,9 +8,10 @@ import { Cart, CartIngredientField, CartIngredientSpan, CartName, CheckBox, chec
 
 export const ShoppingCart = () => {
 
-    const shopCart = useSelector( state => state.shoppingCart.products);
+    const shopCart = useSelector( state => state);
 
-    const [shoppingState, setShoppingState] = useState(shopCart);
+    const [shoppingState, setShoppingState] = useState(shopCart.shoppingCart.products);
+    const [userEmail, setUserEmail] = useState('');
 
     const [selected, setSelected] = useState({keys: []});
 
@@ -18,16 +19,17 @@ export const ShoppingCart = () => {
     const dispatch = useDispatch();
 
     useEffect(()=> {
-        shopCart && setShoppingState(shopCart)
+        shopCart && setShoppingState(shopCart.shoppingCart.products) && setUserEmail(shopCart.userInfo.email)
     }, [shopCart])
 
+    console.log("user email: ", shopCart)
     const getUserOrders = () => {
         axios.get()
         .then((response)=>{
         })
     }
     const postOrder = () => {
-        axios.post(`http://localhost:8079/dish/order/new/janekkominek2000@gmail.com`, shoppingState)
+        axios.post(`http://localhost:8079/dish/order/new/${shopCart.userInfo.email}`, shoppingState)
             .then( response => {
             })
         navigate('/pizzeria')
