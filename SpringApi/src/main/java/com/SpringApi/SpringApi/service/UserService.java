@@ -8,6 +8,7 @@ import com.SpringApi.SpringApi.repository.CityRepository;
 import com.SpringApi.SpringApi.repository.UserRepository;
 import com.SpringApi.SpringApi.model.User;
 import com.SpringApi.SpringApi.repository.VoivodeshipRepository;
+import com.SpringApi.SpringApi.utils.EditUserDTO;
 import com.SpringApi.SpringApi.utils.PersonType;
 import com.SpringApi.SpringApi.utils.UserVerification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,26 +111,14 @@ public class UserService {
                 .isVerified(false).build();
     }
 
-    public User updateUserCredentials(String email) {
-        System.out.println(email);
-        System.out.println("asdasdasd");
-        User userEntity = getUser(email);
-
-//        User userEntity = userRepository.findUserByUserId(47);
-//        System.out.println(userEntity);
-//        Voivodeship newVoivodeship = voivodeshipRepository.getById(user.getVoivodeship_id());
-//        City newCity = cityRepository.findCityByCityId(user.getCity_id());
-//        userEntity.builder().userId(userEntity.getUserId())
-//                .firstname(user.getFirstname())
-//                .lastName(user.getLastname())
-//                .email(user.getEmail())
-//                .password(user.getPassword())
-//                .voivodeship(newVoivodeship)
-//                .city(newCity).build();
-//        userRepository.save(userEntity);
-//        return userEntity;
-        userEntity.setFirstname("XDDDDDDDDDDDDDDDD");
-        userRepository.save(userEntity);
-        return userEntity;
+    public void updateUserCredentials(String curremail, EditUserDTO newUser) {
+        userRepository.editUser(curremail,
+                newUser.getFirstname(),
+                newUser.getLastname(),
+                newUser.getEmail(),
+                newUser.getPassword(),
+                newUser.getVoivodeship_id(),
+                newUser.getCity_id()
+        );
     }
 }

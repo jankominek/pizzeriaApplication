@@ -24,7 +24,6 @@ export const EditProfile = () => {
 
     useEffect(() => {
         userInfo && getUserInformation(userInfo.email);
-        userInfo && updateUser(userInfo.email)
         console.log(userInfo)
     }, [])
 
@@ -76,17 +75,16 @@ export const EditProfile = () => {
         return options;
     }
 
-    const updateUser = (email) => {
+    const updateUser = () => {
 
-        // const userToUpdate = {
-        //     ...userInformation,
-        //     voivodeship_id : voivodeshipValue,
-        //     city_id: cityValue
-        // }
-        axios.get(`http://localhost:8079/pizza/updateUser/${email}`)
-            .then(resp => {
-                console.log(resp.data)
-            })
+        const dataToSend = {
+            ...userInformation,
+            voivodeship_id : voivodeshipValue,
+            city_id : cityValue
+        }
+        console.log(dataToSend)
+        console.log("user email : ", userInfo.email)
+        userInfo?.email && axios.post(`http://localhost:8079/pizza/updateUser/${userInfo.email}`, dataToSend)
         // console.log("userToUpdate : ", userToUpdate)
     }
 

@@ -26,8 +26,8 @@ export const UserPage = (props) => {
     }
 
     const redirectToEditProfile = () => {
-        // navigate("/edit/profile")
-        navigate("/admin")
+        navigate("/edit/profile")
+        // navigate("/admin")
     }
 
     const getAllDishesWithIngredient = () => {

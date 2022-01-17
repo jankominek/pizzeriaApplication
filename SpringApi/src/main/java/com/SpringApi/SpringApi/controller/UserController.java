@@ -5,6 +5,7 @@ import com.SpringApi.SpringApi.dto.UserDto;
 import com.SpringApi.SpringApi.dto.UserInfoDto;
 import com.SpringApi.SpringApi.model.User;
 import com.SpringApi.SpringApi.service.UserService;
+import com.SpringApi.SpringApi.utils.EditUserDTO;
 import com.SpringApi.SpringApi.utils.UserVerification;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +49,9 @@ public class UserController {
         System.out.println(email);
         return userService.getUserInfo(email);
     }
-    @GetMapping("/updateUser/{email}")
-    public User updateUserCredentials(@PathVariable String email){
-        return userService.updateUserCredentials(email);
+    @PostMapping("/updateUser/{email}")
+    public void updateUserCredentials(@PathVariable String email, @RequestBody EditUserDTO newUser){
+        userService.updateUserCredentials(email, newUser);
     }
 
 }
