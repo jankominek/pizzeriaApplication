@@ -1,3 +1,9 @@
+CREATE FUNCTION myFunc ()
+returns INTEGER
+BEGIN
+return 5;
+END;
+
 insert into ingredient(ingredient_id, ingredient_name, ingredient_price) values (1, 'Pepperoni', 5.50),
                                        (2, 'Szynka', 5.50),
                                        (3, 'Wołowina', 5.50),
@@ -109,5 +115,7 @@ insert into city(city_id, city_name) values (1, 'Poznań'),
                                             (7, 'Warszawa'),
                                             (8, 'Ciechanów'),
                                             (9, 'Radom');
--- insert into payment(id_payment, type) values (1, 'GOTOWKA'), (2, 'KARTA');
+insert into payment(payment_id, type) values (1, 'GOTÓWKA'), (2, 'KARTA');
+
+
 

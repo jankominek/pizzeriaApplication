@@ -41,7 +41,6 @@ export const Login = () => {
         axios.get(`http://localhost:8079/pizza/getUserInfo/${email}`)
             .then( response => {
                 const data = response.data;
-                console.log(data)
                 const userInfoData = {
                     userId: data.userId,
                     email: data.email,

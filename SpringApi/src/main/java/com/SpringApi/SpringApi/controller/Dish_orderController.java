@@ -2,6 +2,7 @@ package com.SpringApi.SpringApi.controller;
 
 
 import com.SpringApi.SpringApi.service.DishOrderService;
+import com.SpringApi.SpringApi.utils.DishOrderFullObject;
 import com.SpringApi.SpringApi.utils.Dish_orderPostModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class Dish_orderController {
     DishOrderService dishOrderService;
 
     @PostMapping("/new/{email}")
-    public void addDishToOrder(@PathVariable String email, @RequestBody List<Dish_orderPostModel> dishes){
-        dishOrderService.addDishesToOrder(email, dishes);
+    public void addDishToOrder(@PathVariable String email, @RequestBody DishOrderFullObject dishObject){
+        dishOrderService.addDishesToOrder(email, dishObject);
     }
 }

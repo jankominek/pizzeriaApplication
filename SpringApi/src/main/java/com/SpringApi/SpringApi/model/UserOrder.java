@@ -31,12 +31,18 @@ public class UserOrder {
     @Column(name = "date")
     private Timestamp date;
 
-    @OneToOne()
-    @JoinColumn(name = "paymentId", referencedColumnName = "paymentId")
+    @ManyToOne()
+    @JoinColumn(name = "paymentId")
     private Payment payment;
 
+    @Column(name = "adressOrder")
+    private String adressOrder;
+
+    @Column(name = "phoneNumber")
+    private String phoneNumber;
+
     @Column(name = "status")
-    private Boolean status;
+    private Integer status;
 
     @Column(name = "price")
     private Float price;

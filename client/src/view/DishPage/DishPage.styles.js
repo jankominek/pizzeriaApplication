@@ -51,7 +51,7 @@ export const IngredientsField = styled.div`
 `
 
 export const Button = styled.div`
-    width: 8rem;
+    width: 12rem;
     height: 3rem;
     cursor: pointer;
     display: flex;

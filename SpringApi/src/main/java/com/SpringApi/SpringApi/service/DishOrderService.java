@@ -3,10 +3,15 @@ package com.SpringApi.SpringApi.service;
 import com.SpringApi.SpringApi.model.*;
 import com.SpringApi.SpringApi.repository.*;
 
+import com.SpringApi.SpringApi.utils.DishOrderFullObject;
 import com.SpringApi.SpringApi.utils.Dish_orderPostModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -25,26 +30,38 @@ public class DishOrderService {
     DishModifyRepository dishModifyRepository;
     @Autowired
     IngredientRepository ingredientRepository;
+    @Autowired
+    PaymentRepository paymentRepository;
 
     public User getUser(String email){
         return userRepository.findUserByEmail(email);
     }
 
-    public UserOrder createOrder(String email){
+    @Transactional
+    public UserOrder createOrder(String email, String address, String payment, String phone){
         Timestamp date = new Timestamp(System.currentTimeMillis());
         User user = getUser(email);
-        UserOrder userOrder = UserOrder.builder().date(date).status(false).userId(user).build();
+        Payment paymentInstance = paymentRepository.findByType(payment);
+        UserOrder userOrder = UserOrder.builder()
+                .date(date)
+                .price_date(date)
+                .phoneNumber(phone)
+                .adressOrder(address)
+                .payment(paymentInstance)
+                .status(-1)
+                .userId(user).build();
         userOrderRepository.save(userOrder);
 
+        Integer result = dishOrderRepository.myFunc();
+        System.out.println(result);
         return userOrder;
     }
 
-    public void addDishesToOrder(String email, List<Dish_orderPostModel> dishes){
 
-        UserOrder userOrder = createOrder(email);
-        System.out.println(email);
-        System.out.println(dishes);
-        dishes.stream().forEach( dishModel -> {
+    public void addDishesToOrder(String email, DishOrderFullObject dishObject){
+
+        UserOrder userOrder = createOrder(email, dishObject.getAddress(), dishObject.getPayment(), dishObject.getPhone());
+        dishObject.getDishes().stream().forEach( dishModel -> {
             Dish dish = dishRepository.findDishByDishName(dishModel.getDish_name());
             DishOrder builtDish = DishOrder.builder()
                     .count(1)

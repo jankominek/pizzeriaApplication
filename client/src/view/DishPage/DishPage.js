@@ -75,7 +75,7 @@ export const DishPage = () => {
            <InfoContainer>
                 <PizzaNameField>
                     <Span>{dish && dish.dishName}</Span>
-                    <Button onClick={onClickOrder}>Zamów..</Button>
+                    <Button onClick={onClickOrder}>Dodaj do zamówienia..</Button>
                 </PizzaNameField>
                 <IngredientsField>
                     <span>Składniki : </span>{ingredientsList}

@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.List;
 
 @Entity
 @Table(name = "payment")
@@ -17,8 +18,8 @@ public class Payment {
     private Integer paymentId;
 
     @Column(name = "type")
-    private PaymentEnum type;
+    private String type;
 
-    @OneToOne(mappedBy = "payment")
-    private UserOrder indent;
+    @OneToMany(mappedBy = "payment")
+    private List<UserOrder> indent;
 }
