@@ -1,8 +1,10 @@
-CREATE FUNCTION myFunc ()
-returns INTEGER
-BEGIN
-return 5;
-END;
+--
+-- CREATE FUNCTION myFunccc()
+--     returns INTEGER
+-- deterministic
+-- BEGIN
+-- return 5;
+-- END
 
 insert into ingredient(ingredient_id, ingredient_name, ingredient_price) values (1, 'Pepperoni', 5.50),
                                        (2, 'Szynka', 5.50),

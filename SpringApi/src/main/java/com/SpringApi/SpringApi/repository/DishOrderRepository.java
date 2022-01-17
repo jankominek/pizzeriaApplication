@@ -16,8 +16,8 @@ public interface DishOrderRepository extends JpaRepository<DishOrder, Integer> {
 
 //    @Modifying
     @Transactional
-    @Query(value = "select myFunctionTest() as myFunctionTest", nativeQuery = true)
-    Integer myFunc();
+    @Query(value = "select calculateOrderPrice(?1) as calculateOrderPrice", nativeQuery = true)
+    Integer myFunc(Integer myint);
 
 //    @Procedure("myFunc")
 //    Integer myFunc();

@@ -52,7 +52,7 @@ public class DishOrderService {
                 .userId(user).build();
         userOrderRepository.save(userOrder);
 
-        Integer result = dishOrderRepository.myFunc();
+        Integer result = dishOrderRepository.myFunc(69);
         System.out.println(result);
         return userOrder;
     }
