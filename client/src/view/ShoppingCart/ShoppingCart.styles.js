@@ -73,6 +73,17 @@ export const SCName = styled.span`
     border-bottom: 1px solid red;
     margin-bottom: 2rem;
 `
+
+export const DeleteIconWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.7rem;
+    color: red;
+    right:0;
+    top:0;
+    position: absolute;
+`
 export const OrderField = styled.div`
     width: 100%;
     display: flex;
@@ -93,8 +104,9 @@ export const SubmitButton = styled.div`
 
 export const Cart = styled.div`
     width: 15rem;
+    position: relative;
     margin: 0rem 1rem;
-    height: 18rem;
+    height: auto;
     border: 1px solid gray;
     border-radius: 5px;
     display: flex;

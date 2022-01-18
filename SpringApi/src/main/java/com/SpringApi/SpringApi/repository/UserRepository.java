@@ -27,17 +27,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query("select u from User u where u.email = ?1")
     User findUserByEmail(String email);
 
-//    @Modifying
-//    @Transactional
-//    @Query(value = "editUser(:curremail, :vfn, :vln, :vemail, :vpassword, :vvoivodeship, :vcity);", nativeQuery = true)
-//    void editUser(@Param("curremail") String curremail,
-//                  @Param("vfn") String vfn,
-//                          @Param("vln") String vln,
-//                          @Param("vemail") String vemail,
-//                          @Param("vpassword") String vpassword,
-//                          @Param("vvoivodeship") Integer vvoivodeship,
-//                          @Param("vcity") Integer vcity);
-
     @Procedure("editUser")
     void editUser(String curremail, String vfn, String vln, String vemail, String vpassword, Integer vvoivodeship, Integer vcity);
 

@@ -43,8 +43,19 @@ export const DishPage = () => {
     }
 
     const onClickOrder = () => {
-        
-        const allIngredients = [...dish.ingredients, ...additionIngredients]
+        const filteredAdditionIngredients = additionIngredients.filter( ingredient => {
+            return ingredient.count !== 0;
+        })
+        const ingredientsStr = [...dish.ingredients];
+        filteredAdditionIngredients.forEach( element => {
+            if(element.count === 1) ingredientsStr.push(element.ingredient_name);
+            if(element.count > 1){
+                for(let i=0; i<element.count; i++){
+                    ingredientsStr.push(element.ingredient_name);
+                }
+            }
+        })
+        const allIngredients = ingredientsStr;
 
         const dishObject = {
             dish_name : dish.dishName,
@@ -59,13 +70,14 @@ export const DishPage = () => {
 
     const ingredientsList = dish && dish.ingredients.map( element => ( <span> {element}</span>));
 
-    const additionIgredientsList = additionIngredients && additionIngredients.map( (element)=> (<span> {element}</span>));
-
+    // const additionIgredientsList = additionIngredients && additionIngredients.map( (element)=> (<span> {element.ingredient_name}</span>));
+//////////////////////////////////////
     const addAdditionIngredients = () => {
         setIsModalShowing(true)
     }
     const checkedData = (data) => {
         setAdditionIngredients(data);
+        console.log("test", data)
     }
 
     return(
@@ -81,7 +93,7 @@ export const DishPage = () => {
                     <span>Składniki : </span>{ingredientsList}
                 </IngredientsField>
                 {additionIngredients && <IngredientsField>
-                    <span>Składniki : </span>{additionIgredientsList}
+                    {/* <span>Składniki dodatkowe : </span>{additionIgredientsList} */}
                 </IngredientsField>}
                 <IngredientButton onClick={addAdditionIngredients}>Dodaj dodatkowe składniki...</IngredientButton>
            </InfoContainer>

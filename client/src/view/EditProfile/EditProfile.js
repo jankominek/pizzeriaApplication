@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { SelectLabel, SelectList } from "../RegisterPage/RegisterPage.styled";
-import { Button, EditProfileContainer, EditWrapper, Input, InputWrapper, Label, PEditName } from './EditProfile.styled'
+import { Button, EditProfileContainer, EditWrapper, Input, InputPassword, InputWrapper, Label, PEditName } from './EditProfile.styled'
 
 
 export const EditProfile = () => {
@@ -131,7 +131,7 @@ export const EditProfile = () => {
                 </InputWrapper>
                 <InputWrapper>
                     <Label>Password: </Label>
-                    <Input name="password" value={userInformation.password} onChange={onChange}/>
+                    <InputPassword name="password" value={userInformation.password} onChange={onChange}/>
                 </InputWrapper>
                 
                 <SelectLabel>Województwo</SelectLabel>

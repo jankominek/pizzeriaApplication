@@ -3,8 +3,8 @@ import { useEffect, useState } from "react"
 import {useNavigate} from 'react-router';
 import { useDispatch, useSelector } from "react-redux"
 import { deleteFromShoppingCart, setShoppingCart } from "../../utils/store/actions/shoppingCartAction"
-import { Label, AddressWrapper, AdressInput, Cart, CartIngredientField, CartIngredientSpan, CartName, CheckBox, checkBoxWrapper, DeleteIcon, OrderField, OrderInformationBox, Price, SCName, ShoppingCartContainer, SubmitButton, PaymentCheckBox, PaymentWrapper, PaymentCheckboxLabel, BackBtn } from "./ShoppingCart.styles"
-
+import { Label, AddressWrapper, AdressInput, Cart, CartIngredientField, CartIngredientSpan, CartName, CheckBox, checkBoxWrapper, DeleteIcon, OrderField, OrderInformationBox, Price, SCName, ShoppingCartContainer, SubmitButton, PaymentCheckBox, PaymentWrapper, PaymentCheckboxLabel, BackBtn, DeleteIconWrapper } from "./ShoppingCart.styles"
+import {MdClear} from "react-icons/md";
 
 export const ShoppingCart = () => {
 
@@ -65,35 +65,16 @@ export const ShoppingCart = () => {
         
     }
 
-    const deleteSelected = () => {
-        console.log("selected in delete selected : ", selected)
-        selected.keys.forEach( s => dispatch(deleteFromShoppingCart(s.key)))
-        
+    const deleteSelected = (event) => {
+        dispatch(deleteFromShoppingCart(event.target.id))    
     }
 
-    const selectItemToRemove = (element) => {
-        if(element.target.checked){
-            const key = {
-                key: element.target.id
-            }
-            setSelected({
-                keys: [...selected.keys, key]
-            })
-        }
-        if(!element.target.checked){
-            const key = element.target.id;
-            const newSelected = selected.keys.filter( old => old.key !== key)
-            setSelected({
-                keys: newSelected
-            })
-        }
-    }
+    console.log(shoppingState)
     const productList = shoppingState.map( (element)=> (
         <Cart>
-            <checkBoxWrapper>
-                zaznacz by usunać
-                <CheckBox id={element} onClick={selectItemToRemove}/>
-            </checkBoxWrapper>
+            <DeleteIconWrapper >
+                <MdClear id={element.dish_name} onClick={deleteSelected}/>
+            </DeleteIconWrapper>
             <CartName>{element.dish_name}</CartName>
             <CartIngredientField>
                 {element.ingredients.map((ingredient)=>(
@@ -104,8 +85,6 @@ export const ShoppingCart = () => {
     ))
     const onChangeAdditionInfo = (event) => {
         console.log(event)
-            const checkBoxResponse = 0;
-            // if(event.target.value)
             if(event.target.name === 'karta' || event.target.name === 'gotówka'){
                 setAdditionInfo({
                     ...additionInfo,
@@ -118,33 +97,36 @@ export const ShoppingCart = () => {
                 })
             }
     }
+    console.log(shoppingState)
     return(
         <>
         <ShoppingCartContainer>
+            { shoppingState.length ? 
             <OrderInformationBox>
-                <AddressWrapper>
-                    <Label>Adres dostawy..</Label>
-                    <AdressInput placeholder="adres dostawy.." name="address" onChange={onChangeAdditionInfo}/>
-                </AddressWrapper>
-                <AddressWrapper>
-                    <Label>Numer telefonu..</Label>
-                    <AdressInput placeholder="Numer telefonu.." name="phone" onChange={onChangeAdditionInfo}/>
-                </AddressWrapper>
-                <PaymentWrapper>
-                    <Label>Płatność..</Label>
-                    <checkBoxWrapper>
-                        <PaymentCheckBox name="karta" onChange={onChangeAdditionInfo}/>
-                        <PaymentCheckboxLabel>karta</PaymentCheckboxLabel>
-                    </checkBoxWrapper>
-                    <checkBoxWrapper>
-                        <PaymentCheckBox name="gotówka" onChange={onChangeAdditionInfo}/>
-                        <PaymentCheckboxLabel>gotówka</PaymentCheckboxLabel>
-                    </checkBoxWrapper>
-                </PaymentWrapper>
-                
-            </OrderInformationBox>
+            <AddressWrapper>
+                <Label>Adres dostawy..</Label>
+                <AdressInput placeholder="adres dostawy.." name="address" onChange={onChangeAdditionInfo}/>
+            </AddressWrapper>
+            <AddressWrapper>
+                <Label>Numer telefonu..</Label>
+                <AdressInput placeholder="Numer telefonu.." name="phone" onChange={onChangeAdditionInfo}/>
+            </AddressWrapper>
+            <PaymentWrapper>
+                <Label>Płatność..</Label>
+                <checkBoxWrapper>
+                    <PaymentCheckBox name="karta" onChange={onChangeAdditionInfo}/>
+                    <PaymentCheckboxLabel>karta</PaymentCheckboxLabel>
+                </checkBoxWrapper>
+                <checkBoxWrapper>
+                    <PaymentCheckBox name="gotówka" onChange={onChangeAdditionInfo}/>
+                    <PaymentCheckboxLabel>gotówka</PaymentCheckboxLabel>
+                </checkBoxWrapper>
+            </PaymentWrapper>
+            
+        </OrderInformationBox>
+            : null
+        }
             <SCName>Twoje zamówienie..</SCName>
-            {selected && <DeleteIcon onClick={deleteSelected}>Usuń zaznaczone</DeleteIcon>}
             <OrderField>
                 {productList}
             </OrderField>

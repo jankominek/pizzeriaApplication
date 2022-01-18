@@ -29,14 +29,38 @@ export const IngredientField = styled.div`
     width: 70%;
     border-radius: 10px;
     border: 1px solid black;
-    margin: 0.25rem 0rem;
+    // margin: 0.25rem 0rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    align-items: center;
 `
 export const ProductWithCheckBoxContainer = styled.div`
     
 `
 
+export const IngredientCountWrapper = styled.div`
+    // width: 5rem;
+    // height: 3rem;
+    // border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+export const FlexWrapper = styled.div`
+    display: flex;
+`
+export const CountField = styled.p`
+    font-size: 1.5rem;
+    padding: 0 .5rem;
+`
+export const IconWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background: red;
+    font-size: 2rem;
+    cursor: pointer;
+`
 export const CheckBox = styled.input.attrs({ type: 'checkbox' })`
 margin-left: 1rem;
 `
@@ -50,6 +74,19 @@ export const Price = styled.p`
     text-align: right;
     margin-right: 2rem;
 `
+export const CloseButton = styled.div`
+    padding: 1rem 2rem;
+    background: red;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    margin-left: .5rem;
+    margin-right: .5rem;
+    margin-bottom: 1rem;
+`
 export const AddButton = styled.div`
     padding: 1rem 2rem;
     background: #9AE66E;
@@ -59,5 +96,7 @@ export const AddButton = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: 1rem;
+    margin-left: .5rem;
+    margin-right: .5rem;
     margin-bottom: 1rem;
 `

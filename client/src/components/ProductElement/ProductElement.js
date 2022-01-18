@@ -22,7 +22,7 @@ export const ProductElement = (props) => {
                 <IngredientFieldList>
                     {ingredientList}
                 </IngredientFieldList>
-                <Price>{price}</Price>
+                <Price>{price} zł</Price>
                 <BuyButton onClick={navigateToProduct}>Kup teraz..</BuyButton>
             </ProductElementContainer>
         </>
