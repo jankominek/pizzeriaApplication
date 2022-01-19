@@ -7,7 +7,7 @@ export const ProductElement = (props) => {
     const navigate = useNavigate();
 
     const ingredientList = ingredients.map( ing => (
-        <SpanIngeredient>{ing}</SpanIngeredient>
+        <SpanIngeredient> {" " + ing + " "}  </SpanIngeredient>
     ))
 
     const navigateToProduct = () => {
