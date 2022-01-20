@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Login } from "../components/Login/Login";
 import { CheckPermissions } from "./CheckPermissions";
 import { Navigate, Route, useNavigate} from "react-router";
@@ -7,6 +7,11 @@ import { UserPage } from "../view/userPage/UserPage";
 
 
 export const AuthRoute = ({component : RouteComponent, role}) => {
+
+
+    useEffect(()=>{
+        
+    }, [])
 
     const userRole = useSelector(state => state.userInfo)
  

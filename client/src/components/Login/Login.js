@@ -18,7 +18,7 @@ export const Login = () => {
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        if(isLoggedIn) navigate("/pizzeria")
+        if(isLoggedIn) navigate("/admin");//navigate("/pizzeria")
     }, [isLoggedIn])
     const redirectToRegister = () => {
         navigate('/register');
