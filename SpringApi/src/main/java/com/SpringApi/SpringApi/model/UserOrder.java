@@ -2,6 +2,8 @@ package com.SpringApi.SpringApi.model;
 
 
 import com.SpringApi.SpringApi.utils.PaymentEnum;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +33,7 @@ public class UserOrder {
     @Column(name = "date")
     private Timestamp date;
 
+    @JsonManagedReference
     @ManyToOne()
     @JoinColumn(name = "paymentId")
     private Payment payment;
@@ -50,8 +53,14 @@ public class UserOrder {
     @Column(name = "priceDate")
     private Timestamp price_date;
 
+    @JsonManagedReference
     @ManyToOne()
     @JoinColumn(name = "userId", nullable = false)
     private User userId;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "userOrder")
+    private List<DishOrder> dishOrderList;
+
 
 }

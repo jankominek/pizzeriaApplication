@@ -10,16 +10,15 @@ export const TableWrapper = styled.div`
     // align-items: center;
 `
 export const RowTable = styled.div`
-    width: 96%;
+    width: 100%;
     height: 3rem;
-    border: 1px solid red;
     border-radius: 2.5px;
     margin: .5rem 0;
 `
 export const ColumnWrapper = styled.div`
     display: flex;
     width: 100%;
-    border-bottom: 1px solid black;
+    // border-bottom: 1px solid black;
 `
 export const ColumnRow = styled.div`
     display: flex;

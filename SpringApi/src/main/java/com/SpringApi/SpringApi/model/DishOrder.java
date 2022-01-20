@@ -1,5 +1,7 @@
 package com.SpringApi.SpringApi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +30,7 @@ public class DishOrder {
     @Column(name = "dish_price")
     private Float dishPrice;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "orderId", nullable = false)
     private UserOrder userOrder;

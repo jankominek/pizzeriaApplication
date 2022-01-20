@@ -1,6 +1,7 @@
 package com.SpringApi.SpringApi.model;
 
 import com.SpringApi.SpringApi.utils.PaymentEnum;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class Payment {
     @Column(name = "type")
     private String type;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "payment")
     private List<UserOrder> indent;
 }

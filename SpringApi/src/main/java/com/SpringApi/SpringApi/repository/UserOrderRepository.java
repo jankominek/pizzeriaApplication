@@ -6,8 +6,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
+import java.util.List;
 
 @Repository
-public interface UserOrderRepository extends JpaRepository<UserOrder, BigInteger> {
-
+public interface UserOrderRepository extends JpaRepository<UserOrder, Integer> {
+    List<UserOrder> findAllByStatus(Integer status);
 }

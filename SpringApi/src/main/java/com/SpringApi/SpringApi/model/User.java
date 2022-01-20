@@ -1,6 +1,7 @@
 package com.SpringApi.SpringApi.model;
 
 import com.SpringApi.SpringApi.utils.PersonType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -53,6 +54,7 @@ public class User {
     @Column(name = "isVerified")
     private Boolean isVerified;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "userId")
     private List<UserOrder> orders;
 }
