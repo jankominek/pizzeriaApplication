@@ -15,5 +15,6 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
     @Query("select d from Dish d where d.dishName = ?1")
     Dish findDishByDishName(String name);
 
+    Dish findDishByDishId(Integer dishId);
 //    Dish findByDishName(String name);
 }

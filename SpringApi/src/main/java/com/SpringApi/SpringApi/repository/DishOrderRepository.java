@@ -1,6 +1,7 @@
 package com.SpringApi.SpringApi.repository;
 
 import com.SpringApi.SpringApi.model.DishOrder;
+import com.SpringApi.SpringApi.model.UserOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +11,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 
 public interface DishOrderRepository extends JpaRepository<DishOrder, Integer> {
@@ -18,6 +21,9 @@ public interface DishOrderRepository extends JpaRepository<DishOrder, Integer> {
     @Transactional
     @Query(value = "select calculateOrderPrice(?1) as calculateOrderPrice", nativeQuery = true)
     Integer myFunc(Integer myint);
+
+    List<DishOrder> findAllByUserOrder(UserOrder userOrder);
+
 
 //    @Procedure("myFunc")
 //    Integer myFunc();
