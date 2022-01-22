@@ -29,6 +29,7 @@ public class Ingredient {
     @ManyToMany(mappedBy = "ingredients")
     List<Dish> dishes;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "ingredient")
     private List<DishModify> dishModifyList;
 }

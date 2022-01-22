@@ -12,7 +12,7 @@ export const AdminPageContainer = styled.div`
 
 export const TableOptionsContainer = styled.div`
     padding: 1rem 1rem;
-    border: 1px solid black;
+    // border: 1px solid black;
     display: flex;
 `
 
@@ -25,6 +25,7 @@ export const OptionField = styled.div`
     border-radius: 5px;
     margin: 0 1rem;
     cursor: pointer;
+    background: ${props => props.isSelected? "#D0D0D0" : "white"};
 `
 
 export const TableWrapper = styled.div`

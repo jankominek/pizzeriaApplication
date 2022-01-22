@@ -38,10 +38,12 @@ public class DishOrder {
     @JoinColumn(name = "orderId", nullable = false)
     private UserOrder userOrder;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "dishId", nullable = false)
     private Dish dishId;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "dishOrder")
     private List<DishModify> dishModifyList;
 
