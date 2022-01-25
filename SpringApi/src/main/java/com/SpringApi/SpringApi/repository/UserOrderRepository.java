@@ -1,5 +1,6 @@
 package com.SpringApi.SpringApi.repository;
 
+import com.SpringApi.SpringApi.model.Employee;
 import com.SpringApi.SpringApi.model.UserOrder;
 import com.SpringApi.SpringApi.utils.UserStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,4 +24,9 @@ public interface UserOrderRepository extends JpaRepository<UserOrder, Integer> {
     @Modifying
     @Query("update UserOrder u set u.status = :userStatus where u.orderId = :orderId")
     void changeUserStatus(@Param(value ="userStatus") Integer userStatus, @Param(value = "orderId") Integer orderId);
+
+    @Transactional
+    @Modifying
+    @Query("update UserOrder u set u.employeeId = :emp where u.orderId = :orderId")
+    void addEmployeeToOrder(@Param(value ="emp") Employee emp, @Param(value = "orderId") Integer orderId);
 }

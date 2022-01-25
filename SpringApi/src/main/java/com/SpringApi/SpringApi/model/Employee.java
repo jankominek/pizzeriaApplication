@@ -1,11 +1,19 @@
 package com.SpringApi.SpringApi.model;
 
 import com.SpringApi.SpringApi.utils.PersonType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "employee")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employee {
 
     @Id
@@ -24,16 +32,19 @@ public class Employee {
     @Column(name = "password")
     private String password;
 
-    @OneToOne()
-    @JoinColumn(name = "voivodeshipId", referencedColumnName = "voivodeshipId")
+    @ManyToOne
+    @JoinColumn(name = "veivodeship")
     private Voivodeship voivodeship;
 
-    @OneToOne()
-    @JoinColumn(name = "cityId", referencedColumnName = "cityId")
+    @ManyToOne()
+    @JoinColumn(name = "cityId")
     private City city;
 
     @Column(name = "typ")
     @Enumerated(EnumType.STRING)
     private PersonType type;
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "employeeId")
+    private List<UserOrder> orders;
 }

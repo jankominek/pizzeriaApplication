@@ -58,6 +58,11 @@ public class UserOrder {
     @JoinColumn(name = "userId", nullable = false)
     private User userId;
 
+    @JsonManagedReference
+    @ManyToOne()
+    @JoinColumn(name = "employeeId")
+    private Employee employeeId;
+
     @JsonBackReference
     @OneToMany(mappedBy = "userOrder")
     private List<DishOrder> dishOrderList;

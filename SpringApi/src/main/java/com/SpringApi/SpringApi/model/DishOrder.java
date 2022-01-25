@@ -31,7 +31,7 @@ public class DishOrder {
     private Integer count;
 
     @Column(name = "dish_price")
-    private Float dishPrice;
+    private Double dishPrice;
 
     @JsonManagedReference
     @ManyToOne

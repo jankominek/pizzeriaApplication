@@ -22,4 +22,8 @@ public class City {
     @JsonBackReference
     @OneToMany(mappedBy = "city")
     private List<User> userList;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "city")
+    private List<Employee> employeeList;
 }

@@ -6,6 +6,24 @@
 -- return 5;
 -- END
 
+insert into voivodeship(voivodeship_id, voivodeship_name) values (1, 'Wielkopolskie'),
+                                                                 (2, 'Mazowieckie');
+
+insert into city(city_id, city_name) values (1, 'Poznań'),
+                                            (2, 'Kalisz'),
+                                            (3, 'Konin'),
+                                            (4, 'Piła'),
+                                            (5, 'Leszno'),
+                                            (6, 'Luboń'),
+                                            (7, 'Warszawa'),
+                                            (8, 'Ciechanów'),
+                                            (9, 'Radom');
+
+insert into employee(employee_id, email, last_name, name, password, typ, city_id, veivodeship)
+values (1, 'admin@gmail.com', 'admin', 'admin', 'admin', 'ADMIN', 1, 1),
+       (2, 'kacper@gmail.com', 'szaur', 'kacper', 'kacper', 'ADMIN', 3, 1),
+        (3, 'janek@gmail.com', 'kominek', 'janek', 'janek', 'ADMIN', 1, 1);
+
 insert into ingredient(ingredient_id, ingredient_name, ingredient_price) values (1, 'Pepperoni', 5.50),
                                        (2, 'Szynka', 5.50),
                                        (3, 'Wołowina', 5.50),
@@ -104,19 +122,6 @@ insert into dish_ingredient(dish_id, ingredient_id) values (1, 5),
                                                            (17, 8);
 
 
-
-insert into voivodeship(voivodeship_id, voivodeship_name) values (1, 'Wielkopolskie'),
-                                                                 (2, 'Mazowieckie');
-
-insert into city(city_id, city_name) values (1, 'Poznań'),
-                                            (2, 'Kalisz'),
-                                            (3, 'Konin'),
-                                            (4, 'Piła'),
-                                            (5, 'Leszno'),
-                                            (6, 'Luboń'),
-                                            (7, 'Warszawa'),
-                                            (8, 'Ciechanów'),
-                                            (9, 'Radom');
 insert into payment(payment_id, type) values (1, 'GOTÓWKA'), (2, 'KARTA');
 
 

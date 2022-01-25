@@ -54,4 +54,9 @@ public class UserController {
         userService.updateUserCredentials(email, newUser);
     }
 
+    @PostMapping("/addEmployee")
+    public void addEmployee(){
+
+    }
+
 }

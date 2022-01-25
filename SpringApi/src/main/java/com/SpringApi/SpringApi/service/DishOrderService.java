@@ -13,7 +13,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class DishOrderService {
@@ -32,9 +36,32 @@ public class DishOrderService {
     IngredientRepository ingredientRepository;
     @Autowired
     PaymentRepository paymentRepository;
+    @Autowired
+    EmployeeRepository employeeRepository;
 
     public User getUser(String email){
         return userRepository.findUserByEmail(email);
+    }
+
+    public Employee getEmployeeToOrder(){
+        List<Employee> employeeList =employeeRepository.findAll();
+        Random random = new Random();
+        Integer stop = 0;
+        Integer selectedValue = null;
+//        while(stop.equals(0)){
+//            Integer randomNumber = random.nextInt(employeeList.size());
+//            if(!randomNumber.equals(0)) {
+//                selectedValue = randomNumber;
+//                stop = 1;
+//
+//            }
+//        }
+        Integer randomNumber = random.nextInt(employeeList.size()) + 1;
+        System.out.println("selected value: " + selectedValue);
+        Employee selectedEmployee = employeeList.get(selectedValue - 1);
+
+        return selectedEmployee;
+
     }
 
     @Transactional
@@ -42,6 +69,7 @@ public class DishOrderService {
         Timestamp date = new Timestamp(System.currentTimeMillis());
         User user = getUser(email);
         Payment paymentInstance = paymentRepository.findByType(payment);
+//        Employee employee = getEmployeeToOrder();
         UserOrder userOrder = UserOrder.builder()
                 .date(date)
                 .price_date(date)
@@ -49,11 +77,12 @@ public class DishOrderService {
                 .adressOrder(address)
                 .payment(paymentInstance)
                 .status(-1)
-                .userId(user).build();
+                .userId(user)
+                .build();
         userOrderRepository.save(userOrder);
 
-        Integer result = dishOrderRepository.myFunc(69);
-        System.out.println(result);
+//        Integer result = dishOrderRepository.myFunc(69);
+//        System.out.println(result);
         return userOrder;
     }
 
@@ -67,18 +96,50 @@ public class DishOrderService {
                     .count(1)
                     .isMod(dishModel.getIsMod())
                     .dishId(dish)
+                    .dishPrice(dish.getDishPrice())
                     .userOrder(userOrder)
                     .build();
             dishOrderRepository.save(builtDish);
-
             if(dishModel.getIsMod().equals(true)){
+
                 dishModel.getIngredients().stream().forEach(ingredient -> {
                     Ingredient ingredientObject = ingredientRepository.findIngredientByIngredientName(ingredient);
-                    DishModify modifiedDish = DishModify.builder().ingredientCount(1).dishOrder(builtDish).ingredient(ingredientObject).build();
+
+                    DishModify modifiedDish = DishModify.builder()
+                            .ingredientCount(1)
+                            .dishOrder(builtDish)
+                            .ingredient(ingredientObject)
+                            .build();
                     dishModifyRepository.save(modifiedDish);
                 });
+//                List<Ingredient> listWithOnlyAdditionalIngredients = ingredientsList.stream().filter( ingredient -> {
+//                    for( Ingredient dishIng : dish.getIngredients()){
+//                        if(dishIng.getIngredientName().equals(ingredient.getIngredientName())) return false;
+//                    }
+//                    return true;
+//                }).collect(Collectors.toList());
+//                List<Ingredient> listWithOnlyAdditionalIngredients =
+                System.out.println("==========================================");
+                // updating modified dishes price
 
+                List<DishModify> dishModifyObject =  dishModifyRepository.findAllByDishOrder(builtDish);
+                List<Ingredient> ingredientsFromModify = dishModifyObject.stream().map( obj -> obj.getIngredient()).collect(Collectors.toList());
+                System.out.println(" before : " + ingredientsFromModify.size());
+                List<Ingredient> originalIngredients = dish.getIngredients();
+                ingredientsFromModify.removeAll(originalIngredients);
+                System.out.println("after : " + ingredientsFromModify.size());
+                Double priceFromModified = ingredientsFromModify.stream().mapToDouble(d -> d.getIngredientPrice()).sum();
+                System.out.println("price " + priceFromModified);
+                Double price = dish.getDishPrice() + priceFromModified;
+
+                dishOrderRepository.modifyDishPrice(price, builtDish.getDishOrderId());
+
+
+//                for(Ingredient a : listWithOnlyAdditionalIngredients){
+//                    System.out.println(a.getIngredientName());
+//                }
             }
+
         });
 
 

@@ -10,4 +10,5 @@ public interface DishModifyRepository extends JpaRepository<DishModify, Integer>
 
 //    List<Dish_modify> saveAll();
     DishModify findDishModifyByDishOrder(DishOrder dishOrder);
+    List<DishModify> findAllByDishOrder(DishOrder dishOrder);
 }

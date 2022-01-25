@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const TableWrapper = styled.div`
-    width: 85rem;
+    min-width: 85rem;
     height: 30rem;
     border: 2px solid #D0D0D0;
     display: flex;
@@ -9,6 +9,7 @@ export const TableWrapper = styled.div`
     border-radius: 5px; 
     margin-top: 5rem;
     // align-items: center;
+    overflow-y: scroll;
 `
 export const RowTable = styled.div`
     width: 100%;

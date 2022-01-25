@@ -23,6 +23,8 @@ public class UserOrderService {
     DishModifyRepository dishModifyRepository;
     @Autowired
     IngredientRepository ingredientRepository;
+    @Autowired
+    EmployeeRepository employeeRepository;
 
     public List<UserWithOrdersAndDishesDTO> getAllOrdersByStatusWithUserInfo(Integer status) {
         List<UserOrder> userOrderList = userOrderRepository.findAllByStatus(status);
@@ -85,5 +87,10 @@ public class UserOrderService {
             return true;
         }
         return false;
+    }
+
+    public void addEmployeeToOrder(Integer employeeId, Integer orderId){
+        Employee employee = employeeRepository.getById(employeeId);
+        userOrderRepository.addEmployeeToOrder(employee, orderId);
     }
 }
