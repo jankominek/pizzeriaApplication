@@ -1,7 +1,7 @@
 import { Table } from "../adminComponents/table"
 import CollapsibleTable from "../adminComponents/table"
 import BasicTable from "../adminComponents/table"
-import { AdminPageContainer, OptionField, TableOptionsContainer, TableWrapper } from "./AdminPage.styles"
+import { AddEmployeeBtn, AdminPageContainer, OptionField, TableOptionsContainer, TableWrapper } from "./AdminPage.styles"
 import axios from "axios"
 import { useEffect, useState } from "react"
 
@@ -30,7 +30,7 @@ export const AdminPage = () => {
     console.log("selected status: ", selectedStatus)
     return(
         <AdminPageContainer>
-        
+            <AddEmployeeBtn>Dodaj pracownika</AddEmployeeBtn>
             <TableOptionsContainer>
                 <OptionField onClick={changeSelectedStatus} id={-1} isSelected={ selectedStatus == -1 ? true : false}>Zamówienia do zrealizowania</OptionField>
                 <OptionField onClick={changeSelectedStatus} id={0} isSelected={ selectedStatus == 0 ? true : false}>Zamówienia w trakcie realizacji</OptionField>
