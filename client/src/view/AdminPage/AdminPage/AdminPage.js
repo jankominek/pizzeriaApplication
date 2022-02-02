@@ -19,7 +19,7 @@ export const AdminPage = () => {
     const getOrdersBystatus = (status) => {
         axios.get(`http://localhost:8079/order/allOdersByStatus/${status}`)
             .then(response => {
-                console.log(response.data)
+                console.log("ASDASDASDASDASDA" ,response.data)
                 setSelectedOrders(response.data)
             })
     }

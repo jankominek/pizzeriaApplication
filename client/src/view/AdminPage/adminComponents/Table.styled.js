@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const TableWrapper = styled.div`
-    min-width: 85rem;
+    min-width: 93rem;
     height: 30rem;
     border: 2px solid #D0D0D0;
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     border-radius: 5px; 
     margin-top: 5rem;
     // align-items: center;
@@ -19,7 +19,7 @@ export const RowTable = styled.div`
     display: flex;
     flex-direction: column;
     // justify-content: center;
-    align-items: center;   
+    // align-items: center;   
 `
 export const ColumnWrapper = styled.div`
     display: flex;

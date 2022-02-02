@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AddEmployeeToOrderModal } from "../AddEmployeeToOrderModal";
+import { PasswordModal } from "../PasswordModal";
 import { BorderRight, ColumnRow, ColumnWrapper, DishInfoField, DishInfoIngredientsContainer, DishInfoName, DishInfoWrapper, IngredientField, Layer, Row, RowButton, RowField, RowFlexCol, RowTable, TableWrapper, Test } from "./Table.styled"
 
-const columns = ['ID', 'adres', 'imię', 'nazwisko', 'email', 'nr.tel', 'miasto', 'województwo', 'kwota', '           ']
+const columns = ['ID', 'adres', 'imię', 'nazwisko', 'email', 'nr.tel', 'miasto', 'województwo', 'kwota', 'Obsługuje']
 const dataRow = [1, 'ADRESTEST', 'jan', 'kominek', 'jan@gmail.com', 'poznan', 'WLKP', 48];
-const columnsSizes = ['4rem', '9rem', '9rem', '9rem',"12rem", "7rem", "10rem", "10rem", "6rem"];
+const columnsSizes = ['4rem', '9rem', '9rem', '9rem',"12rem", "7rem", "10rem", "10rem", "6rem", "7rem"];
 
 
 export const Table = (props) => {
@@ -18,9 +19,12 @@ export const Table = (props) => {
     const [isModalShowing, setIsModalShowing] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState();
     const [isEmployeeAdded, setIsEmployeeAdded] = useState(false);
+    const [isPasswordModalShowing, setIsPasswordModalShowing] = useState(false);
+    const [selectedOrderId, setSelectedOrderId] = useState();
 
 
     useEffect(()=>{
+        // const generalOrders = prepareOrders(props.orders)
         setOrders(props.orders)
     }, [props.orders])
 
@@ -31,6 +35,12 @@ export const Table = (props) => {
             <ColumnRow widthField={columnsSizes[i]}>{col}</ColumnRow>
         </>
     ))
+
+    // const prepareOrders = (data) => {
+    //     const ordersWithEmployee = data.map( obj => ({...obj, employeeId : null}));
+
+    //     return ordersWithEmployee;
+    // }
 
     const changeOrderStatus = (orderId) => {
         console.log("order : ", orderId)
@@ -56,11 +66,36 @@ export const Table = (props) => {
     const finishOrder = (event) => {
         const id = event.target.id;
         console.log("order in realizeOrder : ", id)
+        setSelectedOrderId(id)
+        setIsPasswordModalShowing(true);
+        // removeFromOrders(id);
+    }
+
+    const removeFromOrders = (id) => {
         const filteredOrder = id && orders.filter( order => order.idOrder == id);
         const newOrderArray = orders.filter( orderObject =>  orderObject.idOrder !== filteredOrder[0].idOrder);
         changeOrderStatus(id);
         setOrders(newOrderArray);
     }
+
+    const onCloseModalPassword = () => {
+        setIsPasswordModalShowing(false)
+    }
+    console.log("isEmployeeAdded : ", isEmployeeAdded)
+    const onSaveModalPassword = (password) => {
+        setIsPasswordModalShowing(false);
+        const userIdFromOrder = selectedOrderId && orders.filter( order => order.idOrder == selectedOrderId)[0].employeeId;
+        if(userIdFromOrder){
+            axios.get(`http://localhost:8079/employee/checkBy/${parseInt(userIdFromOrder)}/${password}`)
+            .then(response => {
+                console.log("response : ", response.data)
+                response.data && removeFromOrders(selectedOrderId);
+            })
+        }
+        console.log("userIdFromOrder xxxxxxxxxxxxxxxxxxxxxxxxxx: ", userIdFromOrder)
+    }
+
+
     console.log("selected order : ", showedOrder)
     const showOrderDetails = (event) =>{
         const id = event.target.id;
@@ -78,13 +113,27 @@ export const Table = (props) => {
         }
     }
 
+    const isPasswordCorrect = (userId, password) => {
+        if(userId && password){
+            axios.get(`http://localhost:8079/employee/checkBy/${parseInt(userId)}/${password}`)
+                .then(response => {
+                    console.log("response : ", response.data)
+                    response.data && postEmployeeToOrder(selectedOrder, userId);
+                })
+        }
+        if(!userId || !password){
+            return false;
+        }
+        
+    }
+
     const onCloseModal = () => {
         setIsModalShowing(false)
     }
     console.log("isEmployeeAdded : ", isEmployeeAdded)
-    const onSaveModal = (empId) => {
+    const onSaveModal = (empId, password) => {
         setIsModalShowing(false);
-        postEmployeeToOrder(selectedOrder, empId);
+        isPasswordCorrect(empId, password)
     }
 
     const rowList = orders.map((order, i) => (
@@ -100,6 +149,7 @@ export const Table = (props) => {
             <RowField widthField="10rem">{order.city}</RowField>
             <RowField widthField="10rem">{order.voivodeship}</RowField>
             <RowField widthField="6rem">{order.price}</RowField>
+            <RowField widthField="7rem">{order.employeeId}</RowField>
             { status == -1 && <RowButton widthField="9rem" id={order.idOrder} onClick={realizeOrder}>realizuj</RowButton>}
             { status == 0 && <RowButton widthField="9rem" id={order.idOrder} onClick={finishOrder}>zakończ</RowButton>}
         </Row>
@@ -139,10 +189,10 @@ export const Table = (props) => {
                 </RowTable>
                 { isModalShowing && <AddEmployeeToOrderModal onCloseModal={onCloseModal}
                                                             onSaveModal={onSaveModal}
-                                                            
-                                                            
-                                                            
                                                             />}
+                                                            
+                { isPasswordModalShowing && <PasswordModal onCloseModal={onCloseModalPassword}
+                                                            onSaveModal={onSaveModalPassword}/>}
             </TableWrapper>
         </>
     )

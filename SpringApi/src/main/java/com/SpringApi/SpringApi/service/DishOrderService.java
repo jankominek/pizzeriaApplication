@@ -13,10 +13,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +36,7 @@ public class DishOrderService {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    public User getUser(String email){
+    public Optional<User> getUser(String email){
         return userRepository.findUserByEmail(email);
     }
 
@@ -67,15 +64,16 @@ public class DishOrderService {
     @Transactional
     public UserOrder createOrder(String email, String address, String payment, String phone){
         Timestamp date = new Timestamp(System.currentTimeMillis());
-        User user = getUser(email);
+        User user = getUser(email).get();
         Payment paymentInstance = paymentRepository.findByType(payment);
-//        Employee employee = getEmployeeToOrder();
+        Employee admin = employeeRepository.getById(1);
         UserOrder userOrder = UserOrder.builder()
                 .date(date)
                 .price_date(date)
                 .phoneNumber(phone)
                 .adressOrder(address)
                 .payment(paymentInstance)
+                .employeeId(admin)
                 .status(-1)
                 .userId(user)
                 .build();

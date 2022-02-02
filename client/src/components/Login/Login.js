@@ -12,13 +12,15 @@ export const Login = () => {
 
     const [credentials, setCredentials] = useState({email: "", password: ""})
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAdminLoggedin, setIsAdminLoggedIn] = useState(false)
     const [emailErrorMessage, setEmailErrorMessage] = useState();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        if(isLoggedIn) navigate("/admin");//navigate("/pizzeria")
+        isLoggedIn && !isAdminLoggedin && navigate("/pizzeria");
+        isLoggedIn && isAdminLoggedin && navigate("/admin");
     }, [isLoggedIn])
     const redirectToRegister = () => {
         navigate('/register');
@@ -26,8 +28,15 @@ export const Login = () => {
     const logInUser = () => {
         axios.post("http://localhost:8079/pizza/login", credentials)
         .then(response => {
-            setIsLoggedIn(response.data)
-            getUserInfo(credentials.email)
+            console.log("RESP : ", response.data)
+            if(response.data && response.data === 'KLIENT'){
+                setIsLoggedIn(true);
+            }
+            if(response.data && response.data ==='ADMIN'){
+                setIsAdminLoggedIn(true);
+                setIsLoggedIn(true);
+            }
+            getUserInfo(credentials.email, response.data)
             if(response.status == 200) console.log("correct login")
         }).catch( error => {
               if(error.response.status == 500){
@@ -37,8 +46,9 @@ export const Login = () => {
         })
     }
 
-    const getUserInfo = (email) => {
-        axios.get(`http://localhost:8079/pizza/getUserInfo/${email}`)
+    const getUserInfo = (email, role) => {
+        if(role == 'KLIENT'){
+            axios.get(`http://localhost:8079/pizza/getUserInfo/${email}`)
             .then( response => {
                 const data = response.data;
                 const userInfoData = {
@@ -49,6 +59,22 @@ export const Login = () => {
                 }
                 dispatch(setUserInfoAction(userInfoData))
             })
+        }
+        if(role == 'ADMIN'){
+            axios.get(`http://localhost:8079/employee/getEmployeeInfo/${email}`)
+            .then( response => {
+                const data = response.data;
+                const userInfoData = {
+                    userId: data.employeeId,
+                    email: data.email,
+                    name: data.name,
+                    lastName : data.lastName,
+                    role : data.role
+                }
+                dispatch(setUserInfoAction(userInfoData))
+            })
+        }
+        
     }
 
     const sendCredentials = () => {

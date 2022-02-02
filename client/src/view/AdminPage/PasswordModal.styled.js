@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ModalWrapper = styled.div`
+export const PasswordModalWrapper = styled.div`
     width: 100%;
     height: 100%;
     background: transparent;
@@ -9,7 +9,7 @@ export const ModalWrapper = styled.div`
     position: absolute;
     opacity: 1;
 `
-export const ModalContainer = styled.div`
+export const PasswordModalContainer = styled.div`
     width: 30rem;
     height: 15rem;
     position absolute;
@@ -29,8 +29,8 @@ export const Flex = styled.div`
     display: flex;
 `
 
-export const InputEmployeeId = styled.input`
-    width: 50%;
+export const PasswordInput = styled.input`
+    width: 60%;
     height: 2rem;
     padding: .5rem .5rem;
     margin: 1rem 1rem;
@@ -46,7 +46,6 @@ export const InputEmployeeId = styled.input`
 export const Button = styled.div`
     padding: .5rem 2rem;
     display: flex;
-    cursor: pointer;
     justify-content: center;
     align-items: center;
     margin: 1rem 1rem;

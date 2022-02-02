@@ -60,7 +60,7 @@ public class UserOrder {
 
     @JsonManagedReference
     @ManyToOne()
-    @JoinColumn(name = "employeeId")
+    @JoinColumn(name = "employeeId", nullable = true)
     private Employee employeeId;
 
     @JsonBackReference

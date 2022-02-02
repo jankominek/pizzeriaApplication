@@ -3,8 +3,10 @@ package com.SpringApi.SpringApi.service;
 import com.SpringApi.SpringApi.dto.UserCredentialsDto;
 import com.SpringApi.SpringApi.dto.UserInfoDto;
 import com.SpringApi.SpringApi.model.City;
+import com.SpringApi.SpringApi.model.Employee;
 import com.SpringApi.SpringApi.model.Voivodeship;
 import com.SpringApi.SpringApi.repository.CityRepository;
+import com.SpringApi.SpringApi.repository.EmployeeRepository;
 import com.SpringApi.SpringApi.repository.UserRepository;
 import com.SpringApi.SpringApi.model.User;
 import com.SpringApi.SpringApi.repository.VoivodeshipRepository;
@@ -31,12 +33,16 @@ public class UserService {
     @Autowired
     EmailSenderService emailSenderService;
 
-    public User getUser(String email) {
+    @Autowired
+    EmployeeRepository employeeRepository;
+
+    public Optional<User> getUser(String email) {
         return userRepository.findUserByEmail(email);
     }
 
+
     public UserCredentialsDto getUserCredentialsDto(String email){
-        User user = getUser(email);
+        User user = getUser(email).get();
         return UserCredentialsDto.builder()
                 .firstname(user.getFirstname())
                 .lastname(user.getLastName())
@@ -46,21 +52,53 @@ public class UserService {
                 .city_id(user.getCity().getCityId()).build();
     }
 
-    public Boolean loginUser(UserCredentialsDto user){
-        User userEntity = getUser(user.getEmail());
-        UserCredentialsDto userAuth = toCredentialsDto(userEntity);
-
-            if (!userAuth.getEmail().equals(user.getEmail()) || !userAuth.getPassword().equals(user.getPassword())) {
-                System.out.println("nie udalo sie zalogowac");
-                return false;
-            }
-            System.out.println("udalo sie zalogować");
+    public Boolean checkUserByPassword(Integer id, String password){
+        User user = userRepository.findUserByUserId(id);
+        if(password.equals(user.getPassword())){
             return true;
+        }
+        return false;
+    }
+
+    public String loginUser(UserCredentialsDto user){
+
+            Optional<User> isUserExists = getUser(user.getEmail());
+        System.out.println("is user exists? " + !isUserExists.isEmpty());
+            if(!isUserExists.isEmpty()){
+                User userEntity = getUser(user.getEmail()).get();
+                UserCredentialsDto userAuth = toCredentialsUserDto(userEntity);
+
+                if (!userAuth.getEmail().equals(user.getEmail()) || !userAuth.getPassword().equals(user.getPassword())) {
+                    System.out.println("nie udalo sie zalogowac");
+                    return null;
+                }
+                System.out.println("udalo sie zalogować");
+                return userEntity.getType().toString();
+            }
+
+            Optional<Employee> isEmployeeExists = employeeRepository.findEmployeeByEmail(user.getEmail());
+        System.out.println("is employee exists? " + !isEmployeeExists.isEmpty());
+            if(!isEmployeeExists.isEmpty()){
+                Employee employee = employeeRepository.findEmployeeByEmail(user.getEmail()).get();
+                UserCredentialsDto userAuth = toCredentialsEmployeeDto(employee);
+
+                if (!userAuth.getEmail().equals(user.getEmail()) || !userAuth.getPassword().equals(user.getPassword())) {
+                    System.out.println("nie udalo sie zalogowac");
+                    return null;
+                }
+                System.out.println("udalo sie zalogować");
+                return employee.getType().toString();
+            }
+
+            return null;
     }
 
     public UserInfoDto getUserInfo(String email){
-        User userEntity = getUser(email);
-        return UserEntityToUserInfoDto(userEntity);
+        if(!getUser(email).isEmpty()){
+            User userEntity = getUser(email).get();
+            return UserEntityToUserInfoDto(userEntity);
+        }
+        return null;
     }
 
     public void registerUser(UserCredentialsDto user){
@@ -72,7 +110,7 @@ public class UserService {
 
     @Transactional
     public Boolean verifyAccount(UserVerification userVerification) {
-        String codeEntity = getUser(userVerification.getEmail()).getVCode();
+        String codeEntity = getUser(userVerification.getEmail()).get().getVCode();
         System.out.println(codeEntity);
         if(codeEntity.equals(userVerification.getV_code())) {
             System.out.println("before verification");
@@ -89,10 +127,16 @@ public class UserService {
                 .type(user.getType())
                 .isVerified(user.getIsVerified()).build();
     }
-    public UserCredentialsDto toCredentialsDto(User user){
+    public UserCredentialsDto toCredentialsUserDto(User user){
         return UserCredentialsDto.builder()
                 .email(user.getEmail())
                 .password(user.getPassword()).build();
+    }
+
+    public UserCredentialsDto toCredentialsEmployeeDto(Employee employee){
+        return UserCredentialsDto.builder()
+                .email(employee.getEmail())
+                .password(employee.getPassword()).build();
     }
 
     public User credentialsDtoToUser(UserCredentialsDto user){

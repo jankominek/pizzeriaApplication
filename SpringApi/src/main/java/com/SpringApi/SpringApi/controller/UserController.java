@@ -24,7 +24,7 @@ public class UserController {
 
     @GetMapping("/getUser")
     public User getUser(@RequestBody String email){
-        return userService.getUser(email);
+        return userService.getUser(email).get();
     }
 
     @GetMapping("/user/{email}/information")
@@ -32,12 +32,17 @@ public class UserController {
         return userService.getUserCredentialsDto(email);
     }
 
+    @GetMapping("/users/checkBy/{id}/{password}")
+    public Boolean checkUserPasswordById(@PathVariable Integer id, @PathVariable String password){
+        return userService.checkUserByPassword(id, password);
+    }
+
     @PostMapping("/register")
     public void registerUser(@RequestBody UserCredentialsDto user){ userService.registerUser(user);
     }
 
     @PostMapping("/login")
-    public Boolean loginUser(@RequestBody UserCredentialsDto user) {
+    public String loginUser(@RequestBody UserCredentialsDto user) {
         return userService.loginUser(user);
     }
     @PostMapping("/verification")

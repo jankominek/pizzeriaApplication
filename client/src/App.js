@@ -50,7 +50,7 @@ function App() {
           element={<AuthRoute component={ShoppingCart} role={Role.User} />}>
         </Route>
         <Route path="/admin"
-          element={<AuthRoute component={AdminPage} role={Role.User} />}>
+          element={<AuthRoute component={AdminPage} role={Role.Admin} />}>
         </Route>
         <Route path="*" element={<Login />} />
 

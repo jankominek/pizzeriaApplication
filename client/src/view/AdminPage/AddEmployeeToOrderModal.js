@@ -6,6 +6,7 @@ import { Button, Flex, InputEmployeeId, ModalContainer, ModalWrapper } from "./A
 export const AddEmployeeToOrderModal = (props) => {
 
     const [userId, setUserId] = useState("");
+    const [password, setPassword] = useState("");
     const [idsEmployees, setIdsEmployees] = useState([]);
 
     useEffect(()=>{
@@ -24,22 +25,26 @@ export const AddEmployeeToOrderModal = (props) => {
         setUserId(e.target.value);
     }
 
+    const onChangePassword = (e) => {
+        setPassword(e.target.value)
+    }
+
     const validateId = (id) => {
         if( !id) return false;
         const res = idsEmployees.some( arrId => arrId == id);
         console.log("res valid : ", res);
         return res;
     }
+    
     const SendIdFromModal = () => {
         const validationResult = userId && validateId(userId);
-        if(validationResult){
-            props.onSaveModal(userId)
-        }
+        validationResult && props.onSaveModal(userId, password);
     }
     return(
         <ModalWrapper>
             <ModalContainer>
                 <InputEmployeeId placeholder="Wpisz swój identyfikator" onChange={onChangeId}/>
+                <InputEmployeeId type="password" placeholder="Wpisz swoje hasło.." onChange={onChangePassword}/>
                 <Flex>
                     <Button onClick={SendIdFromModal}>Dodaj</Button>
                     <Button onClick={props.onCloseModal}>Zamknij</Button>

@@ -2,12 +2,10 @@ package com.SpringApi.SpringApi.controller;
 
 import com.SpringApi.SpringApi.model.Employee;
 import com.SpringApi.SpringApi.service.EmployeeService;
+import com.SpringApi.SpringApi.utils.EmployeeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +20,15 @@ public class EmployeeController {
     @GetMapping("/all")
     public List<Employee> getAllEmployees(){
         return employeeService.getAllEmployees();
+    }
+
+    @GetMapping("/checkBy/{id}/{password}")
+    public Boolean checkUserPasswordById(@PathVariable Integer id, @PathVariable String password){
+        return employeeService.checkUserByPassword(id, password);
+    }
+
+    @GetMapping("/getEmployeeInfo/{email}")
+    public EmployeeDto getEmpInfo(@PathVariable String email){
+        return employeeService.getEmpInfo(email);
     }
 }

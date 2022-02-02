@@ -57,8 +57,6 @@ public class UserOrderService {
                         .ingredients(dishModifyIngredients)
                         .build();
             }).collect(Collectors.toList());
-
-
             return UserWithOrdersAndDishesDTO.builder()
                     .idOrder(userOrder.getOrderId())
                     .address(userOrder.getAdressOrder())
@@ -66,6 +64,7 @@ public class UserOrderService {
                     .lastName(user.getLastName())
                     .email(user.getEmail())
                     .phone(userOrder.getPhoneNumber())
+                    .employeeId(userOrder.getEmployeeId().getEmployeeId())
                     .voivodeship(userOrder.getUserId().getVoivodeship().getVoivodeshipName())
                     .city(userOrder.getUserId().getCity().getCityName())
                     .payment(userOrder.getPayment().getType())

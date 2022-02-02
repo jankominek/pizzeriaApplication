@@ -33,7 +33,6 @@ export const UserPage = (props) => {
     const getAllDishesWithIngredient = () => {
         axios.get(`http://localhost:8079/dish/withIngredients/all`)
             .then( response => {
-                console.log(response.data)
                 setPizzas(response.data);
             })
     }

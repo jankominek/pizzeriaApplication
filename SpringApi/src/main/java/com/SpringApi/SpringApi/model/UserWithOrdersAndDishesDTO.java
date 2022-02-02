@@ -23,6 +23,7 @@ public class UserWithOrdersAndDishesDTO {
     private String city;
     private String voivodeship;
     private String payment;
+    private Integer employeeId;
     private Float price;
 
     private List<DishDTO> dishes;
