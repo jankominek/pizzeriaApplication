@@ -48,3 +48,18 @@ export const AddEmployeeBtn = styled.div`
     left: 0;
     margin: 1rem 1rem;
 `
+
+export const AllEployeeBtn = styled.div`
+    cursor: pointer;
+    width: 10rem;
+    height: 3rem;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top:0;
+    left: 12rem;
+    margin: 1rem 1rem;
+`

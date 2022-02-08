@@ -1,9 +1,14 @@
 package com.SpringApi.SpringApi.service;
 
+import com.SpringApi.SpringApi.model.City;
 import com.SpringApi.SpringApi.model.Employee;
 import com.SpringApi.SpringApi.model.User;
+import com.SpringApi.SpringApi.model.Voivodeship;
+import com.SpringApi.SpringApi.repository.CityRepository;
 import com.SpringApi.SpringApi.repository.EmployeeRepository;
+import com.SpringApi.SpringApi.repository.VoivodeshipRepository;
 import com.SpringApi.SpringApi.utils.EmployeeDto;
+import com.SpringApi.SpringApi.utils.NewEmployeeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +20,10 @@ public class EmployeeService {
 
     @Autowired
     EmployeeRepository employeeRepository;
+    @Autowired
+    CityRepository cityRepository;
+    @Autowired
+    VoivodeshipRepository voivodeshipRepository;
 
     public List<Employee> getAllEmployees(){
         return employeeRepository.findAll();
@@ -36,5 +45,21 @@ public class EmployeeService {
                 .name(emp.getName())
                 .lastName(emp.getLastName())
                 .role(emp.getType().toString()).build();
+    }
+
+    public Employee saveEmployee(NewEmployeeDto employeeDto) {
+
+        City city = cityRepository.findCityByCityId(employeeDto.getCity());
+        Voivodeship voivodeship = voivodeshipRepository.findVoivodeshipByVoivodeshipId(employeeDto.getVoivodeship());
+
+        Employee employee = Employee.builder()
+                .name(employeeDto.getName())
+                .lastName(employeeDto.getLastName())
+                .email(employeeDto.getEmail())
+                .password(employeeDto.getPassword())
+                .city(city)
+                .voivodeship(voivodeship).build();
+
+        return employeeRepository.save(employee);
     }
 }

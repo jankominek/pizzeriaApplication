@@ -3,6 +3,7 @@ package com.SpringApi.SpringApi.model;
 import com.SpringApi.SpringApi.utils.PersonType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "employee")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Employee {
