@@ -6,6 +6,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { AddEmployeeModal } from "../AddEmployeeModal"
 import { EmployeeListModal } from "../EmployeeListModal"
+import { LogOutBtn } from "../../../components/LogOutBtn/LogOutBtn"
 
 
 const columnsOrder = ['ID', 'adres', 'imię', 'nazwisko', 'email', 'nr.tel', 'miasto', 'województwo', 'kwota', 'Obsługuje']
@@ -66,6 +67,7 @@ export const AdminPage = () => {
     
     return(
         <AdminPageContainer>
+            <LogOutBtn marginLeft={2}/>
             <AddEmployeeBtn onClick={showEmployeeModal}> Dodaj pracownika</AddEmployeeBtn>
             <AllEployeeBtn onClick={showEmployeeList}> Lista pracowników </AllEployeeBtn>
             <TableOptionsContainer>

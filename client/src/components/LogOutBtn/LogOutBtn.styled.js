@@ -1,13 +1,11 @@
 import styled from "styled-components";
 
 export const LogoutBtnContainer = styled.div`
-    width: 5rem;
-    height: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: gray;
+    padding: .5rem 1rem;
+    border: 1px solid black;
     position: absolute;
-    top: 0;
+    top: 1rem;
+    border-radius: 5px;
     right: 0;
+    margin-right: ${props => props.marginLeft + "rem" };
 `
