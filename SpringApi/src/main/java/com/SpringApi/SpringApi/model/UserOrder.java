@@ -48,7 +48,7 @@ public class UserOrder {
     private Integer status;
 
     @Column(name = "price")
-    private Float price;
+    private Double price;
 
     @Column(name = "priceDate")
     private Timestamp price_date;

@@ -30,7 +30,5 @@ public interface DishOrderRepository extends JpaRepository<DishOrder, Integer> {
     @Query(value = "update DishOrder d set d.dishPrice = :price where d.dishOrderId = :id")
     void modifyDishPrice(@Param(value = "price") Double price, @Param(value = "id") Integer id);
 
-//    @Procedure("myFunc")
-//    Integer myFunc();
 
 }

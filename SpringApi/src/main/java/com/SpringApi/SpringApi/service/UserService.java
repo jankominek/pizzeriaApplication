@@ -122,7 +122,9 @@ public class UserService {
     }
 
     public UserInfoDto UserEntityToUserInfoDto(User user){
-        return UserInfoDto.builder().userId(user.getUserId())
+        return UserInfoDto.builder()
+                .userId(user.getUserId())
+                .name(user.getFirstname())
                 .email(user.getEmail())
                 .type(user.getType())
                 .isVerified(user.getIsVerified()).build();

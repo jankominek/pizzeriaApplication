@@ -18,9 +18,6 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-//    @Query(value = "SELECT * FROM User WHERE email = ?1", nativeQuery = true)
-//    User findByEmail(String email);
-//
     @Modifying
     @Query(value = "UPDATE User u SET u.isVerified = 1 WHERE u.email = :email")
     void verifyAccount(@Param(value = "email") String email);

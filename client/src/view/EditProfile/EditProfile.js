@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { BackBtn } from "../../components/BackBtn/BackBtn";
 import { SelectLabel, SelectList } from "../RegisterPage/RegisterPage.styled";
 import { Button, EditProfileContainer, EditWrapper, Input, InputPassword, InputWrapper, Label, PEditName } from './EditProfile.styled'
 
@@ -115,6 +116,7 @@ export const EditProfile = () => {
 
     return(
         <EditProfileContainer>
+            <BackBtn />
             <EditWrapper>
                 <PEditName>Edycja profilu użytkownika</PEditName>
                 <InputWrapper>

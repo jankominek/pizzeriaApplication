@@ -10,6 +10,7 @@ import java.util.UUID;
 @Builder
 public class UserInfoDto {
         private Integer userId;
+        private String name;
         private String email;
         private PersonType type;
         private Boolean isVerified;

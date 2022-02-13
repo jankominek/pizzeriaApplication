@@ -55,7 +55,8 @@ export const Login = () => {
                     userId: data.userId,
                     email: data.email,
                     role : data.type,
-                    isVerified: data.isVerified
+                    isVerified: data.isVerified,
+                    name: data.name
                 }
                 dispatch(setUserInfoAction(userInfoData))
             })

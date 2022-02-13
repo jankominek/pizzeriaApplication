@@ -6,6 +6,7 @@ import axios from 'axios';
 import {useNavigate} from 'react-router';
 import { useDispatch, useSelector} from "react-redux";
 import { ProductElementList } from "../../components/productElementList/ProductElementList";
+import { BackBtn } from "../../components/BackBtn/BackBtn";
 
 export const UserPage = (props) => {
     
@@ -48,9 +49,9 @@ export const UserPage = (props) => {
         <>
             <UserPageContainer> 
                 <CompanyName>Pizzeria ShaurJano</CompanyName>
-                {userData && <UserName>{`Witaj ${userData.email}`}</UserName>}
+                {userData && <UserName>{`Witaj ${userData.name}`}</UserName>}
                 <ProductTypeContainer>
-                    {productTypes}
+                    
                 </ProductTypeContainer>
                 <ProductElementList products={pizzas} setDataToShoppingCart={setDataToShoppingCart}/>
             </UserPageContainer>

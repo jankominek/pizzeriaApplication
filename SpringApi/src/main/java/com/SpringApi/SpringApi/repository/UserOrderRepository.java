@@ -29,4 +29,14 @@ public interface UserOrderRepository extends JpaRepository<UserOrder, Integer> {
     @Modifying
     @Query("update UserOrder u set u.employeeId = :emp where u.orderId = :orderId")
     void addEmployeeToOrder(@Param(value ="emp") Employee emp, @Param(value = "orderId") Integer orderId);
+
+    // FUNKCJA
+    @Transactional
+    @Query(value = "select getFullDishPrice(?1) as getFullDishPrice", nativeQuery = true)
+    Double getFullDishPrice(Integer orderId);
+
+    @Transactional
+    @Modifying
+    @Query("update UserOrder u set u.price = :orderPrice where u.orderId = :orderId")
+    void setOrderPrice(@Param(value ="orderPrice") Double orderPrice, @Param(value = "orderId") Integer orderId);
 }

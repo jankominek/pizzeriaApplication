@@ -24,7 +24,7 @@ public class UserWithOrdersAndDishesDTO {
     private String voivodeship;
     private String payment;
     private Integer employeeId;
-    private Float price;
+    private Double price;
 
     private List<DishDTO> dishes;
 

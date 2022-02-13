@@ -140,9 +140,9 @@ public class DishOrderService {
 
         });
 
-
+        Double fullOrderPrice = userOrderRepository.getFullDishPrice(userOrder.getOrderId());
+        userOrderRepository.setOrderPrice(fullOrderPrice, userOrder.getOrderId());
 
     }
-
 
 }
