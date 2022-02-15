@@ -49,6 +49,9 @@ export const IngredientsField = styled.div`
     padding: 1rem 0rem;
     border-bottom: 1px solid black;
 `
+export const AdditionIngSpan = styled.span`
+    margin: 0rem .3rem;
+`
 
 export const Button = styled.div`
     width: 12rem;

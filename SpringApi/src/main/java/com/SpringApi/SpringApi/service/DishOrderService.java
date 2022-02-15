@@ -141,6 +141,7 @@ public class DishOrderService {
         });
 
         Double fullOrderPrice = userOrderRepository.getFullDishPrice(userOrder.getOrderId());
+        System.out.println(fullOrderPrice);
         userOrderRepository.setOrderPrice(fullOrderPrice, userOrder.getOrderId());
 
     }

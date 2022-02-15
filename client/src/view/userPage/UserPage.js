@@ -4,23 +4,31 @@ import { type_of_products } from "../../utils/type_of_products";
 import {UserPageContainer, CompanyName, UserName, ProductTypeContainer, ShoppingCartIconContainer, ShoppingCartContainer, EditUserIconContainer} from './UserPage.styled';
 import axios from 'axios';
 import {useNavigate} from 'react-router';
+import { setUserInfoAction } from "../../utils/store/actions/userStateAction";
 import { useDispatch, useSelector} from "react-redux";
 import { ProductElementList } from "../../components/productElementList/ProductElementList";
 import { BackBtn } from "../../components/BackBtn/BackBtn";
+import { VerificationModal } from "../../components/VerificationModal/VerificationModal";
+import { LogOutBtn } from "../../components/LogOutBtn/LogOutBtn";
 
 export const UserPage = (props) => {
     
-    const [isUserAuth, setIsUserAuth] = useState();
     const [pizzas, setPizzas] = useState([]);
+    const [isVerified, setIsVerified] = useState(true);
 
 
     const navigate = useNavigate();
     const userData = useSelector( state => state.userInfo);
+    const dispatch = useDispatch();
 
 
     useEffect(()=> {
         getAllDishesWithIngredient();
     }, [])
+
+    useEffect(()=>{
+        setIsVerified(userData.isVerified);
+    }, [userData])
 
     const redirectToShoppingCart = () => {
         navigate("/pizzeria/shopping_cart")
@@ -41,6 +49,7 @@ export const UserPage = (props) => {
     const setDataToShoppingCart = (data) => {
 
     }
+
     const productTypes = type_of_products.map((element, index)=>(
         <ProductField key={index} type={element.type} />
     ))
@@ -48,6 +57,7 @@ export const UserPage = (props) => {
     return(
         <>
             <UserPageContainer> 
+
                 <CompanyName>Pizzeria ShaurJano</CompanyName>
                 {userData && <UserName>{`Witaj ${userData.name}`}</UserName>}
                 <ProductTypeContainer>
@@ -57,6 +67,8 @@ export const UserPage = (props) => {
             </UserPageContainer>
             <ShoppingCartIconContainer onClick={redirectToShoppingCart}>S</ShoppingCartIconContainer>
             <EditUserIconContainer onClick={redirectToEditProfile}>Edytuj profil</EditUserIconContainer>
+            <LogOutBtn marginLeft={15}/>
+
             </>
     )
 }

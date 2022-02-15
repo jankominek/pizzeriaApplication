@@ -4,9 +4,10 @@ import {Input} from './Login.styled';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import {ErrorComponent} from '../../utils/errorComponent/ErrorComponent';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUserInfoAction } from "../../utils/store/actions/userStateAction";
 import { emailValidation } from '../../utils/validation';
+import { VerificationModal } from '../VerificationModal/VerificationModal';
 
 export const Login = () => {
 
@@ -14,17 +15,23 @@ export const Login = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdminLoggedin, setIsAdminLoggedIn] = useState(false)
     const [emailErrorMessage, setEmailErrorMessage] = useState();
+    const [isVerified, setIsVerified] = useState(true);
+    const [userInfo, setUserInfo] = useState({});
+    const [isRedirectPosible, setIsRedirectPossible] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        isLoggedIn && !isAdminLoggedin && navigate("/pizzeria");
+        isLoggedIn && isVerified && isRedirectPosible && !isAdminLoggedin && navigate("/pizzeria");
         isLoggedIn && isAdminLoggedin && navigate("/admin");
-    }, [isLoggedIn])
+    }, [isLoggedIn, isVerified, isRedirectPosible])
     const redirectToRegister = () => {
         navigate('/register');
     }
+    console.log(isLoggedIn)
+    console.log(isVerified)
+    console.log(isRedirectPosible)
     const logInUser = () => {
         axios.post("http://localhost:8079/pizza/login", credentials)
         .then(response => {
@@ -58,6 +65,9 @@ export const Login = () => {
                     isVerified: data.isVerified,
                     name: data.name
                 }
+                setUserInfo(userInfoData)
+                if(userInfoData.isVerified) setIsRedirectPossible(true);
+                if(!userInfoData.isVerified) setIsVerified(false);
                 dispatch(setUserInfoAction(userInfoData))
             })
         }
@@ -98,16 +108,23 @@ export const Login = () => {
         })
     }
 
+    const verifyAccount = () =>{
+        getUserInfo(userInfo.email, 'KLIENT')
+        setIsVerified(true);
+    }
+
     return(
         <LoginContainer>
             <SigningContainer>
                     <Label>Login</Label>
                     <Input name="email" onChange={onChange} placeholder="email"/>
                     {emailErrorMessage && <PError>{emailErrorMessage}</PError>}
-                    <Input name="password" onChange={onChange} placeholder="password"/>
+                    <Input type="password" name="password" onChange={onChange} placeholder="password"/>
                     <Button onClick={sendCredentials}>Log in</Button> 
                     <ButtonRegister onClick={redirectToRegister}>Register</ButtonRegister>
             </SigningContainer>
+            {!isVerified && isLoggedIn && <VerificationModal name={userInfo.name} email={userInfo.email} verifyAccount={verifyAccount} />}
+            
         </LoginContainer>
     )
 }

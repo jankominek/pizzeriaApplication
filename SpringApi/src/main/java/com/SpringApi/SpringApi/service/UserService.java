@@ -104,7 +104,7 @@ public class UserService {
     public void registerUser(UserCredentialsDto user){
         User userEntity = credentialsDtoToUser(user);
 //        System.out.println(userEntity.getVoivodeship().getVoivodeshipName());
-//        emailSenderService.sendEmail("pizzeriapp21@gmail.com", userEntity.getVCode());
+        emailSenderService.sendEmail(user.getEmail(), userEntity.getVCode());
         userRepository.save(userEntity);
     }
 

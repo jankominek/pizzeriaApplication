@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom"
 import {useNavigate} from 'react-router';
 import { Modal } from "../../components/Modal/Modal";
 import { setShoppingCart } from "../../utils/store/actions/shoppingCartAction";
-import { Button, DishPageContainer, InfoContainer, IngredientButton, IngredientsField, Picture, PizzaName, PizzaNameField, Span } from "./DishPage.styles"
+import { AdditionIngSpan, Button, DishPageContainer, InfoContainer, IngredientButton, IngredientsField, Picture, PizzaName, PizzaNameField, Span } from "./DishPage.styles"
 
 export const DishPage = () => {
 
@@ -68,10 +68,26 @@ export const DishPage = () => {
         navigate('/')
     }
 
-    const ingredientsList = dish && dish.ingredients.map( element => ( <span> {element}</span>));
+    const ingredientsList = dish && dish.ingredients.map( element => ( <AdditionIngSpan> {element}</AdditionIngSpan>));
+    console.log("additionIngredients : ", additionIngredients)
 
-    // const additionIgredientsList = additionIngredients && additionIngredients.map( (element)=> (<span> {element.ingredient_name}</span>));
-//////////////////////////////////////
+    const getAdditionIngredients = () => {
+        const ingredients = additionIngredients.filter( (element) => element.count > 0);
+        console.log("XXXXX:", ingredients)
+        return ingredients;
+    }
+    const prepareAdditionIngredientList = () => {
+        const preparedArray = [];
+        getAdditionIngredients().forEach((element)=>{
+            for(let i=0; i<  element.count; i++){
+                preparedArray.push(element.ingredient_name)
+            }
+        })
+
+        return preparedArray ? preparedArray : []
+    }
+    const additionIgredientsList = prepareAdditionIngredientList().map((element) => <AdditionIngSpan>{element}</AdditionIngSpan>)
+
     const addAdditionIngredients = () => {
         setIsModalShowing(true)
     }
@@ -79,7 +95,7 @@ export const DishPage = () => {
         setAdditionIngredients(data);
         console.log("test", data)
     }
-
+    prepareAdditionIngredientList();
     return(
         <>
        <DishPageContainer>
@@ -93,7 +109,7 @@ export const DishPage = () => {
                     <span>Składniki : </span>{ingredientsList}
                 </IngredientsField>
                 {additionIngredients && <IngredientsField>
-                    {/* <span>Składniki dodatkowe : </span>{additionIgredientsList} */}
+                    <span>Składniki dodatkowe : </span>{additionIgredientsList}
                 </IngredientsField>}
                 <IngredientButton onClick={addAdditionIngredients}>Dodaj dodatkowe składniki...</IngredientButton>
            </InfoContainer>

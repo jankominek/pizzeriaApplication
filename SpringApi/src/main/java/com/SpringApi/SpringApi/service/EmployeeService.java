@@ -9,6 +9,7 @@ import com.SpringApi.SpringApi.repository.EmployeeRepository;
 import com.SpringApi.SpringApi.repository.VoivodeshipRepository;
 import com.SpringApi.SpringApi.utils.EmployeeDto;
 import com.SpringApi.SpringApi.utils.NewEmployeeDto;
+import com.SpringApi.SpringApi.utils.PersonType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +59,7 @@ public class EmployeeService {
                 .email(employeeDto.getEmail())
                 .password(employeeDto.getPassword())
                 .city(city)
+                .type(PersonType.ADMIN)
                 .voivodeship(voivodeship).build();
 
         return employeeRepository.save(employee);

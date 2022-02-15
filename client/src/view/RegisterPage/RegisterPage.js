@@ -122,7 +122,7 @@ export const RegisterPage = () => {
                     <Input name="firstname" onChange={onChange} placeholder="firstname"/>
                     <Input name="lastname" onChange={onChange} placeholder="lastname"/>
                     <Input name="email" onChange={onChange} placeholder="email"/>
-                    <Input name="password" onChange={onChange} placeholder="password"/>
+                    <Input type="password" name="password" onChange={onChange} placeholder="password"/>
                     <SelectLabel>Województwo</SelectLabel>
                     <SelectList onChange={onChangeSelectListVoiv}>
                         {voivOptions && voivOptions.map((e)=> (
