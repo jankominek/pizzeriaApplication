@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -110,15 +111,7 @@ public class DishOrderService {
                             .build();
                     dishModifyRepository.save(modifiedDish);
                 });
-//                List<Ingredient> listWithOnlyAdditionalIngredients = ingredientsList.stream().filter( ingredient -> {
-//                    for( Ingredient dishIng : dish.getIngredients()){
-//                        if(dishIng.getIngredientName().equals(ingredient.getIngredientName())) return false;
-//                    }
-//                    return true;
-//                }).collect(Collectors.toList());
-//                List<Ingredient> listWithOnlyAdditionalIngredients =
-                System.out.println("==========================================");
-                // updating modified dishes price
+
 
                 List<DishModify> dishModifyObject =  dishModifyRepository.findAllByDishOrder(builtDish);
                 List<Ingredient> ingredientsFromModify = dishModifyObject.stream().map( obj -> obj.getIngredient()).collect(Collectors.toList());
@@ -133,9 +126,6 @@ public class DishOrderService {
                 dishOrderRepository.modifyDishPrice(price, builtDish.getDishOrderId());
 
 
-//                for(Ingredient a : listWithOnlyAdditionalIngredients){
-//                    System.out.println(a.getIngredientName());
-//                }
             }
 
         });

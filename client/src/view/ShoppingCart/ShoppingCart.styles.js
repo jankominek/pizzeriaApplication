@@ -92,6 +92,7 @@ export const OrderField = styled.div`
     margin-bottom: 2rem;
 `
 export const SubmitButton = styled.div`
+cursor: pointer;
     width: 8rem;
     height: 3rem;
     font-size: 1.2rem;
@@ -103,7 +104,7 @@ export const SubmitButton = styled.div`
 `
 
 export const Cart = styled.div`
-    width: 15rem;
+    width: 17rem;
     position: relative;
     margin: 0rem 1rem;
     height: auto;
@@ -127,15 +128,22 @@ export const CartIngredientField = styled.div`
     padding: 1rem;
 
 `
+export const FlexIng = styled.div`
+    display: flex;
+`
 export const CartIngredientSpan = styled.span`
     font-size: 1.2rem;
     color: gray;
+    margin : 0rem .5rem;
 `
 
 export const Price = styled.span`
     font-size: 1.2rem;
 `
-
+export const ErrorMess = styled.span`
+    color: red;
+    font-size: 1.2rem;
+`
 export const DeleteIcon = styled.div`
     padding: .3rem 1rem;
     margin-top: 0.2rem;

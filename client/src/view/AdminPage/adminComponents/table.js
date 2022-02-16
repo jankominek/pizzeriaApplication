@@ -2,8 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { AddEmployeeToOrderModal } from "../AddEmployeeToOrderModal";
 import { PasswordModal } from "../PasswordModal";
-import { BorderRight, ColumnRow, ColumnWrapper, DishInfoField, DishInfoIngredientsContainer, DishInfoName, DishInfoWrapper, IngredientField, Layer, Row, RowButton, RowField, RowFlexCol, RowTable, TableWrapper, Test } from "./Table.styled"
-
+import { BorderRight, ColumnRow, ColumnWrapper, DishInfoField, DishInfoIngredientsContainer, DishInfoName, DishInfoWrapper, IngredientField, IngredientFieldCount, Layer, Row, RowButton, RowField, RowFlexCol, RowTable, TableWrapper, Test } from "./Table.styled"
+import {CartIngredientSpan, FlexIng} from '../../ShoppingCart/ShoppingCart.styles';
 const columns = ['ID', 'adres', 'imię', 'nazwisko', 'email', 'nr.tel', 'miasto', 'województwo', 'kwota', 'Obsługuje']
 
 const columnsSizes = ['4rem', '9rem', '9rem', '9rem',"12rem", "7rem", "10rem", "10rem", "6rem", "7rem"];
@@ -136,6 +136,30 @@ export const Table = (props) => {
         isPasswordCorrect(empId, password)
     }
 
+    const countDoubleIndegriends = (ingredientList, ingTofind) => {
+        const listOfSearch = ingredientList.filter( (element) => element === ingTofind);
+        console.log("maches count : ", listOfSearch.length)
+        return listOfSearch.length;
+    } 
+
+    const showIngredientCounts = (ingredients) => {
+        const ingNames = ingredients.map((ing)=> ing.ingredientName);
+        console.log("UUUUUUUUUUUUUUU: ", ingNames)
+        const uniqIng = [...new Set(ingNames)];
+        const ingredientToShow = uniqIng.map((element)=>{
+            const count = countDoubleIndegriends(ingNames, element);
+            const ingObject = {
+                name : element,
+                count: count,
+            };
+            return ingObject;
+        })
+
+        console.log("YYYYYYYYYYYYYY: ", ingredientToShow)
+        return ingredientToShow;
+    }
+
+    console.log("XXXXXXX: ", orders)
     const rowList = orders.map((order, i) => (
         <>
         <RowFlexCol >
@@ -163,8 +187,11 @@ export const Table = (props) => {
                     <BorderRight />
                     </DishInfoName>
                 <DishInfoIngredientsContainer>
-                    {dish.ingredients.map( ingredient => (
-                        <IngredientField>{ingredient.ingredientName}</IngredientField>
+                    {showIngredientCounts(dish.ingredients).map( (ing) => (
+                        <>
+                        <IngredientField>{ing.name}</IngredientField>
+                        <IngredientFieldCount>{"x"+ing.count}</IngredientFieldCount>
+                        </>
                     ))}
                 </DishInfoIngredientsContainer>
             </DishInfoField>
@@ -173,7 +200,19 @@ export const Table = (props) => {
         </>
     ))
 
-
+// {order.dishes.map( dish => (
+//                 <DishInfoField>
+//                 <DishInfoName>
+//                     {dish.dishName}
+//                     <BorderRight />
+//                     </DishInfoName>
+//                 <DishInfoIngredientsContainer>
+//                     {dish.ingredients.map( ingredient => (
+//                         <IngredientField>{ingredient.ingredientName}</IngredientField>
+//                     ))}
+//                 </DishInfoIngredientsContainer>
+//             </DishInfoField>
+//             ))}
 
     return (
         <>

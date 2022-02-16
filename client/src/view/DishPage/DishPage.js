@@ -6,6 +6,7 @@ import { Navigate } from "react-router-dom"
 import {useNavigate} from 'react-router';
 import { Modal } from "../../components/Modal/Modal";
 import { setShoppingCart } from "../../utils/store/actions/shoppingCartAction";
+import {FlexIng} from '../ShoppingCart/ShoppingCart.styles';
 import { AdditionIngSpan, Button, DishPageContainer, InfoContainer, IngredientButton, IngredientsField, Picture, PizzaName, PizzaNameField, Span } from "./DishPage.styles"
 
 export const DishPage = () => {
@@ -68,6 +69,29 @@ export const DishPage = () => {
         navigate('/')
     }
 
+
+    const countDoubleIndegriends = (ingredientList, ingTofind) => {
+        const listOfSearch = ingredientList.filter( (element) => element === ingTofind);
+        console.log("maches count : ", listOfSearch.length)
+        return listOfSearch.length;
+    } 
+
+    const showIngredientCounts = (ingredients) => {
+        const uniqIng = [...new Set(ingredients)];
+        const ingredientToShow = uniqIng.map((element)=>{
+            const count = countDoubleIndegriends(ingredients, element);
+            const ingObject = {
+                name : element,
+                count: count,
+            };
+            return ingObject;
+        })
+
+        return ingredientToShow;
+    }
+
+
+
     const ingredientsList = dish && dish.ingredients.map( element => ( <AdditionIngSpan> {element}</AdditionIngSpan>));
     console.log("additionIngredients : ", additionIngredients)
 
@@ -109,7 +133,15 @@ export const DishPage = () => {
                     <span>Składniki : </span>{ingredientsList}
                 </IngredientsField>
                 {additionIngredients && <IngredientsField>
-                    <span>Składniki dodatkowe : </span>{additionIgredientsList}
+                    <span>Składniki dodatkowe : </span>
+                    {showIngredientCounts(prepareAdditionIngredientList()).map((ingredient) => (
+                        <FlexIng>
+                        <AdditionIngSpan>{ingredient.name}</AdditionIngSpan>
+                        <AdditionIngSpan>{"x" + ingredient.count}</AdditionIngSpan>
+                        </FlexIng>
+                ))}
+
+                    
                 </IngredientsField>}
                 <IngredientButton onClick={addAdditionIngredients}>Dodaj dodatkowe składniki...</IngredientButton>
            </InfoContainer>

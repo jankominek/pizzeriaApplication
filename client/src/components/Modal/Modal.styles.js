@@ -75,6 +75,7 @@ export const Price = styled.p`
     margin-right: 2rem;
 `
 export const CloseButton = styled.div`
+    cursor: pointer;
     padding: 1rem 2rem;
     background: red;
     border: 1px solid black;
@@ -88,6 +89,7 @@ export const CloseButton = styled.div`
     margin-bottom: 1rem;
 `
 export const AddButton = styled.div`
+    cursor: pointer;
     padding: 1rem 2rem;
     background: #9AE66E;
     border: 1px solid black;

@@ -33,6 +33,7 @@ export const InputEmployee = styled.input`
 
 export const Button = styled.div`
     width: 5rem;
+    cursor: pointer;
     height: 2rem;
     background: white;
     border-radius: 5px;

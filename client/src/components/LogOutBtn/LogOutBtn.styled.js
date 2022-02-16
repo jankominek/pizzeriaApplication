@@ -7,5 +7,6 @@ export const LogoutBtnContainer = styled.div`
     top: 1rem;
     border-radius: 5px;
     right: 0;
+    cursor: pointer;
     margin-right: ${props => props.marginLeft + "rem" };
 `

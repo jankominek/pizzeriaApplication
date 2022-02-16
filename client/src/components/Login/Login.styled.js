@@ -18,7 +18,8 @@ export const SigningContainer = styled.div`
    flex-direction: column;
    justify-content: center;
    align-items: center;
-`; 
+`;
+
 export const Input = styled.input`
     width: 80%;
     height: 1.5rem;
@@ -38,6 +39,7 @@ export const Label = styled.label`
 export const Button = styled.button`
     width: 40%;
     height: 1.5rem;
+    cursor: pointer;
     padding: 5px 10px;
     margin-top: 10%;
     font-size: 1rem;
@@ -57,6 +59,7 @@ export const ButtonRegister = styled.button`
     margin-top: 5%;
     font-size: 1rem;
     border-radius: 10px;
+    cursor: pointer;
     border: none;
     background-color: ${colors.lightRed};
 `

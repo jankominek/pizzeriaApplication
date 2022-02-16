@@ -116,9 +116,16 @@ export const DishInfoIngredientsContainer = styled.div`
     display: flex;
     margin-left: .5rem;
 `
+export const IngredientFieldCount = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    padding-right: 1rem;
+    text-transform : lowercase;
+`
 export const IngredientField = styled.div`
     display: flex;
     justify-content: center;
     align-items: center; 
-    padding: 0 1rem;
+    padding-right: .5rem;
 `

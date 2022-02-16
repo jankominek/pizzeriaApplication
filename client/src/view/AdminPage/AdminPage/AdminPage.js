@@ -31,7 +31,6 @@ export const AdminPage = () => {
     const getOrdersBystatus = (status) => {
         axios.get(`http://localhost:8079/order/allOdersByStatus/${status}`)
             .then(response => {
-                console.log("ASDASDASDASDASDA" ,response.data)
                 setSelectedOrders(response.data)
             })
     }
@@ -66,8 +65,7 @@ export const AdminPage = () => {
     }
     
     return(
-        <AdminPageContainer>
-            <LogOutBtn marginLeft={2}/>
+        <AdminPageContainer>            <LogOutBtn marginLeft={2}/>
             <AddEmployeeBtn onClick={showEmployeeModal}> Dodaj pracownika</AddEmployeeBtn>
             <AllEployeeBtn onClick={showEmployeeList}> Lista pracowników </AllEployeeBtn>
             <TableOptionsContainer>

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import {useNavigate} from 'react-router';
 import { useDispatch, useSelector } from "react-redux"
 import { deleteFromShoppingCart, setShoppingCart } from "../../utils/store/actions/shoppingCartAction"
-import { Label, AddressWrapper, AdressInput, Cart, CartIngredientField, CartIngredientSpan, CartName, CheckBox, checkBoxWrapper, DeleteIcon, OrderField, OrderInformationBox, Price, SCName, ShoppingCartContainer, SubmitButton, PaymentCheckBox, PaymentWrapper, PaymentCheckboxLabel, BackBtn, DeleteIconWrapper } from "./ShoppingCart.styles"
+import { Label, AddressWrapper, AdressInput, Cart, CartIngredientField, CartIngredientSpan, CartName, CheckBox, checkBoxWrapper, DeleteIcon, OrderField, OrderInformationBox, Price, SCName, ShoppingCartContainer, SubmitButton, PaymentCheckBox, PaymentWrapper, PaymentCheckboxLabel, BackBtn, DeleteIconWrapper, FlexIng, ErrorMess } from "./ShoppingCart.styles"
 import {MdClear} from "react-icons/md";
 
 export const ShoppingCart = () => {
@@ -12,6 +12,7 @@ export const ShoppingCart = () => {
 
     const [shoppingState, setShoppingState] = useState(shopCart.shoppingCart.products);
     const [userEmail, setUserEmail] = useState('');
+    const [errorMessage, setErrorMessage] = useState("");
 
     const [additionInfo, setAdditionInfo] = useState({
         address: "",
@@ -37,7 +38,17 @@ export const ShoppingCart = () => {
     }
 
     const validationPayment = (data) => {
-        if(data.karta && data.gotówka || !data.karta && !data.gotówka) return false;
+        setErrorMessage("");
+        const phoneRegex = new RegExp("^[0-9]{9}$")
+        if(data.karta && data.gotówka || !data.karta && !data.gotówka){
+            setErrorMessage("brak wszystkich danych")
+            return false;
+        };
+        if(!phoneRegex.test(data.phone)) {
+            setErrorMessage("błędny format numeru telefonu")
+            return false;
+        }
+    
         return true;
     }
     const postOrder = () => {
@@ -69,16 +80,45 @@ export const ShoppingCart = () => {
         dispatch(deleteFromShoppingCart(event.target.id))    
     }
 
-    console.log(shoppingState)
-    const productList = shoppingState.map( (element)=> (
+
+    const countDoubleIndegriends = (ingredientList, ingTofind) => {
+        const listOfSearch = ingredientList.filter( (element) => element === ingTofind);
+        console.log("maches count : ", listOfSearch.length)
+        return listOfSearch.length;
+    } 
+
+    const showIngredientCounts = (ingredients) => {
+        const uniqIng = [...new Set(ingredients)];
+        const ingredientToShow = uniqIng.map((element)=>{
+            const count = countDoubleIndegriends(ingredients, element);
+            const ingObject = {
+                name : element,
+                count: count,
+            };
+            return ingObject;
+        })
+
+        return ingredientToShow;
+    }
+
+
+    console.log("shoppingState ---> :", shoppingState);
+    const productList = shoppingState.map((element)=> (
         <Cart>
             <DeleteIconWrapper >
                 <MdClear id={element.dish_name} onClick={deleteSelected}/>
             </DeleteIconWrapper>
             <CartName>{element.dish_name}</CartName>
             <CartIngredientField>
-                {element.ingredients.map((ingredient)=>(
+                {/* {element.ingredients.map((ingredient)=>(
                     <CartIngredientSpan>{ingredient}</CartIngredientSpan>
+                ))} */}
+                {showIngredientCounts(element.ingredients).map((ingredient) => (
+                    <FlexIng>
+                    <CartIngredientSpan>{ingredient.name}</CartIngredientSpan>
+                    <CartIngredientSpan>{"x" + ingredient.count}</CartIngredientSpan>
+                    </FlexIng>
+                    
                 ))}
             </CartIngredientField>
         </Cart>
@@ -122,7 +162,7 @@ export const ShoppingCart = () => {
                     <PaymentCheckboxLabel>gotówka</PaymentCheckboxLabel>
                 </checkBoxWrapper>
             </PaymentWrapper>
-            
+            {errorMessage && <ErrorMess>{errorMessage}</ErrorMess>}
         </OrderInformationBox>
             : null
         }

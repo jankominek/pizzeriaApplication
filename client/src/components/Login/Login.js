@@ -18,6 +18,7 @@ export const Login = () => {
     const [isVerified, setIsVerified] = useState(true);
     const [userInfo, setUserInfo] = useState({});
     const [isRedirectPosible, setIsRedirectPossible] = useState(false);
+    const [errorMess, setErrorMess] = useState("");
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -33,9 +34,13 @@ export const Login = () => {
     console.log(isVerified)
     console.log(isRedirectPosible)
     const logInUser = () => {
+        setErrorMess("");
         axios.post("http://localhost:8079/pizza/login", credentials)
         .then(response => {
             console.log("RESP : ", response.data)
+            if(!response.data){
+                setErrorMess("Błedny email lub hasło");
+            }
             if(response.data && response.data === 'KLIENT'){
                 setIsLoggedIn(true);
             }
@@ -120,6 +125,7 @@ export const Login = () => {
                     <Input name="email" onChange={onChange} placeholder="email"/>
                     {emailErrorMessage && <PError>{emailErrorMessage}</PError>}
                     <Input type="password" name="password" onChange={onChange} placeholder="password"/>
+                    {errorMess && <PError>{errorMess}</PError>}
                     <Button onClick={sendCredentials}>Log in</Button> 
                     <ButtonRegister onClick={redirectToRegister}>Register</ButtonRegister>
             </SigningContainer>
