@@ -28,7 +28,7 @@ export const Login = () => {
 
     useEffect(()=>{
         isLoggedIn && isVerified && isRedirectPosible && !isAdminLoggedin && navigate("/pizzeria");
-        // isLoggedIn && isAdminLoggedin && navigate("/admin");
+        isLoggedIn && isRedirectPosible && isAdminLoggedin && navigate("/admin");
     }, [isLoggedIn, isVerified, isRedirectPosible, isAdminLoggedin])
     const redirectToRegister = () => {
         navigate('/register');
