@@ -38,4 +38,10 @@ public class UserOrderController {
     public void addEmployeeToOrder(@PathVariable Integer empId, @PathVariable Integer orderId){
         userOrderService.addEmployeeToOrder(empId, orderId);
     }
+
+    @GetMapping("/getUserOrders/{email}")
+    public void getSummaryOrder(@PathVariable String email){
+        System.out.println(email);
+         userOrderService.getSummaryOrder(email);
+    }
 }

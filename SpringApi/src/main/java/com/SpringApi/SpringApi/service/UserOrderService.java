@@ -3,11 +3,12 @@ package com.SpringApi.SpringApi.service;
 import com.SpringApi.SpringApi.model.*;
 import com.SpringApi.SpringApi.repository.*;
 import com.SpringApi.SpringApi.utils.DishDTO;
-import com.SpringApi.SpringApi.utils.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +26,8 @@ public class UserOrderService {
     IngredientRepository ingredientRepository;
     @Autowired
     EmployeeRepository employeeRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public List<UserWithOrdersAndDishesDTO> getAllOrdersByStatusWithUserInfo(Integer status) {
         List<UserOrder> userOrderList = userOrderRepository.findAllByStatus(status);
@@ -91,5 +94,12 @@ public class UserOrderService {
     public void addEmployeeToOrder(Integer employeeId, Integer orderId){
         Employee employee = employeeRepository.getById(employeeId);
         userOrderRepository.addEmployeeToOrder(employee, orderId);
+    }
+
+    public void getSummaryOrder(String email) {
+        User user = userRepository.findUserByEmail(email).get();
+        Optional<List<UserOrder>> userOrders = userOrderRepository.findUserOrderByUserId(user);
+        List<UserOrder> orders = userOrders.get().stream().sorted(Comparator.comparing(UserOrder::getOrderId)).collect(Collectors.toList());
+        System.out.println(orders.get(orders.size() - 1).getOrderId());
     }
 }

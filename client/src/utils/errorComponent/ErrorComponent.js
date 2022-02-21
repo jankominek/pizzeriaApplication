@@ -4,23 +4,19 @@ import { ErrorContainer, ErrorMessage } from "./ErrorComponent.styled"
 export const ErrorComponent = (props) => {
     const {message} = props;
 
-    const [visible, setVisible] = useState();
-
     useEffect(()=>{
-        setVisible(true);
         setTimeout(()=>{
-            setVisible(false)
+            props.closeSuccErrorComponent();
         }, 3000)
     },[])
 
     return(
         <>
-        {visible &&
             <ErrorContainer>
                 <ErrorMessage>
                     {message}
                 </ErrorMessage>
-            </ErrorContainer>}
+            </ErrorContainer>
         </>
     )
 }

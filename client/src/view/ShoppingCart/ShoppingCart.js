@@ -3,17 +3,22 @@ import { useEffect, useState } from "react"
 import {useNavigate} from 'react-router';
 import { useDispatch, useSelector } from "react-redux"
 import { deleteFromShoppingCart, setShoppingCart } from "../../utils/store/actions/shoppingCartAction"
-import { Label, AddressWrapper, AdressInput, Cart, CartIngredientField, CartIngredientSpan, CartName, CheckBox, checkBoxWrapper, DeleteIcon, OrderField, OrderInformationBox, Price, SCName, ShoppingCartContainer, SubmitButton, PaymentCheckBox, PaymentWrapper, PaymentCheckboxLabel, BackBtn, DeleteIconWrapper, FlexIng, ErrorMess } from "./ShoppingCart.styles"
+import { Label, AddressWrapper, AdressInput, Cart, CartIngredientField, CartIngredientSpan, CartName, CheckBox, checkBoxWrapper, DeleteIcon, OrderField, OrderInformationBox, Price, SCName, ShoppingCartContainer, SubmitButton, PaymentCheckBox, PaymentWrapper, PaymentCheckboxLabel, BackBtn, DeleteIconWrapper, FlexIng, ErrorMess, Test, CartIngredientSpan2, Span } from "./ShoppingCart.styles"
 import {MdClear} from "react-icons/md";
+import { SuccessComponent } from "../../utils/successfullComponent/SuccessComponent";
+import { ErrorComponent } from "../../utils/errorComponent/ErrorComponent";
+import { setLastOrder } from "../../utils/store/actions/LastOrder";
 
 export const ShoppingCart = () => {
 
     const shopCart = useSelector( state => state);
 
     const [shoppingState, setShoppingState] = useState(shopCart.shoppingCart.products);
-    const [userEmail, setUserEmail] = useState('');
+    // const [userEmail, setUserEmail] = useState('');
     const [errorMessage, setErrorMessage] = useState("");
-
+    const [showSuccessComponent, setSuccessComponent] = useState(false);
+    const [showErrorComponent, setErrorComponent] = useState(false);
+    const [generalPrice, setGeneralPrice] = useState(0);
     const [additionInfo, setAdditionInfo] = useState({
         address: "",
         phone: "",
@@ -21,21 +26,14 @@ export const ShoppingCart = () => {
         gotówka: false
     });
 
-    const [selected, setSelected] = useState({keys: []});
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(()=> {
-        shopCart && setShoppingState(shopCart.shoppingCart.products) && setUserEmail(shopCart.userInfo.email)
+        shopCart && setShoppingState(shopCart.shoppingCart.products)
     }, [shopCart])
 
     console.log("user email: ", shopCart)
-    const getUserOrders = () => {
-        axios.get()
-        .then((response)=>{
-        })
-    }
 
     const validationPayment = (data) => {
         setErrorMessage("");
@@ -54,26 +52,54 @@ export const ShoppingCart = () => {
     const postOrder = () => {
         const resultVal = validationPayment(additionInfo)
         if(resultVal){
+            setSuccessComponent(true)
             const payment = Object.entries(additionInfo).filter( ([key, value]) => {
                 if(value === true) return value;
             })
-            console.log("payment: ", payment[0][0])
+            const ingredientsWithoutAd = shoppingState.map((obj) => {
+                const newIng = obj.ingredients.map( (ing) => replacesAddition(ing))
+                const replacedShoppingState = {
+                    dish_name : obj.dish_name,
+                    ingredients : newIng,
+                    isMod : obj.isMod,
+                    dish_price : obj.dish_price
+                }
+                return replacedShoppingState;
+            })
+
+            const ingsWithAd = shoppingState.map((obj) => {
+                const lastOrderDishState = {
+                    dish_name : obj.dish_name,
+                    ingredients : obj.ingredients,
+                    isMod : obj.isMod,
+                    dish_price : obj.dish_price
+                }
+                return lastOrderDishState;
+            })
+            console.log("XOXOXOXOXOXO : ", ingsWithAd);
+
+            const lastOrderState = {
+                address : additionInfo.address,
+                phone : additionInfo.phone,
+                payment : payment[0][0].toUpperCase(),
+                dishes : ingsWithAd
+            }
+            dispatch(setLastOrder(lastOrderState))
             const objectToSend = {
                 address : additionInfo.address,
                 phone : additionInfo.phone,
                 payment : payment[0][0].toUpperCase(),
-                dishes : shoppingState
+                dishes : ingredientsWithoutAd
             }
-            console.log("objectToSend: ", objectToSend)
             axios.post(`http://localhost:8079/dish/order/new/${shopCart.userInfo.email}`, objectToSend)
-            navigate('/pizzeria')
-        }else{
-
+            dispatch(deleteFromShoppingCart(1))  
         }
-        console.log("result validation : ", resultVal)
-        console.log("ordeeeer : ", additionInfo)
+    }
 
-        
+    const closeSuccErrorComponent = () => {
+        setSuccessComponent(false);
+        setErrorComponent(false);
+        navigate("/pizzeria/shopping_cart/summary");
     }
 
     const deleteSelected = (event) => {
@@ -88,19 +114,34 @@ export const ShoppingCart = () => {
     } 
 
     const showIngredientCounts = (ingredients) => {
+        // const ingWithoutAd = ingredients.map( (ing) => replacesAddition(ing));
         const uniqIng = [...new Set(ingredients)];
         const ingredientToShow = uniqIng.map((element)=>{
             const count = countDoubleIndegriends(ingredients, element);
             const ingObject = {
                 name : element,
                 count: count,
+                price : 5.5 * count
             };
             return ingObject;
         })
-
+        console.log("ingredientToShow object : ", ingredientToShow)
         return ingredientToShow;
     }
 
+    const checkIfIngIsAddition = (ingredient) => {
+        const ifStartWith = ingredient.name.startsWith("ad/");
+        return ifStartWith;
+    }
+    const replacesAddition = (ingredient) => {
+        return ingredient.replace("ad/", "");
+    }
+
+    const getFullDishPrice = (dish) => {
+        const countOfAdditionIngs = dish.ingredients.filter((element)=> element.startsWith("ad/")).length;
+        const dishPrice = dish.dish_price + (countOfAdditionIngs * 5.5);
+        return Math.round(dishPrice * 100)/100 + " zł";
+    }
 
     console.log("shoppingState ---> :", shoppingState);
     const productList = shoppingState.map((element)=> (
@@ -108,15 +149,15 @@ export const ShoppingCart = () => {
             <DeleteIconWrapper >
                 <MdClear id={element.dish_name} onClick={deleteSelected}/>
             </DeleteIconWrapper>
-            <CartName>{element.dish_name}</CartName>
+            <CartName>{element.dish_name}
+            <Price>{getFullDishPrice(element)}</Price>
+            </CartName>
             <CartIngredientField>
-                {/* {element.ingredients.map((ingredient)=>(
-                    <CartIngredientSpan>{ingredient}</CartIngredientSpan>
-                ))} */}
                 {showIngredientCounts(element.ingredients).map((ingredient) => (
                     <FlexIng>
-                    <CartIngredientSpan>{ingredient.name}</CartIngredientSpan>
-                    <CartIngredientSpan>{"x" + ingredient.count}</CartIngredientSpan>
+                    <CartIngredientSpan2 isAddition={checkIfIngIsAddition(ingredient)}>{ingredient.name.replace("ad/", "")}</CartIngredientSpan2>
+                    <CartIngredientSpan2 isAddition={checkIfIngIsAddition(ingredient)}>{"x" + ingredient.count}</CartIngredientSpan2>
+                    {checkIfIngIsAddition(ingredient) && <CartIngredientSpan2 isAddition={checkIfIngIsAddition(ingredient)}>{ingredient.price + "zł"}</CartIngredientSpan2>}
                     </FlexIng>
                     
                 ))}
@@ -175,6 +216,9 @@ export const ShoppingCart = () => {
         </ShoppingCartContainer>
 
         <BackBtn onClick={() => navigate("/pizzeria")}>Powrót do menu..</BackBtn>
+        {showSuccessComponent && <SuccessComponent message={"Zamówienie zrealizowane poprawnie"} closeSuccErrorComponent={closeSuccErrorComponent}/>}
+        {showErrorComponent && <ErrorComponent message={"Zamówienie nie zostało zrealizowane"} closeSuccErrorComponent={closeSuccErrorComponent}/>}
         </>
     )
 }
+

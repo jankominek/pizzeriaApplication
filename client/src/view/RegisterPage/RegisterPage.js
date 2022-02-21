@@ -4,6 +4,8 @@ import { registerValidation } from "../../utils/validation";
 import { RegisterContainer, SigningContainer, Label, Input, Button, ButtonRegister, SelectList, SelectLabel} from "./RegisterPage.styled";
 import {PError} from '../../components/Login/Login.styled'
 import { useNavigate } from 'react-router';
+import { SuccessComponent } from "../../utils/successfullComponent/SuccessComponent";
+import { ErrorComponent } from "../../utils/errorComponent/ErrorComponent";
 export const RegisterPage = () => {
 
     const [firstname, setFirstname] = useState("");
@@ -22,6 +24,11 @@ export const RegisterPage = () => {
     const [credentials, setCredentials] = useState();
 
     const [registerErrorMessage, setRegisterErrorMessage] = useState();
+
+    const [showSuccessComponent, setSuccessComponent] = useState(false);
+    const [showErrorComponent, setErrorComponent] = useState(false);
+
+    const [canRedirect, setCanRedirect] = useState(false);
 
     const navigate = useNavigate();
     // {
@@ -69,10 +76,19 @@ export const RegisterPage = () => {
         const [validationResult, message] = registerValidation(objectToSend);
         if(validationResult){
             console.log("IN POST METHOD")
-            axios.post("http://localhost:8079/pizza/register", objectToSend);
-            setCityValue(1);
-            setVoivodeshipValue(1);
-            navigate("/login")
+            axios.post("http://localhost:8079/pizza/register", objectToSend)
+                .then((response)=>{
+                    if(!response.data){
+                        setErrorComponent(true);
+                    }
+                    if(response.data){
+                        setCityValue(1);
+                        setVoivodeshipValue(1);
+                        setCanRedirect(true);
+                        setSuccessComponent(true);
+                    }
+                    console.log("REgister response : ", response.data)
+                })
         }else{
             setRegisterErrorMessage(message)
         }        
@@ -108,6 +124,13 @@ export const RegisterPage = () => {
         return options;
     }
 
+        const closeSuccErrorComponent = () => {
+            setSuccessComponent(false);
+            setErrorComponent(false);
+            console.log("can be redirect : ", canRedirect)
+            canRedirect && navigate("/login");
+        }
+
     const onChangeSelectListVoiv = (value) => {
         setVoivodeshipValue(value.target.value);
     }
@@ -139,6 +162,8 @@ export const RegisterPage = () => {
 
                     <Button onClick={sendCredentials}>zarejestruj sie!</Button> 
             </SigningContainer>
+             {showSuccessComponent && <SuccessComponent message={"Rejestracja zrealizowana poprawnie !"} closeSuccErrorComponent={closeSuccErrorComponent}/>}
+         {showErrorComponent && <ErrorComponent message={"Użytkownik o takim samym adresie email już istnieje"} closeSuccErrorComponent={closeSuccErrorComponent}/>}
         </RegisterContainer>
     )
 }

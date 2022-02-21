@@ -30,6 +30,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Procedure("editUser")
     void editUser(String curremail, String vfn, String vln, String vemail, String vpassword, Integer vvoivodeship, Integer vcity);
 
+//    Optional<User> findUserByEmail(String email);
 
 
 

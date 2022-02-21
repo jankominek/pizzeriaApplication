@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public void registerUser(@RequestBody UserCredentialsDto user){ userService.registerUser(user);
+    public Boolean registerUser(@RequestBody UserCredentialsDto user){return userService.registerUser(user);
     }
 
     @PostMapping("/login")
@@ -55,8 +55,8 @@ public class UserController {
         return userService.getUserInfo(email);
     }
     @PostMapping("/updateUser/{email}")
-    public void updateUserCredentials(@PathVariable String email, @RequestBody EditUserDTO newUser){
-        userService.updateUserCredentials(email, newUser);
+    public Boolean updateUserCredentials(@PathVariable String email, @RequestBody EditUserDTO newUser){
+        return userService.updateUserCredentials(email, newUser);
     }
 
     @PostMapping("/addEmployee")

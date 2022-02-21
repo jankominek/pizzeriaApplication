@@ -37,4 +37,8 @@ public class EmployeeController {
     public Employee saveEmployee(@RequestBody NewEmployeeDto employeeDto){
         return employeeService.saveEmployee(employeeDto);
     }
+    @PostMapping("/delete/{id}")
+    public Boolean deleteEmployee(@PathVariable Integer id){
+        return employeeService.deleteEmployee(id);
+    }
 }

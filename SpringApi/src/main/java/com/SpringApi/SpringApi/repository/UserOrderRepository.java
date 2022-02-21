@@ -1,6 +1,7 @@
 package com.SpringApi.SpringApi.repository;
 
 import com.SpringApi.SpringApi.model.Employee;
+import com.SpringApi.SpringApi.model.User;
 import com.SpringApi.SpringApi.model.UserOrder;
 import com.SpringApi.SpringApi.utils.UserStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserOrderRepository extends JpaRepository<UserOrder, Integer> {
@@ -30,6 +32,7 @@ public interface UserOrderRepository extends JpaRepository<UserOrder, Integer> {
     @Query("update UserOrder u set u.employeeId = :emp where u.orderId = :orderId")
     void addEmployeeToOrder(@Param(value ="emp") Employee emp, @Param(value = "orderId") Integer orderId);
 
+    Optional<List<UserOrder>> findAllByEmployeeId(Employee employee);
     // FUNKCJA
     @Transactional
     @Query(value = "select getFullDishPrice(?1) as getFullDishPrice", nativeQuery = true)
@@ -39,4 +42,6 @@ public interface UserOrderRepository extends JpaRepository<UserOrder, Integer> {
     @Modifying
     @Query("update UserOrder u set u.price = :orderPrice where u.orderId = :orderId")
     void setOrderPrice(@Param(value ="orderPrice") Double orderPrice, @Param(value = "orderId") Integer orderId);
+
+    Optional<List<UserOrder>> findUserOrderByUserId(User user);
 }

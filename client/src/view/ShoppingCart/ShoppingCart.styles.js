@@ -58,7 +58,7 @@ export const BackBtn = styled.div`
 
 export const OrderInformationBox = styled.div`
     width: 30rem;
-    height: 20rem;
+    height: 18rem;
     border: 1px solid black;
     border-radius: 5px;
     display: flex;
@@ -67,11 +67,16 @@ export const OrderInformationBox = styled.div`
     align-items: center;
 `
 
+export const Span = styled.span`
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+`
+
 export const SCName = styled.span`
     font-size: 2rem;
     padding: 1rem 1rem;
     border-bottom: 1px solid red;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 `
 
 export const DeleteIconWrapper = styled.div`
@@ -120,6 +125,8 @@ export const CartName = styled.span`
     text-align: center;
     width: 90%;
     border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: column;
 `
 export const CartIngredientField = styled.div`
     display: flex;
@@ -128,6 +135,7 @@ export const CartIngredientField = styled.div`
     padding: 1rem;
 
 `
+
 export const FlexIng = styled.div`
     display: flex;
 `
@@ -136,8 +144,14 @@ export const CartIngredientSpan = styled.span`
     color: gray;
     margin : 0rem .5rem;
 `
+export const CartIngredientSpan2 = styled.span`
+    font-size: 1.2rem;
+    color: ${props => props.isAddition ? "limeGreen" : "gray"};
+    margin : 0rem .5rem;
+`
 
 export const Price = styled.span`
+    margin-top: .5rem;
     font-size: 1.2rem;
 `
 export const ErrorMess = styled.span`

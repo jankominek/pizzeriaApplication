@@ -13,6 +13,7 @@ import { AuthRoute } from './authService/PrivateRoute';
 import { Role } from './helpers/role';
 import { EditProfile } from './view/EditProfile/EditProfile';
 import { AdminPage } from './view/AdminPage/AdminPage/AdminPage';
+import { OrderSummary } from './view/ShoppingCart/OrderSummary';
 
 function App() {
 
@@ -48,6 +49,9 @@ function App() {
         </Route>
         <Route path="/pizzeria/shopping_cart"
           element={<AuthRoute component={ShoppingCart} role={Role.User} />}>
+        </Route>
+        <Route path="/pizzeria/shopping_cart/summary"
+          element={<AuthRoute component={OrderSummary} role={Role.User} />}>
         </Route>
         <Route path="/admin"
           element={<AuthRoute component={AdminPage} role={Role.Admin} />}>

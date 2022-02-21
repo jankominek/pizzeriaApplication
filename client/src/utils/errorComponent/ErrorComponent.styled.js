@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 export const ErrorContainer = styled.div`
-    width : 15rem;
-    height: 6rem;
     position: absolute;
+    padding: 2rem 2rem;
     right: 0;
     top: 0;
     margin: 1rem;

@@ -1,9 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BackBtn } from "../../components/BackBtn/BackBtn";
+import { ErrorComponent } from "../../utils/errorComponent/ErrorComponent";
+import { setUserInfoAction } from "../../utils/store/actions/userStateAction";
+import { SuccessComponent } from "../../utils/successfullComponent/SuccessComponent";
+import { emailValidation } from "../../utils/validation";
 import { SelectLabel, SelectList } from "../RegisterPage/RegisterPage.styled";
-import { Button, EditProfileContainer, EditWrapper, Input, InputPassword, InputWrapper, Label, PEditName } from './EditProfile.styled'
+import { Button, EditProfileContainer, EditWrapper, ErrorMessage, Input, InputPassword, InputWrapper, Label, PEditName } from './EditProfile.styled'
 
 
 export const EditProfile = () => {
@@ -14,12 +18,17 @@ export const EditProfile = () => {
         lastname: "",
         password: "",
     });
+    const dispatch = useDispatch();
     const [voivodeshipList, setVoivodeshipList] = useState();
     const [cityList, setCityList] = useState();
     const [voivodeshipValue, setVoivodeshipValue] = useState();
     const [cityValue, setCityValue] = useState();
     const [voivOptions, setVoivOptions] = useState();
     const [cityOptions, setCityOptions ]= useState();
+    const [errorMessage, setErrorMessage] = useState("");
+
+    const [showSuccessComponent, setSuccessComponent] = useState(false);
+        const [showErrorComponent, setErrorComponent] = useState(false);
 
     const userInfo = useSelector(state => state.userInfo)
 
@@ -76,6 +85,49 @@ export const EditProfile = () => {
         return options;
     }
 
+    const validation = (dataToSend) => {
+        setErrorMessage("")
+        if(!dataToSend.firstname || !dataToSend.lastname || !dataToSend.email){
+            return false;
+        }
+        const flnameRegex = new RegExp("^[A-Za-z ]+$")
+        const fnameRes = flnameRegex.test(dataToSend.firstname);
+        if(!fnameRes){
+            setErrorMessage("Pole firstname powinno zawierac tylko litery")
+            return false;
+        }
+
+        const lnameRes = flnameRegex.test(dataToSend.lastname); 
+        if(!lnameRes){
+            setErrorMessage("Pole lastname powinno zawierac tylko litery")
+            return false;
+        }
+        const emailRes = emailValidation(dataToSend.email);
+        if(!emailRes){
+            setErrorMessage("Niepoprawny format adresu email")
+            return false;
+        }
+
+
+        return fnameRes && lnameRes && emailRes;
+    }
+
+    const getUserInfo = (email) => {
+            axios.get(`http://localhost:8079/pizza/getUserInfo/${email}`)
+            .then( response => {
+                const data = response.data;
+                const userInfoData = {
+                    userId: data.userId,
+                    email: data.email,
+                    role : data.type,
+                    isVerified: data.isVerified,
+                    name: data.name
+                }
+                dispatch(setUserInfoAction(userInfoData))
+            })
+        }
+        
+
     const updateUser = () => {
 
         const dataToSend = {
@@ -83,10 +135,19 @@ export const EditProfile = () => {
             voivodeship_id : voivodeshipValue,
             city_id : cityValue
         }
+        const validationResult = validation(dataToSend);
         console.log(dataToSend)
         console.log("user email : ", userInfo.email)
-        userInfo?.email && axios.post(`http://localhost:8079/pizza/updateUser/${userInfo.email}`, dataToSend)
-        // console.log("userToUpdate : ", userToUpdate)
+        userInfo?.email && validationResult && axios.post(`http://localhost:8079/pizza/updateUser/${userInfo.email}`, dataToSend)
+            .then(response => {
+               if(response.data){
+                setSuccessComponent(true)
+                getUserInfo(dataToSend.email)
+               }
+                if(!response.data){
+                    setErrorComponent(true);
+                }
+            })
     }
 
     const getUserInformation = (email) => {
@@ -107,6 +168,12 @@ export const EditProfile = () => {
             [event.target.name] : event.target.value
         })
     }
+
+    const closeSuccErrorComponent = () => {
+                    setSuccessComponent(false);
+                    setErrorComponent(false);
+
+                }
     const onChangeSelectListVoiv = (value) => {
         setVoivodeshipValue(value.target.value);
     }
@@ -135,7 +202,7 @@ export const EditProfile = () => {
                     <Label>Password: </Label>
                     <InputPassword name="password" value={userInformation.password} onChange={onChange}/>
                 </InputWrapper>
-                
+                {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
                 <SelectLabel>Województwo</SelectLabel>
                     <SelectList onChange={onChangeSelectListVoiv}>
                         {voivOptions && voivOptions.map((e)=> (
@@ -150,6 +217,19 @@ export const EditProfile = () => {
                     </SelectList>
                 <Button onClick={updateUser}>Zaaktualizuj</Button>
             </EditWrapper>
+            {showSuccessComponent && <SuccessComponent message={"Pomyślnie zaaktualizowano użytkownika"} closeSuccErrorComponent={closeSuccErrorComponent}/>}
+        {showErrorComponent && <ErrorComponent message={"Użytkownik o takim adresie email istnieje"} closeSuccErrorComponent={closeSuccErrorComponent}/>}
         </EditProfileContainer>
     )
 }
+// const [showSuccessComponent, setSuccessComponent] = useState(false);
+//     const [showErrorComponent, setErrorComponent] = useState(false);
+
+//     {showSuccessComponent && <SuccessComponent message={"Zamówienie zrealizowane poprawnie"} closeSuccErrorComponent={closeSuccErrorComponent}/>}
+//         {showErrorComponent && <ErrorComponent message={"Zamówienie nie zostało zrealizowane"} closeSuccErrorComponent={closeSuccErrorComponent}/>}
+
+//         const closeSuccErrorComponent = () => {
+//             setSuccessComponent(false);
+//             setErrorComponent(false);
+//             navigate('/pizzeria')
+//         }

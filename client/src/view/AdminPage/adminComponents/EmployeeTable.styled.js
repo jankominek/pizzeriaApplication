@@ -1,7 +1,12 @@
 import styled from "styled-components";
 
+export const MainWrapper = styled.div`
+    width: 100%;
+    height: 100%;
+`
+
 export const TableWrapper = styled.div`
-    wifth: 100%;
+    width: 100%;
     max-height: 90%;
     // border: 2px solid #D0D0D0;
     display: flex;

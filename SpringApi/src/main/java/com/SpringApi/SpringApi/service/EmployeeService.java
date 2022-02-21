@@ -1,11 +1,9 @@
 package com.SpringApi.SpringApi.service;
 
-import com.SpringApi.SpringApi.model.City;
-import com.SpringApi.SpringApi.model.Employee;
-import com.SpringApi.SpringApi.model.User;
-import com.SpringApi.SpringApi.model.Voivodeship;
+import com.SpringApi.SpringApi.model.*;
 import com.SpringApi.SpringApi.repository.CityRepository;
 import com.SpringApi.SpringApi.repository.EmployeeRepository;
+import com.SpringApi.SpringApi.repository.UserOrderRepository;
 import com.SpringApi.SpringApi.repository.VoivodeshipRepository;
 import com.SpringApi.SpringApi.utils.EmployeeDto;
 import com.SpringApi.SpringApi.utils.NewEmployeeDto;
@@ -23,6 +21,8 @@ public class EmployeeService {
     EmployeeRepository employeeRepository;
     @Autowired
     CityRepository cityRepository;
+    @Autowired
+    UserOrderRepository userOrderRepository;
     @Autowired
     VoivodeshipRepository voivodeshipRepository;
 
@@ -63,5 +63,22 @@ public class EmployeeService {
                 .voivodeship(voivodeship).build();
 
         return employeeRepository.save(employee);
+    }
+
+    public Boolean deleteEmployee(Integer id) {
+        Employee employee = employeeRepository.findEmployeeByEmployeeId(id);
+        if(employee.getName().equals("admin")){
+            return false;
+        }
+        Optional<List<UserOrder>> userOrders = userOrderRepository.findAllByEmployeeId(employee);
+        System.out.println(userOrders.get().size());
+        if(userOrders.get().size() != 0){
+            userOrders.get().stream().forEach((userOrder -> {
+                userOrderRepository.addEmployeeToOrder(null, userOrder.getOrderId());
+            }));
+        }
+
+        employeeRepository.delete(employee);
+        return true;
     }
 }

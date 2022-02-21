@@ -2,13 +2,16 @@ import styled from "styled-components";
 
 
 export const EmpListWrapper = styled.div`
-    width: 100vw;
+    width: 100%;
     height: 100%;
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
+    top:0;
+    left:0;
     background: rgba(255,255,255,0.9);
+    // border: 1px solid black;
 
 `
 export const EmpListModalContainer = styled.div`

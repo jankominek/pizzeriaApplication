@@ -30,6 +30,7 @@ export const DishPage = () => {
     const GetPizzaById = () => {
         axios.get(`http://localhost:8079/dish/${params.id}`)
             .then( response => {
+                console.log("RESPONSE DISH :", response.data)
                 setDish(response.data);
             })
         }
@@ -49,22 +50,23 @@ export const DishPage = () => {
         })
         const ingredientsStr = [...dish.ingredients];
         filteredAdditionIngredients.forEach( element => {
-            if(element.count === 1) ingredientsStr.push(element.ingredient_name);
+            if(element.count === 1) ingredientsStr.push("ad/" + element.ingredient_name);
             if(element.count > 1){
                 for(let i=0; i<element.count; i++){
-                    ingredientsStr.push(element.ingredient_name);
+                    ingredientsStr.push("ad/" + element.ingredient_name);
                 }
             }
         })
         const allIngredients = ingredientsStr;
+        console.log("all with ADDITION ING : ", allIngredients)
 
         const dishObject = {
             dish_name : dish.dishName,
             ingredients : allIngredients,
-            isMod : additionIngredients.length ? true : false
+            isMod : additionIngredients.length ? true : false,
+            dish_price : dish.dishPrice
 
         };
-        console.log("dish object : ", dishObject)
         dispatch(setShoppingCart(dishObject));
         navigate('/')
     }
@@ -72,7 +74,6 @@ export const DishPage = () => {
 
     const countDoubleIndegriends = (ingredientList, ingTofind) => {
         const listOfSearch = ingredientList.filter( (element) => element === ingTofind);
-        console.log("maches count : ", listOfSearch.length)
         return listOfSearch.length;
     } 
 
@@ -93,11 +94,9 @@ export const DishPage = () => {
 
 
     const ingredientsList = dish && dish.ingredients.map( element => ( <AdditionIngSpan> {element}</AdditionIngSpan>));
-    console.log("additionIngredients : ", additionIngredients)
 
     const getAdditionIngredients = () => {
         const ingredients = additionIngredients.filter( (element) => element.count > 0);
-        console.log("XXXXX:", ingredients)
         return ingredients;
     }
     const prepareAdditionIngredientList = () => {
@@ -117,16 +116,23 @@ export const DishPage = () => {
     }
     const checkedData = (data) => {
         setAdditionIngredients(data);
-        console.log("test", data)
     }
-    prepareAdditionIngredientList();
+    console.log("ADASDSADSAD : " , prepareAdditionIngredientList());
+    const getFullDishPrice = () => {
+        const addIngredientsPrice = (prepareAdditionIngredientList().length * 5.5);
+        const resultPrice = dish && dish.dishPrice + addIngredientsPrice;
+
+        return Math.round(resultPrice * 100)/100;
+    }
+    getFullDishPrice();
     return(
         <>
        <DishPageContainer>
            {dish && <Picture src={require(`../../assets/${dish.dishName}.jpg`).default}/>}
            <InfoContainer>
                 <PizzaNameField>
-                    <Span>{dish && dish.dishName}</Span>
+                    <Span>{dish && dish.dishName} <Span>{getFullDishPrice() + "zł"}</Span></Span>
+                    
                     <Button onClick={onClickOrder}>Dodaj do zamówienia..</Button>
                 </PizzaNameField>
                 <IngredientsField>
@@ -136,8 +142,8 @@ export const DishPage = () => {
                     <span>Składniki dodatkowe : </span>
                     {showIngredientCounts(prepareAdditionIngredientList()).map((ingredient) => (
                         <FlexIng>
-                        <AdditionIngSpan>{ingredient.name}</AdditionIngSpan>
-                        <AdditionIngSpan>{"x" + ingredient.count}</AdditionIngSpan>
+                            <AdditionIngSpan>{ingredient.name}</AdditionIngSpan>
+                            <AdditionIngSpan>{"x" + ingredient.count}</AdditionIngSpan>
                         </FlexIng>
                 ))}
 

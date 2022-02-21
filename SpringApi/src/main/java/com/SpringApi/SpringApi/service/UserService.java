@@ -17,8 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -101,11 +103,26 @@ public class UserService {
         return null;
     }
 
-    public void registerUser(UserCredentialsDto user){
-        User userEntity = credentialsDtoToUser(user);
-//        System.out.println(userEntity.getVoivodeship().getVoivodeshipName());
-        emailSenderService.sendEmail(user.getEmail(), userEntity.getVCode());
-        userRepository.save(userEntity);
+    public Boolean registerUser(UserCredentialsDto user){
+//        List<User> users = userRepository.findAll();
+//        System.out.println(users);
+//        List<User> filteredUsers = users.stream().filter((userDb)->{
+//            return userDb.getEmail().equals(user.getEmail());
+//        }).collect(Collectors.toList());
+//        System.out.println(filteredUsers);
+
+        Optional<User> isUserExists = userRepository.findUserByEmail(user.getEmail());
+//        System.out.println(isUserExists);
+//        System.out.println(isUserExists.isEmpty())
+        if(!isUserExists.isEmpty()){
+            System.out.println("taki user istnieje");
+            return false;
+        }
+            System.out.println("nie ma takiego usera");
+            User userEntity = credentialsDtoToUser(user);
+            emailSenderService.sendEmail(user.getEmail(), userEntity.getVCode());
+            userRepository.save(userEntity);
+        return true;
     }
 
     @Transactional
@@ -157,7 +174,12 @@ public class UserService {
                 .isVerified(false).build();
     }
 
-    public void updateUserCredentials(String curremail, EditUserDTO newUser) {
+    public Boolean updateUserCredentials(String curremail, EditUserDTO newUser) {
+        Optional<User> isUserExists = userRepository.findUserByEmail(newUser.getEmail());
+        if(!isUserExists.isEmpty() && !(newUser.getEmail().equals(curremail))){
+            System.out.println("taki user istnieje");
+            return false;
+        }
         userRepository.editUser(curremail,
                 newUser.getFirstname(),
                 newUser.getLastname(),
@@ -166,5 +188,7 @@ public class UserService {
                 newUser.getVoivodeship_id(),
                 newUser.getCity_id()
         );
+
+        return true;
     }
 }
