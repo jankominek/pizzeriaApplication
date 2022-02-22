@@ -6,12 +6,14 @@ import com.SpringApi.SpringApi.dto.UserInfoDto;
 import com.SpringApi.SpringApi.model.User;
 import com.SpringApi.SpringApi.service.UserService;
 import com.SpringApi.SpringApi.utils.EditUserDTO;
+import com.SpringApi.SpringApi.utils.OrderEmailObject;
 import com.SpringApi.SpringApi.utils.UserVerification;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.UUID;
 
 @RestController
@@ -62,6 +64,12 @@ public class UserController {
     @PostMapping("/addEmployee")
     public void addEmployee(){
 
+    }
+//    @RequestBody OrderEmailObject orderEmailObject
+    @PostMapping("/sendMail/{email}")
+    public Boolean sendMail(@PathVariable String email, @RequestBody OrderEmailObject orderEmailObject) throws MessagingException {
+        System.out.println(email);
+        return userService.sendMail(email, orderEmailObject);
     }
 
 }

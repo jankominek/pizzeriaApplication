@@ -67,6 +67,7 @@ public class EmployeeService {
 
     public Boolean deleteEmployee(Integer id) {
         Employee employee = employeeRepository.findEmployeeByEmployeeId(id);
+        Employee admin = employeeRepository.findEmployeeByEmployeeId(1);
         if(employee.getName().equals("admin")){
             return false;
         }
@@ -74,7 +75,7 @@ public class EmployeeService {
         System.out.println(userOrders.get().size());
         if(userOrders.get().size() != 0){
             userOrders.get().stream().forEach((userOrder -> {
-                userOrderRepository.addEmployeeToOrder(null, userOrder.getOrderId());
+                userOrderRepository.addEmployeeToOrder(admin, userOrder.getOrderId());
             }));
         }
 

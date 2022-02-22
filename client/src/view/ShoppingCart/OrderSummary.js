@@ -8,7 +8,7 @@ import { ButtonToMain, DishBlockLeft, DishBlockRight, DishBlockSpan, DishBlockWr
 export const OrderSummary = () => {
 
     const [OrderState, setOrderState] = useState("");
-    const [summaryPrice, setSummaryPrice] = useState(0);
+    const [summaryPrice, setSummaryPrice] = useState();
 
 
     const navigate = useNavigate();
@@ -16,9 +16,32 @@ export const OrderSummary = () => {
     const redux = useSelector( state => state);
     console.log("OrderState", OrderState)
     useEffect(()=>{
-        redux && setOrderState(redux.lastOrder)
-        OrderState?.order?.dishes && getFullOrderPrice(OrderState.order.dishes);
-    }, [redux])
+        redux.lastOrder && setOrderState(redux.lastOrder)
+    }, [])
+
+    useEffect(()=>{
+        OrderState && getFullOrderPrice(OrderState.order.dishes);
+    }, [OrderState])
+
+    useEffect(()=>{
+        if(summaryPrice){
+            const objectemail = {
+                dishes : [...OrderState.order.dishes],
+                generalPrice : summaryPrice
+            }
+            console.log("JAJSDJASDJASDJASJDASJDJADJASDJASJD: ", objectemail)
+            
+            axios.post(`http://localhost:8079/pizza/sendMail/${redux.userInfo.email}`, objectemail)
+                .then(response => {
+                    console.log(response.data)
+                })
+            // axios.post(`http://localhost:8079/pizza/sendMail/fixame7567@reimondo.com`, objectemail)
+        }
+    }, [summaryPrice])
+
+    useEffect(()=>{
+        
+    }, [])
 
     const countDoubleIndegriends = (ingredientList, ingTofind) => {
         const listOfSearch = ingredientList.filter( (element) => element === ingTofind);
@@ -55,14 +78,16 @@ export const OrderSummary = () => {
     const getFullOrderPrice = (dishes) => {
         let price = 0;
         let additionalIngredientsCount = 0;
-        const countOfAdditionalIngredients = dishes.forEach(element => {
+        dishes.forEach(element => {
             price = price + element.dish_price;
             const countIngs = element.ingredients.filter( (ingName) => checkIfIngIsAddition(ingName))
             additionalIngredientsCount = additionalIngredientsCount + countIngs.length;
         });
         console.log("Additional ingredients COINT : ", additionalIngredientsCount)
-        const returnPrice = price + (additionalIngredientsCount * 5.5);
+        const returnPrice = Math.round((price + (additionalIngredientsCount * 5.5)) * 100)/ 100;
         setSummaryPrice(returnPrice);
+
+        return returnPrice;
     }
 
 

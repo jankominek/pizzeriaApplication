@@ -68,7 +68,7 @@ export const DishPage = () => {
 
         };
         dispatch(setShoppingCart(dishObject));
-        navigate('/')
+        navigate('/pizzeria')
     }
 
 

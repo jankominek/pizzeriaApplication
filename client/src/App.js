@@ -30,8 +30,9 @@ function App() {
       </Routes> */}
       <Routes>
         <Route exact path="/"
-          element={<AuthRoute component={UserPage} role={Role.User} />}>
+          element={<Login />}>
         </Route>
+        {/* <AuthRoute component={Login} role={Role.User} /> */}
         <Route path="/login"
           element={<Login />}>
         </Route>

@@ -11,12 +11,14 @@ import com.SpringApi.SpringApi.repository.UserRepository;
 import com.SpringApi.SpringApi.model.User;
 import com.SpringApi.SpringApi.repository.VoivodeshipRepository;
 import com.SpringApi.SpringApi.utils.EditUserDTO;
+import com.SpringApi.SpringApi.utils.OrderEmailObject;
 import com.SpringApi.SpringApi.utils.PersonType;
 import com.SpringApi.SpringApi.utils.UserVerification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -189,6 +191,11 @@ public class UserService {
                 newUser.getCity_id()
         );
 
+        return true;
+    }
+
+    public Boolean sendMail(String email, OrderEmailObject orderEmailObject) throws MessagingException {
+        emailSenderService.sendSummaryOrderEmail(email, orderEmailObject);
         return true;
     }
 }
